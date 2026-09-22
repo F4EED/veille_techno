@@ -1,0 +1,257 @@
+# Domaines, mots-clés et tendances de la veille IoT.
+# Les alias (FR/EN, avec/sans accents) sont normalisés à l'exécution.
+
+periode_jours: 7
+
+domaines:
+  meshtastic_meshcore:
+    label: Maillage LoRa — Meshtastic & Meshcore
+    priorite: 100
+    mots_cles:
+      - meshtastic
+      - meshcore
+      - mesh core
+      - "lora mesh"
+      - "mesh lora"
+      - "réseau maillé lora"
+      - "reseau maille lora"
+      - "zero-cost hops"
+
+  meteo_routiere:
+    label: Routes & gestion routière
+    priorite: 92
+    mots_cles:
+      - routes
+      - "gestion routière"
+      - "gestion routiere"
+      - "exploitation routière"
+      - "exploitation routiere"
+      - voirie
+      - "patrouille routière"
+      - "patrouille routiere"
+      - "météo routière"
+      - "meteo routiere"
+      - rwis
+      - sirw
+      - simtr
+      - "viabilité hivernale"
+      - "viabilite hivernale"
+      - "température de chaussée"
+      - "temperature chaussee"
+      - "température chaussée"
+      - "état de la chaussée"
+      - "etat de la chaussee"
+      - verglas
+      - "capteur routier"
+      - "capteur de chaussée"
+      - "capteur de chaussee"
+      - "station météo routière"
+      - "station meteo routiere"
+      - "road weather"
+      - "road management"
+      - "pavement temperature"
+      - "winter maintenance"
+      - "winter service"
+      - "road sensor"
+      - "glace noire"
+      - "black ice"
+      - "sel de déneigement"
+      - deneigement
+      - déneigement
+      - salage
+      - "fondant routier"
+      - "visibilité routière"
+      - "visibilite routiere"
+      - "viabilité des routes"
+      - "viabilite des routes"
+
+  crise:
+    label: Crise
+    priorite: 88
+    mots_cles:
+      - crise
+      - "gestion de crise"
+      - "cellule de crise"
+      - "plan de crise"
+      - "continuity"
+      - "crisis management"
+      - orsec
+      - "poste de commandement"
+      - "salle de crise"
+      - "situation d'urgence"
+      - "situation durgence"
+
+  main_courante:
+    label: Main courante
+    priorite: 87
+    mots_cles:
+      - "main courante"
+      - "main-courante"
+      - "mains courantes"
+      - "registre d'événements"
+      - "registre devenements"
+      - "journal d'événements"
+      - "incident log"
+      - "event log"
+
+  radio:
+    label: Radio
+    priorite: 65
+    mots_cles:
+      - radio
+      - "radio professionnelle"
+      - "réseau radio"
+      - "reseau radio"
+      - "poste radio"
+      - pmr
+      - tetra
+      - dmr
+      - "radio numérique"
+      - "radio numerique"
+      - "two-way radio"
+      - "land mobile"
+
+  lorawan:
+    label: LoRa & LoRaWAN
+    priorite: 80
+    mots_cles:
+      - lorawan
+      - lora
+      - "lora wan"
+      - "the things network"
+      - "the things stack"
+      - chirpstack
+      - helium
+      - actility
+      - objenious
+      - kerlink
+      - netmore
+      - "orange iot"
+      - lpwan
+      - "passerelle lorawan"
+      - "gateway lorawan"
+      - "réseau lorawan"
+      - "reseau lorawan"
+
+  mesh:
+    label: Réseaux mesh
+    priorite: 70
+    mots_cles:
+      - mesh
+      - "réseau maillé"
+      - "reseau maille"
+      - "mesh network"
+      - "mesh networking"
+      - "lora mesh"
+      - wirepas
+      - "flood routing"
+      - "next-hop"
+      - "store-and-forward"
+      - meshtastic
+      - meshcore
+
+  industrie:
+    label: Industrie & IIoT
+    priorite: 60
+    mots_cles:
+      - industrie
+      - industrial
+      - iiot
+      - "industrie 4.0"
+      - "industry 4.0"
+      - "iot industriel"
+      - "industrial iot"
+      - "usine connectée"
+      - "usine connectee"
+      - "smart factory"
+      - "smart manufacturing"
+      - "maintenance prédictive"
+      - "maintenance predictive"
+      - "predictive maintenance"
+      - ot
+      - scada
+      - "automate"
+      - plc
+      - mes
+      - "edge industriel"
+      - "cybersécurité ot"
+      - "cybersecurite ot"
+      - "jumeau numérique"
+      - "jumeau numerique"
+      - "digital twin"
+
+  iot:
+    label: IoT & objets connectés
+    priorite: 40
+    mots_cles:
+      - iot
+      - "internet of things"
+      - "internet des objets"
+      - "objets connectés"
+      - "objets connectes"
+      - "objet connecté"
+      - "objet connecte"
+      - m2m
+      - "machine to machine"
+      - mqtt
+      - coap
+      - matter
+      - zigbee
+      - "z-wave"
+      - zwave
+      - "nb-iot"
+      - nbiot
+      - "lte-m"
+      - ltem
+      - sigfox
+      - "wi-sun"
+      - wisun
+      - "6lowpan"
+      - "capteur connecté"
+      - "capteur connecte"
+      - "smart city"
+      - "ville intelligente"
+      - "territoire connecté"
+      - "territoire connecte"
+      - "edge computing"
+      - "edge ai"
+      - "passerelle iot"
+      - "iot gateway"
+
+tendances:
+  - id: lora_mesh_opensource
+    label: Maillage LoRa libre (Meshtastic / Meshcore)
+    mots_cles: [meshtastic, meshcore, "lora mesh"]
+  - id: reseaux_lorawan_territoires
+    label: Réseaux LoRaWAN territoriaux / collectivités
+    mots_cles: [lorawan, collectivité, collectivite, département, departement, "smart city", "territoire connecté"]
+  - id: viabilite_hivernale_iot
+    label: Viabilité hivernale & capteurs de chaussée
+    mots_cles: [rwis, "météo routière", verglas, chaussée, chaussee, "viabilité hivernale"]
+  - id: gestion_routiere
+    label: Gestion routière & routes
+    mots_cles: [routes, "gestion routière", voirie, "exploitation routière"]
+  - id: crise_exploitation
+    label: Gestion de crise
+    mots_cles: [crise, "gestion de crise", orsec, "cellule de crise"]
+  - id: main_courante
+    label: Main courante
+    mots_cles: ["main courante", "main-courante", "incident log"]
+  - id: radio_pro
+    label: Radio professionnelle (PMR, TETRA, DMR)
+    mots_cles: [radio, pmr, tetra, dmr, "réseau radio"]
+  - id: iiot_cyber_ot
+    label: IIoT, usine connectée et cybersécurité OT
+    mots_cles: [iiot, "industrie 4.0", "cybersécurité ot", scada, "usine connectée"]
+  - id: lpwan_5g_redcap
+    label: LPWAN, NB-IoT, LTE-M et 5G RedCap
+    mots_cles: [lpwan, "nb-iot", "lte-m", redcap, 5g, sigfox]
+  - id: matter_thread_maison
+    label: Matter / Thread et maison connectée
+    mots_cles: [matter, thread, zigbee, "smart home", "maison connectée"]
+  - id: edge_ia_capteurs
+    label: IA embarquée et capteurs intelligents
+    mots_cles: ["edge ai", "edge computing", "tiny ml", tinyml, capteur]
+  - id: helium_decentralise
+    label: Réseaux décentralisés (Helium, réseaux communautaires)
+    mots_cles: [helium, "community network", "réseau communautaire"]

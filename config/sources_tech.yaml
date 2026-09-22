@@ -1,0 +1,277 @@
+# Presse nationale informatique, technique, IA et développement.
+# Commune à toutes les veilles. filtre: mots_cles → match du fichier keywords du profil.
+
+google_news:
+  - id: gn-presse-it
+    label: Google News — presse informatique
+    query: 'site:journaldunet.com OR site:usine-digitale.fr OR site:usinenouvelle.com OR site:lemagit.fr OR site:itforbusiness.fr OR site:channelnews.fr OR site:cio-online.com'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    filtre: mots_cles
+    site: https://www.journaldunet.com/
+  - id: gn-presse-ia
+    label: Google News — IA / data
+    query: 'site:actuia.com OR site:lebigdata.fr OR site:siecledigital.fr OR site:frenchweb.fr OR site:maddyness.com OR site:linformaticien.com'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    filtre: mots_cles
+    site: https://www.actuia.com/
+  - id: gn-presse-tech-recherche
+    label: Google News — recherche / ingénierie
+    query: 'site:inria.fr OR site:hellofuture.orange.com OR site:polytechnique-insights.com OR site:industrie-techno.com OR site:alliancy.fr OR site:hardware.fr OR site:lemagit.fr'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    filtre: mots_cles
+    site: https://www.inria.fr/
+
+flux:
+  # --- Informatique / numérique ---
+  - id: 01net
+    nom: 01net
+    url: https://www.01net.com/actualites/feed
+    site: https://www.01net.com/
+    filtre: mots_cles
+  - id: clubic
+    nom: Clubic
+    url: https://www.clubic.com/feed/rss
+    site: https://www.clubic.com/
+    filtre: mots_cles
+  - id: numerama
+    nom: Numerama
+    url: https://www.numerama.com/feed
+    site: https://www.numerama.com/
+    filtre: mots_cles
+  - id: zdnet-fr
+    nom: ZDNet.fr
+    url: https://www.zdnet.fr/feeds/rss/actualites/
+    site: https://www.zdnet.fr/
+    filtre: mots_cles
+  - id: lmi-actu
+    nom: Le Monde Informatique
+    url: https://www.lemondeinformatique.fr/flux-rss/thematique/toutes-les-actualites/rss.xml
+    site: https://www.lemondeinformatique.fr/
+    filtre: mots_cles
+  - id: silicon
+    nom: Silicon.fr
+    url: https://www.silicon.fr/feed
+    site: https://www.silicon.fr/
+    filtre: mots_cles
+  - id: jdn
+    nom: Journal du Net
+    url: https://www.journaldunet.com/rss.xml
+    site: https://www.journaldunet.com/
+    filtre: mots_cles
+  - id: usine-digitale
+    nom: L'Usine Digitale
+    url: https://www.usine-digitale.fr/rss/
+    site: https://www.usine-digitale.fr/
+    filtre: mots_cles
+  - id: usine-nouvelle
+    nom: L'Usine Nouvelle
+    url: https://www.usinenouvelle.com/rss/
+    site: https://www.usinenouvelle.com/
+    filtre: mots_cles
+  - id: lesnumeriques
+    nom: Les Numériques
+    url: https://www.lesnumeriques.com/rss.xml
+    site: https://www.lesnumeriques.com/
+    filtre: mots_cles
+  - id: next-ink
+    nom: Next
+    url: https://next.ink/feed/
+    site: https://next.ink/
+    filtre: mots_cles
+  - id: frandroid
+    nom: Frandroid
+    url: https://www.frandroid.com/feed
+    site: https://www.frandroid.com/
+    filtre: mots_cles
+  - id: presse-citron
+    nom: Presse-citron
+    url: https://www.presse-citron.net/feed/
+    site: https://www.presse-citron.net/
+    filtre: mots_cles
+  - id: itespresso
+    nom: ITespresso
+    url: https://www.itespresso.fr/feed
+    site: https://www.itespresso.fr/
+    filtre: mots_cles
+  - id: it-connect
+    nom: IT-Connect
+    url: https://www.it-connect.fr/feed/
+    site: https://www.it-connect.fr/
+    filtre: mots_cles
+  - id: solutions-numeriques
+    nom: Solutions Numériques
+    url: https://www.solutions-numeriques.com/feed/
+    site: https://www.solutions-numeriques.com/
+    filtre: mots_cles
+  - id: informatiquenews
+    nom: InformatiqueNews
+    url: https://www.informatiquenews.fr/feed
+    site: https://www.informatiquenews.fr/
+    filtre: mots_cles
+  - id: lemonde-pixels
+    nom: Le Monde — Pixels
+    url: https://www.lemonde.fr/pixels/rss_full.xml
+    site: https://www.lemonde.fr/pixels/
+    filtre: mots_cles
+  - id: lefigaro-hightech
+    nom: Le Figaro — High-tech
+    url: https://www.lefigaro.fr/rss/figaro_hightech.xml
+    site: https://www.lefigaro.fr/secteur/high-tech
+    filtre: mots_cles
+  - id: bfmtv-tech
+    nom: BFMTV — Tech
+    url: https://www.bfmtv.com/rss/tech/
+    site: https://www.bfmtv.com/tech/
+    filtre: mots_cles
+  - id: franceinfo-internet
+    nom: franceinfo — Internet
+    url: https://www.francetvinfo.fr/internet.rss
+    site: https://www.francetvinfo.fr/internet/
+    filtre: mots_cles
+  - id: franceinfo-sciences
+    nom: franceinfo — Sciences
+    url: https://www.francetvinfo.fr/sciences.rss
+    site: https://www.francetvinfo.fr/sciences/
+    filtre: mots_cles
+
+  # --- IA / data / digital ---
+  - id: actuia
+    nom: ActuIA
+    url: https://www.actuia.com/feed/
+    site: https://www.actuia.com/
+    filtre: mots_cles
+  - id: lebigdata
+    nom: LeBigData
+    url: https://www.lebigdata.fr/feed
+    site: https://www.lebigdata.fr/
+    filtre: mots_cles
+  - id: siecle-digital
+    nom: Siècle Digital
+    url: https://siecledigital.fr/feed/
+    site: https://siecledigital.fr/
+    filtre: mots_cles
+  - id: frenchweb
+    nom: FrenchWeb
+    url: https://www.frenchweb.fr/feed
+    site: https://www.frenchweb.fr/
+    filtre: mots_cles
+  - id: maddyness
+    nom: Maddyness
+    url: https://www.maddyness.com/feed/
+    site: https://www.maddyness.com/
+    filtre: mots_cles
+  - id: blogdumoderateur
+    nom: Blog du Modérateur
+    url: https://www.blogdumoderateur.com/feed/
+    site: https://www.blogdumoderateur.com/
+    filtre: mots_cles
+
+  # --- Développement / open source ---
+  - id: developpez
+    nom: Developpez.com
+    url: https://www.developpez.com/index/rss
+    site: https://www.developpez.com/
+    filtre: mots_cles
+  - id: programmez
+    nom: Programmez!
+    url: https://www.programmez.com/rss.xml
+    site: https://www.programmez.com/
+    filtre: mots_cles
+  - id: linuxfr
+    nom: LinuxFr
+    url: https://linuxfr.org/news.atom
+    site: https://linuxfr.org/
+    filtre: mots_cles
+  - id: framablog
+    nom: Framablog
+    url: https://framablog.org/feed/
+    site: https://framablog.org/
+    filtre: mots_cles
+  - id: korben
+    nom: Korben
+    url: https://korben.info/feed
+    site: https://korben.info/
+    filtre: mots_cles
+  - id: octo-talks
+    nom: OCTO Talks
+    url: https://blog.octo.com/feed
+    site: https://blog.octo.com/
+    filtre: mots_cles
+
+  # --- Technique / ingénierie / hardware ---
+  - id: electroniques
+    nom: Electroniques
+    url: https://www.electroniques.biz/feed/
+    site: https://www.electroniques.biz/
+    filtre: mots_cles
+  - id: techniques-ingenieur
+    nom: Techniques de l'Ingénieur
+    url: https://www.techniques-ingenieur.fr/actualite/feed/
+    site: https://www.techniques-ingenieur.fr/
+    filtre: mots_cles
+  - id: toms-hardware-fr
+    nom: Tom's Hardware France
+    url: https://www.tomshardware.fr/feed/
+    site: https://www.tomshardware.fr/
+    filtre: mots_cles
+  - id: toms-guide-fr
+    nom: Tom's Guide France
+    url: https://www.tomsguide.fr/feed/
+    site: https://www.tomsguide.fr/
+    filtre: mots_cles
+  - id: futura-sciences
+    nom: Futura Sciences
+    url: https://www.futura-sciences.com/rss/actualites.xml
+    site: https://www.futura-sciences.com/
+    filtre: mots_cles
+  - id: sciences-et-avenir
+    nom: Sciences et Avenir
+    url: https://www.sciencesetavenir.fr/rss.xml
+    site: https://www.sciencesetavenir.fr/
+    filtre: mots_cles
+  - id: cnrs-journal
+    nom: CNRS Le Journal
+    url: https://lejournal.cnrs.fr/rss
+    site: https://lejournal.cnrs.fr/
+    filtre: mots_cles
+  - id: the-conversation-fr
+    nom: The Conversation France
+    url: https://theconversation.com/fr/articles.atom
+    site: https://theconversation.com/fr/
+    filtre: mots_cles
+  - id: ieee-spectrum
+    nom: IEEE Spectrum
+    url: https://spectrum.ieee.org/feeds/feed.rss
+    site: https://spectrum.ieee.org/
+    filtre: mots_cles
+  - id: eenews-europe
+    nom: eeNews Europe
+    url: https://eenewseurope.com/feed
+    site: https://eenewseurope.com/
+    filtre: mots_cles
+  - id: ecinews
+    nom: Electronique Composants & Instrumentation
+    url: https://ecinews.fr/feed
+    site: https://ecinews.fr/
+    filtre: mots_cles
+  - id: rfid-journal
+    nom: RFID Journal
+    url: https://www.rfidjournal.com/feed/
+    site: https://www.rfidjournal.com/
+    filtre: mots_cles
+  - id: industrial-cyber
+    nom: Industrial Cyber
+    url: https://industrialcyber.co/feed
+    site: https://industrialcyber.co/
+    filtre: mots_cles
+  - id: la-revue-du-digital
+    nom: La Revue du Digital
+    url: https://www.larevuedudigital.com/feed/
+    site: https://www.larevuedudigital.com/
+    filtre: mots_cles

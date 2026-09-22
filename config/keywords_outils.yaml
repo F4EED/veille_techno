@@ -1,0 +1,134 @@
+# Veille Outils de gestion de crise et de poste de commandement (PC)
+
+periode_jours: 7
+
+domaines:
+  outils_crise:
+    label: Outils de gestion de crise
+    priorite: 100
+    mots_cles:
+      - "outil de gestion de crise"
+      - "outils de gestion de crise"
+      - "logiciel de gestion de crise"
+      - "logiciels de gestion de crise"
+      - "solution de gestion de crise"
+      - "système de gestion de crise"
+      - "systeme de gestion de crise"
+      - "crisis management software"
+      - "crisis management tool"
+      - "emergency management software"
+      - "emergency management platform"
+      - "crisis platform"
+      - "crisis information system"
+      - "système d'information de crise"
+      - "systeme d'information de crise"
+      - "information de crise"
+      - "aide à la décision de crise"
+      - "aide a la decision de crise"
+      - "tableau de bord de crise"
+      - "dashboard de crise"
+
+  poste_commandement:
+    label: Poste de commandement
+    priorite: 96
+    mots_cles:
+      - "poste de commandement"
+      - "postes de commandement"
+      - "poste de commande"
+      - "PCO"
+      - "PCA"
+      - "PCC"
+      - "PC de crise"
+      - "PC opérationnel"
+      - "PC operationnel"
+      - "PC avancé"
+      - "PC avance"
+      - "PC communal"
+      - "salle de crise"
+      - "salles de crise"
+      - "cellule de crise"
+      - "centre opérationnel"
+      - "centre operationnel"
+      - "emergency operations center"
+      - "poste de commandement avancé"
+      - "poste de commandement operationnel"
+      - "poste de commandement opérationnel"
+      - "cartographie opérationnelle"
+      - "cartographie operationnelle"
+      - "situation opérationnelle"
+      - "situation operationnelle"
+
+  main_courante:
+    label: Main courante
+    priorite: 92
+    mots_cles:
+      - "main courante"
+      - "mains courantes"
+      - "main courante numérique"
+      - "main courante numerique"
+      - "main courante électronique"
+      - "main courante electronique"
+      - "journal de bord opérationnel"
+      - "journal de bord operationnel"
+      - "log de crise"
+      - "incident log"
+
+  systemes_orsec:
+    label: Systèmes ORSEC / état
+    priorite: 90
+    mots_cles:
+      - orsec
+      - synergi
+      - nexsis
+      - "nexsis 18-112"
+      - "18-112"
+      - cogic
+      - "CODIS"
+      - "CTA-CODIS"
+      - "cellule interministérielle de crise"
+      - "cellule interministerielle de crise"
+      - antares
+      - sitac
+      - "plan communal de sauvegarde"
+      - "plan ORSEC"
+
+  editeurs:
+    label: Éditeurs et plateformes
+    priorite: 80
+    mots_cles:
+      - everbridge
+      - webeoc
+      - juvare
+      - "hexagon safety"
+      - intergraph
+      - veoci
+      - noggin
+      - d4h
+      - "crisisworks"
+      - athoc
+      - alertmedia
+      - onsolve
+      - dataminr
+      - crisis24
+      - systel
+      - "airbus ds"
+      - anticip
+      - "iws crise"
+      - "blackBerry athoc"
+
+tendances:
+  - id: outils
+    label: Outils de gestion de crise
+    mots_cles: ["logiciel de gestion de crise", "crisis management software", "système d'information de crise"]
+  - id: pc
+    label: Poste de commandement
+    mots_cles: ["poste de commandement", "salle de crise", "emergency operations center", PCO]
+  - id: main_courante
+    label: Main courante
+    mots_cles: ["main courante", "main courante numérique"]
+  - id: orsec
+    label: ORSEC / NexSIS / SYNERGI
+    mots_cles: [orsec, synergi, nexsis, cogic, CODIS]
+  - id: editeurs
+    label: Éditeurs
+    mots_cles: [everbridge, webeoc, hexagon, systel, juvare]

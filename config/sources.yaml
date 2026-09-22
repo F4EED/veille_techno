@@ -1,0 +1,384 @@
+# Sources RSS / Atom pour la veille IoT.
+# filtre: aucun  → tous les articles de la période
+# filtre: mots_cles → uniquement si un mot-clé du fichier keywords.yaml matche
+# Presse nationale et Auvergne-Rhône-Alpes : config/sources_presse.yaml
+# Presse informatique / technique / IA / développement : config/sources_tech.yaml
+# (fichiers communs à toutes les veilles).
+
+google_news:
+  - id: gn-iot-fr
+    label: Google News — IoT (français)
+    query: 'IoT OR "Internet des objets" OR "objets connectés" OR IIoT'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    domaine: iot
+  - id: gn-iot-en
+    label: Google News — IoT (anglais)
+    query: 'IoT OR "Internet of Things" OR IIoT'
+    hl: en-US
+    gl: US
+    ceid: US:en
+    domaine: iot
+  - id: gn-lorawan
+    label: Google News — LoRaWAN
+    query: 'LoRaWAN OR "réseau LoRa" OR "The Things Network" OR ChirpStack OR Kerlink OR Actility'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    domaine: lorawan
+  - id: gn-mesh
+    label: Google News — Meshtastic / Meshcore
+    query: 'Meshtastic OR Meshcore OR "LoRa mesh" OR "mesh LoRa"'
+    hl: en-US
+    gl: US
+    ceid: US:en
+    domaine: meshtastic_meshcore
+  - id: gn-industrie
+    label: Google News — Industrie / IIoT
+    query: '"IoT industriel" OR IIoT OR "industrie 4.0" OR "usine connectée"'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    domaine: industrie
+  - id: gn-meteo-routiere
+    label: Google News — Météo routière
+    query: '"météo routière" OR "gestion routière" OR RWIS OR "viabilité hivernale" OR "température de chaussée" OR "capteur verglas" OR "station météo routière" OR (routes AND (capteur OR IoT OR LoRa))'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    domaine: meteo_routiere
+  - id: gn-routes-crise
+    label: Google News — Routes, crise, main courante
+    query: '"gestion routière" OR "main courante" OR "gestion de crise" OR "cellule de crise" OR (routes AND (crise OR voirie OR IoT))'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    filtre: mots_cles
+  - id: gn-radio
+    label: Google News — Radio
+    query: '"radio professionnelle" OR TETRA OR "réseau radio" OR PMR OR (radio AND (crise OR voirie OR LoRa OR IoT OR "main courante"))'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    domaine: radio
+
+requetes_rs:
+  - id: iot-fr
+    label: IoT (français)
+    query: 'IoT OR IIoT OR LoRaWAN OR LoRa OR Meshtastic OR Meshcore OR "industrie 4.0" OR "objets connectés" OR "météo routière" OR "gestion routière" OR "main courante" OR "gestion de crise" OR radio'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    filtre: mots_cles
+  - id: iot-en
+    label: IoT (anglais)
+    query: 'IoT OR IIoT OR LoRaWAN OR Meshtastic OR Meshcore OR "Industry 4.0" OR "road weather" OR RWIS OR "crisis management"'
+    hl: en-US
+    gl: US
+    ceid: US:en
+    filtre: mots_cles
+  - id: lora-mesh
+    label: LoRa / mesh
+    query: 'LoRaWAN OR Meshtastic OR Meshcore OR "LoRa mesh" OR Semtech'
+    hl: en-US
+    gl: US
+    ceid: US:en
+    filtre: mots_cles
+
+mastodon_tags:
+  - IoT
+  - LoRaWAN
+  - Meshtastic
+  - Meshcore
+  - IIoT
+
+flux:
+  # --- Médias IoT dédiés ---
+  - id: iot-for-all
+    nom: IoT For All
+    url: https://www.iotforall.com/feed
+    site: https://www.iotforall.com/
+    filtre: aucun
+  - id: iot-business-news
+    nom: IoT Business News
+    url: https://iotbusinessnews.com/feed/
+    site: https://iotbusinessnews.com/
+    filtre: aucun
+  - id: iot-analytics
+    nom: IoT Analytics
+    url: https://iot-analytics.com/feed
+    site: https://iot-analytics.com/
+    filtre: aucun
+  - id: iot-now
+    nom: IoT Now
+    url: https://www.iot-now.com/feed/
+    site: https://www.iot-now.com/
+    filtre: aucun
+  - id: iot-tech-news
+    nom: IoT Tech News
+    url: https://iottechnews.com/feed/
+    site: https://iottechnews.com/
+    filtre: aucun
+  - id: iiot-world
+    nom: IIoT World
+    url: https://iiot-world.com/feed
+    site: https://iiot-world.com/
+    filtre: aucun
+  - id: connected-world
+    nom: Connected World
+    url: https://connectedworld.com/feed
+    site: https://connectedworld.com/
+    filtre: aucun
+  - id: iot-evolution
+    nom: IoT Evolution World
+    url: https://blog.iotevolutionworld.com/feed
+    site: https://www.iotevolutionworld.com/
+    filtre: aucun
+  - id: we-speak-iot
+    nom: We Speak IoT
+    url: https://wespeakiot.com/feed
+    site: https://wespeakiot.com/
+    filtre: aucun
+  - id: iot-times
+    nom: IoT Times
+    url: https://www.iottimes.com/rss
+    site: https://www.iottimes.com/
+    filtre: aucun
+  - id: electronics-foru-iot
+    nom: Electronics For You — IoT
+    url: https://iot.electronicsforu.com/feed
+    site: https://iot.electronicsforu.com/
+    filtre: aucun
+  - id: postscapes
+    nom: Postscapes
+    url: https://feeds.feedburner.com/iot
+    site: https://www.postscapes.com/
+    filtre: aucun
+  - id: iot-world-magazine
+    nom: IoT World Magazine
+    url: https://iotworldmagazine.com/feed
+    site: https://iotworldmagazine.com/
+    filtre: aucun
+  - id: the-iot-magazine
+    nom: The IoT Magazine
+    url: https://theiotmagazine.com/feed
+    site: https://theiotmagazine.com/
+    filtre: aucun
+
+  # --- Presse francophone ---
+  - id: iot-industriel
+    nom: IoT Industriel
+    url: https://iotindustriel.com/feed
+    site: https://iotindustriel.com/
+    filtre: aucun
+  - id: usine-connectee
+    nom: Usine Connectée
+    url: https://usineconnectee.fr/feed/
+    site: https://usineconnectee.fr/
+    filtre: aucun
+  - id: smart-city-mag
+    nom: Smart City Mag
+    url: https://www.smartcitymag.fr/actualites/feed/
+    site: https://www.smartcitymag.fr/
+    filtre: mots_cles
+  - id: smart-cities-dive
+    nom: Smart Cities Dive
+    url: https://www.smartcitiesdive.com/feeds/news/
+    site: https://www.smartcitiesdive.com/
+    filtre: mots_cles
+  - id: govtech-smart-cities
+    nom: GovTech Smart Cities
+    url: https://www.govtech.com/smart-cities.rss
+    site: https://www.govtech.com/smart-cities
+    filtre: mots_cles
+  - id: monde-informatique-iot
+    nom: Le Monde Informatique — IoT
+    url: https://www.lemondeinformatique.fr/flux-rss/thematique/internet-des-objets/rss.xml
+    site: https://www.lemondeinformatique.fr/
+    filtre: aucun
+  - id: silicon
+    nom: Silicon.fr
+    url: https://www.silicon.fr/feed
+    site: https://www.silicon.fr/
+    filtre: mots_cles
+  - id: electroniques
+    nom: Electroniques
+    url: https://www.electroniques.biz/feed/
+    site: https://www.electroniques.biz/
+    filtre: mots_cles
+
+  # --- LoRa / LoRaWAN / LPWAN ---
+  - id: semtech
+    nom: Semtech
+    url: https://blog.semtech.com/rss.xml
+    site: https://www.semtech.com/
+    filtre: aucun
+  - id: ttn-forum
+    nom: The Things Network — forum
+    url: https://www.thethingsnetwork.org/forum/latest.rss
+    site: https://www.thethingsnetwork.org/forum/
+    filtre: aucun
+  - id: actility
+    nom: Actility
+    url: https://www.actility.com/feed/
+    site: https://www.actility.com/
+    filtre: aucun
+  - id: helium
+    nom: Helium
+    url: https://blog.helium.com/feed
+    site: https://blog.helium.com/
+    filtre: aucun
+  - id: rakwireless
+    nom: RAKwireless
+    url: https://news.rakwireless.com/feed/
+    site: https://www.rakwireless.com/
+    filtre: aucun
+  - id: libelium
+    nom: Libelium
+    url: https://www.libelium.com/feed
+    site: https://www.libelium.com/
+    filtre: aucun
+  - id: emnify
+    nom: emnify
+    url: https://www.emnify.com/blog/rss.xml
+    site: https://www.emnify.com/
+    filtre: aucun
+  - id: soracom
+    nom: Soracom
+    url: https://www.soracom.io/feed
+    site: https://www.soracom.io/
+    filtre: aucun
+  - id: sierra-wireless
+    nom: Sierra Wireless / Semtech
+    url: https://www.sierrawireless.com/feed
+    site: https://www.sierrawireless.com/
+    filtre: mots_cles
+  - id: digi
+    nom: Digi
+    url: https://www.digi.com/blog/feed
+    site: https://www.digi.com/
+    filtre: mots_cles
+
+  # --- Mesh / Meshtastic / Meshcore / hardware ---
+  - id: meshtastic-blog
+    nom: Meshtastic Blog
+    url: https://meshtastic.org/blog/rss.xml
+    site: https://meshtastic.org/blog/
+    filtre: aucun
+  - id: meshtastic-releases
+    nom: Meshtastic firmware (GitHub)
+    url: https://github.com/meshtastic/firmware/releases.atom
+    site: https://github.com/meshtastic/firmware
+    filtre: aucun
+  - id: meshcore-ripple
+    nom: MeshCore (GitHub ripplebiz)
+    url: https://github.com/ripplebiz/MeshCore/releases.atom
+    site: https://github.com/ripplebiz/MeshCore
+    filtre: aucun
+  - id: meshcore-dev
+    nom: MeshCore (GitHub meshcore-dev)
+    url: https://github.com/meshcore-dev/MeshCore/releases.atom
+    site: https://github.com/meshcore-dev/MeshCore
+    filtre: aucun
+  - id: cnx-software
+    nom: CNX Software
+    url: https://www.cnx-software.com/feed/
+    site: https://www.cnx-software.com/
+    filtre: mots_cles
+  - id: hackaday-iot
+    nom: Hackaday — IoT
+    url: https://hackaday.com/tag/iot/feed/
+    site: https://hackaday.com/tag/iot/
+    filtre: aucun
+  - id: hackaday-lora
+    nom: Hackaday — LoRa
+    url: https://hackaday.com/tag/lora/feed/
+    site: https://hackaday.com/tag/lora/
+    filtre: aucun
+  - id: hackaday-meshtastic
+    nom: Hackaday — Meshtastic
+    url: https://hackaday.com/tag/meshtastic/feed/
+    site: https://hackaday.com/tag/meshtastic/
+    filtre: aucun
+  - id: seeed
+    nom: Seeed Studio
+    url: https://www.seeedstudio.com/blog/feed/
+    site: https://www.seeedstudio.com/blog/
+    filtre: mots_cles
+
+  # --- Cloud / industriels ---
+  - id: aws-iot
+    nom: AWS IoT Blog
+    url: https://aws.amazon.com/blogs/iot/feed/
+    site: https://aws.amazon.com/blogs/iot/
+    filtre: aucun
+  - id: cisco-iot
+    nom: Cisco Blogs
+    url: https://blogs.cisco.com/feed
+    site: https://blogs.cisco.com/
+    filtre: mots_cles
+
+  # --- Cybersécurité IoT ---
+  - id: attify
+    nom: Attify
+    url: https://blog.attify.com/rss/
+    site: https://blog.attify.com/
+    filtre: aucun
+  - id: krebsonsecurity
+    nom: Krebs on Security
+    url: https://krebsonsecurity.com/feed/
+    site: https://krebsonsecurity.com/
+    filtre: mots_cles
+
+  # --- Communautés ---
+  - id: reddit-iot
+    nom: Reddit r/IOT
+    url: https://www.reddit.com/r/IOT/.rss
+    site: https://www.reddit.com/r/IOT/
+    filtre: mots_cles
+  - id: reddit-lorawan
+    nom: Reddit r/LoRaWAN
+    url: https://www.reddit.com/r/LoRaWAN/.rss
+    site: https://www.reddit.com/r/LoRaWAN/
+    filtre: aucun
+  - id: reddit-lora
+    nom: Reddit r/LoRa
+    url: https://www.reddit.com/r/LoRa/.rss
+    site: https://www.reddit.com/r/LoRa/
+    filtre: aucun
+  - id: reddit-meshtastic
+    nom: Reddit r/meshtastic
+    url: https://www.reddit.com/r/meshtastic/.rss
+    site: https://www.reddit.com/r/meshtastic/
+    filtre: aucun
+  - id: reddit-meshcore
+    nom: Reddit r/MeshCore
+    url: https://www.reddit.com/r/MeshCore/.rss
+    site: https://www.reddit.com/r/MeshCore/
+    filtre: aucun
+  - id: objetconnecte
+    nom: Objet Connecté
+    url: https://objetconnecte.com/feed
+    site: https://objetconnecte.com/
+    filtre: aucun
+  - id: iot-insider
+    nom: IoT Insider
+    url: https://www.iotinsider.com/feed/
+    site: https://www.iotinsider.com/
+    filtre: aucun
+  - id: hackster
+    nom: Hackster.io
+    url: https://hackster.io/projects.rss?sort=recent
+    site: https://www.hackster.io/
+    filtre: mots_cles
+  - id: domo-blog
+    nom: Domo-blog
+    url: https://www.domo-blog.fr/feed/
+    site: https://www.domo-blog.fr/
+    filtre: mots_cles
+  - id: cityramag
+    nom: Cityramag
+    url: https://cityramag.fr/feed/
+    site: https://cityramag.fr/
+    filtre: mots_cles

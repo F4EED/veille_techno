@@ -1,0 +1,453 @@
+# Presse nationale et Auvergne-Rhône-Alpes, commune à toutes les veilles.
+# filtre: mots_cles → seuls les articles qui matchent le fichier keywords du profil.
+
+google_news:
+  - id: gn-afp
+    label: AFP
+    query: 'site:afp.com OR site:agencetfrancepresse.com'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    filtre: mots_cles
+    site: https://www.afp.com/fr/
+  - id: gn-lci-tf1
+    label: LCI / TF1 Info
+    query: 'site:lci.fr OR site:tf1info.fr'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    filtre: mots_cles
+    site: https://www.tf1info.fr/
+  - id: gn-arte-lcp
+    label: Arte / LCP / Public Sénat
+    query: 'site:arte.tv OR site:lcp.fr OR site:publicsenat.fr'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    filtre: mots_cles
+    site: https://www.arte.tv/fr/
+  - id: gn-rtl-echos
+    label: RTL / Les Echos
+    query: 'site:rtl.fr OR site:lesechos.fr'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    filtre: mots_cles
+    site: https://www.rtl.fr/
+  - id: gn-presse-aura-pqr
+    label: Google News — PQR Auvergne-Rhône-Alpes
+    query: 'site:ledauphine.com OR site:leprogres.fr OR site:lamontagne.fr OR site:leveil.fr OR site:lemessager.fr OR site:lavoixdelain.fr OR site:zoomdici.fr'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    filtre: mots_cles
+    site: https://www.ledauphine.com/
+  - id: gn-presse-aura-web
+    label: Google News — médias web AURA
+    query: 'site:lyoncapitale.fr OR site:lyonmag.com OR site:rue89lyon.fr OR site:placegrenet.fr OR site:tribunedelyon.fr OR site:zoomdici.fr OR site:mlyon.fr OR site:mesinfos.fr'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    filtre: mots_cles
+    site: https://www.lyoncapitale.fr/
+
+flux:
+  # --- TV / radio / agences nationales ---
+  - id: franceinfo-titres
+    nom: franceinfo — titres
+    url: https://www.francetvinfo.fr/titres.rss
+    site: https://www.francetvinfo.fr/
+    filtre: mots_cles
+  - id: franceinfo-france
+    nom: franceinfo — France
+    url: https://www.francetvinfo.fr/france.rss
+    site: https://www.francetvinfo.fr/france/
+    filtre: mots_cles
+  - id: franceinfo-monde
+    nom: franceinfo — Monde
+    url: https://www.francetvinfo.fr/monde.rss
+    site: https://www.francetvinfo.fr/monde/
+    filtre: mots_cles
+  - id: bfmtv-24-7
+    nom: BFMTV — fil 24/7
+    url: https://www.bfmtv.com/rss/news-24-7/
+    site: https://www.bfmtv.com/
+    filtre: mots_cles
+  - id: france24
+    nom: France 24
+    url: https://www.france24.com/fr/rss
+    site: https://www.france24.com/fr/
+    filtre: mots_cles
+  - id: france24-france
+    nom: France 24 — France
+    url: https://www.france24.com/fr/france/rss
+    site: https://www.france24.com/fr/france/
+    filtre: mots_cles
+  - id: rfi
+    nom: RFI
+    url: https://www.rfi.fr/fr/rss
+    site: https://www.rfi.fr/fr/
+    filtre: mots_cles
+  - id: cnews
+    nom: CNews
+    url: https://www.cnews.fr/rss.xml
+    site: https://www.cnews.fr/
+    filtre: mots_cles
+  - id: euronews-fr
+    nom: Euronews
+    url: https://fr.euronews.com/rss
+    site: https://fr.euronews.com/
+    filtre: mots_cles
+  - id: europe1
+    nom: Europe 1
+    url: https://www.europe1.fr/rss.xml
+    site: https://www.europe1.fr/
+    filtre: mots_cles
+  - id: franceinter
+    nom: France Inter
+    url: https://www.radiofrance.fr/franceinter/rss
+    site: https://www.radiofrance.fr/franceinter
+    filtre: mots_cles
+  - id: franceinfo-radio
+    nom: franceinfo — radio
+    url: https://www.radiofrance.fr/franceinfo/rss
+    site: https://www.radiofrance.fr/franceinfo
+    filtre: mots_cles
+  - id: rmc
+    nom: RMC
+    url: https://rmc.bfmtv.com/rss/actualites/
+    site: https://rmc.bfmtv.com/
+    filtre: mots_cles
+
+  # --- Quotidiens et magazines nationaux ---
+  - id: lemonde-une
+    nom: Le Monde — une
+    url: https://www.lemonde.fr/rss/une.xml
+    site: https://www.lemonde.fr/
+    filtre: mots_cles
+  - id: lemonde-en-continu
+    nom: Le Monde — en continu
+    url: https://www.lemonde.fr/rss/en_continu.xml
+    site: https://www.lemonde.fr/
+    filtre: mots_cles
+  - id: lefigaro-actu
+    nom: Le Figaro — actualités
+    url: https://www.lefigaro.fr/rss/figaro_actualites.xml
+    site: https://www.lefigaro.fr/
+    filtre: mots_cles
+  - id: liberation
+    nom: Libération
+    url: https://www.liberation.fr/arc/outboundfeeds/rss-all/?outputType=xml
+    site: https://www.liberation.fr/
+    filtre: mots_cles
+  - id: leparisien
+    nom: Le Parisien
+    url: https://feeds.leparisien.fr/leparisien/rss
+    site: https://www.leparisien.fr/
+    filtre: mots_cles
+  - id: 20minutes-une
+    nom: 20 Minutes — une
+    url: https://www.20minutes.fr/feeds/rss-une.xml
+    site: https://www.20minutes.fr/
+    filtre: mots_cles
+  - id: ouest-france-continu
+    nom: Ouest-France — en continu
+    url: https://www.ouest-france.fr/rss-en-continu.xml
+    site: https://www.ouest-france.fr/
+    filtre: mots_cles
+  - id: la-croix
+    nom: La Croix
+    url: https://www.la-croix.com/RSS/UNIVERS
+    site: https://www.la-croix.com/
+    filtre: mots_cles
+  - id: lexpress
+    nom: L'Express
+    url: https://www.lexpress.fr/arc/outboundfeeds/rss/alaune.xml
+    site: https://www.lexpress.fr/
+    filtre: mots_cles
+  - id: lepoint
+    nom: Le Point
+    url: https://www.lepoint.fr/arc/outboundfeeds/rss/?outputType=xml
+    site: https://www.lepoint.fr/
+    filtre: mots_cles
+  - id: lobs
+    nom: L'Obs
+    url: https://www.nouvelobs.com/rss.xml
+    site: https://www.nouvelobs.com/
+    filtre: mots_cles
+  - id: humanite
+    nom: L'Humanité
+    url: https://www.humanite.fr/rss
+    site: https://www.humanite.fr/
+    filtre: mots_cles
+  - id: huffpost-fr
+    nom: HuffPost France
+    url: https://www.huffingtonpost.fr/feeds/index.xml
+    site: https://www.huffingtonpost.fr/
+    filtre: mots_cles
+  - id: mediapart
+    nom: Mediapart
+    url: https://www.mediapart.fr/articles/feed
+    site: https://www.mediapart.fr/
+    filtre: mots_cles
+  - id: challenges
+    nom: Challenges
+    url: https://www.challenges.fr/rss.xml
+    site: https://www.challenges.fr/
+    filtre: mots_cles
+  - id: marianne
+    nom: Marianne
+    url: https://www.marianne.net/rss.xml
+    site: https://www.marianne.net/
+    filtre: mots_cles
+  - id: courrier-international
+    nom: Courrier international
+    url: https://www.courrierinternational.com/feed/all/rss.xml
+    site: https://www.courrierinternational.com/
+    filtre: mots_cles
+  - id: lejdd
+    nom: Le JDD
+    url: https://www.lejdd.fr/rss.xml
+    site: https://www.lejdd.fr/
+    filtre: mots_cles
+
+  # --- Auvergne-Rhône-Alpes : TV / radio publiques ---
+  - id: france3-aura
+    nom: France 3 Auvergne-Rhône-Alpes
+    url: https://france3-regions.franceinfo.fr/auvergne-rhone-alpes/actu/rss
+    site: https://france3-regions.franceinfo.fr/auvergne-rhone-alpes/
+    filtre: mots_cles
+  - id: franceinfo-aura
+    nom: franceinfo — Auvergne-Rhône-Alpes
+    url: https://www.franceinfo.fr/france/auvergne-rhone-alpes.rss
+    site: https://www.franceinfo.fr/france/auvergne-rhone-alpes/
+    filtre: mots_cles
+  - id: franceinfo-lyon
+    nom: franceinfo — Lyon
+    url: https://www.franceinfo.fr/france/auvergne-rhone-alpes/rhone/lyon.rss
+    site: https://www.franceinfo.fr/france/auvergne-rhone-alpes/rhone/lyon/
+    filtre: mots_cles
+  - id: ici-isere
+    nom: ICI Isère
+    url: https://www.ici.fr/rss/isere/a-la-une.xml
+    site: https://www.ici.fr/isere
+    filtre: mots_cles
+  - id: ici-pays-auvergne
+    nom: ICI Pays d'Auvergne
+    url: https://www.ici.fr/rss/pays-d-auvergne/a-la-une.xml
+    site: https://www.ici.fr/pays-d-auvergne
+    filtre: mots_cles
+  - id: ici-pays-savoie
+    nom: ICI Pays de Savoie
+    url: https://www.ici.fr/rss/pays-de-savoie/a-la-une.xml
+    site: https://www.ici.fr/pays-de-savoie
+    filtre: mots_cles
+  - id: ici-saint-etienne
+    nom: ICI Saint-Étienne Loire
+    url: https://www.ici.fr/rss/saint-etienne-loire/a-la-une.xml
+    site: https://www.ici.fr/saint-etienne-loire
+    filtre: mots_cles
+  - id: ici-drome-ardeche
+    nom: ICI Drôme Ardèche
+    url: https://www.ici.fr/rss/drome-ardeche/a-la-une.xml
+    site: https://www.ici.fr/drome-ardeche
+    filtre: mots_cles
+  - id: bfm-lyon
+    nom: BFM Lyon
+    url: https://www.bfmtv.com/rss/lyon/
+    site: https://www.bfmtv.com/lyon/
+    filtre: mots_cles
+  - id: bfm-saint-etienne
+    nom: BFM Saint-Étienne
+    url: https://www.bfmtv.com/rss/saint-etienne/
+    site: https://www.bfmtv.com/saint-etienne/
+    filtre: mots_cles
+  - id: bfm-clermont
+    nom: BFM Clermont-Ferrand
+    url: https://www.bfmtv.com/rss/clermont-ferrand/
+    site: https://www.bfmtv.com/clermont-ferrand/
+    filtre: mots_cles
+
+  # --- Auvergne-Rhône-Alpes : PQR ---
+  - id: dauphine-isere
+    nom: Le Dauphiné Libéré — Isère
+    url: https://www.ledauphine.com/isere/rss
+    site: https://www.ledauphine.com/isere
+    filtre: mots_cles
+  - id: dauphine-drome
+    nom: Le Dauphiné Libéré — Drôme
+    url: https://www.ledauphine.com/drome/rss
+    site: https://www.ledauphine.com/drome
+    filtre: mots_cles
+  - id: dauphine-ardeche
+    nom: Le Dauphiné Libéré — Ardèche
+    url: https://www.ledauphine.com/ardeche/rss
+    site: https://www.ledauphine.com/ardeche
+    filtre: mots_cles
+  - id: dauphine-savoie
+    nom: Le Dauphiné Libéré — Savoie
+    url: https://www.ledauphine.com/savoie/rss
+    site: https://www.ledauphine.com/savoie
+    filtre: mots_cles
+  - id: dauphine-haute-savoie
+    nom: Le Dauphiné Libéré — Haute-Savoie
+    url: https://www.ledauphine.com/haute-savoie/rss
+    site: https://www.ledauphine.com/haute-savoie
+    filtre: mots_cles
+  - id: dauphine-ain
+    nom: Le Dauphiné Libéré — Ain
+    url: https://www.ledauphine.com/ain/rss
+    site: https://www.ledauphine.com/ain
+    filtre: mots_cles
+  - id: progres-rhone
+    nom: Le Progrès — Rhône
+    url: https://www.leprogres.fr/rhone/rss
+    site: https://www.leprogres.fr/rhone
+    filtre: mots_cles
+  - id: progres-lyon
+    nom: Le Progrès — Lyon / Villeurbanne
+    url: https://www.leprogres.fr/edition-lyon-villeurbanne/rss
+    site: https://www.leprogres.fr/
+    filtre: mots_cles
+  - id: progres-loire
+    nom: Le Progrès — Loire
+    url: https://www.leprogres.fr/loire/rss
+    site: https://www.leprogres.fr/loire
+    filtre: mots_cles
+  - id: progres-ain
+    nom: Le Progrès — Ain
+    url: https://www.leprogres.fr/ain/rss
+    site: https://www.leprogres.fr/ain
+    filtre: mots_cles
+  - id: progres-haute-loire
+    nom: Le Progrès — Haute-Loire
+    url: https://www.leprogres.fr/haute-loire/rss
+    site: https://www.leprogres.fr/haute-loire
+    filtre: mots_cles
+  - id: lemessager
+    nom: Le Messager — Haute-Savoie
+    url: https://www.lemessager.fr/rss/606134/cible_principale
+    site: https://www.lemessager.fr/
+    filtre: mots_cles
+  - id: voix-de-l-ain
+    nom: La Voix de l'Ain
+    url: https://www.lavoixdelain.fr/feed
+    site: https://www.lavoixdelain.fr/
+    filtre: mots_cles
+
+  # --- Auvergne-Rhône-Alpes : médias locaux / web ---
+  - id: 20minutes-lyon
+    nom: 20 Minutes — Lyon
+    url: https://www.20minutes.fr/feeds/rss-lyon.xml
+    site: https://www.20minutes.fr/lyon/
+    filtre: mots_cles
+  - id: 20minutes-aura
+    nom: 20 Minutes — Auvergne-Rhône-Alpes
+    url: https://www.20minutes.fr/feeds/rss-auvergne-rhone-alpes.xml
+    site: https://www.20minutes.fr/auvergne-rhone-alpes/
+    filtre: mots_cles
+  - id: lyon-capitale
+    nom: Lyon Capitale
+    url: https://www.lyoncapitale.fr/feed
+    site: https://www.lyoncapitale.fr/
+    filtre: mots_cles
+  - id: lyon-mag
+    nom: Lyon Mag
+    url: https://www.lyonmag.com/rss
+    site: https://www.lyonmag.com/
+    filtre: mots_cles
+  - id: rue89-lyon
+    nom: Rue89 Lyon
+    url: https://www.rue89lyon.fr/feed/
+    site: https://www.rue89lyon.fr/
+    filtre: mots_cles
+  - id: tribune-de-lyon
+    nom: Tribune de Lyon
+    url: https://tribunedelyon.fr/feed/
+    site: https://tribunedelyon.fr/
+    filtre: mots_cles
+  - id: mlyon
+    nom: MLyon
+    url: https://mlyon.fr/xml/news
+    site: https://mlyon.fr/
+    filtre: mots_cles
+  - id: place-grenet
+    nom: Place Gre'net
+    url: https://www.placegrenet.fr/feed/
+    site: https://www.placegrenet.fr/
+    filtre: mots_cles
+  - id: zoomdici
+    nom: Zoomdici
+    url: https://www.zoomdici.fr/feed
+    site: https://www.zoomdici.fr/
+    filtre: mots_cles
+  - id: mesinfos-aura
+    nom: MesInfos — Auvergne-Rhône-Alpes
+    url: https://mesinfos.fr/auvergne-rhone-alpes/rss.xml
+    site: https://mesinfos.fr/auvergne-rhone-alpes
+    filtre: mots_cles
+  - id: actu-lyon
+    nom: Actu.fr — Lyon
+    url: https://actu.fr/lyon/rss.xml
+    site: https://actu.fr/auvergne-rhone-alpes/rhone/lyon_69123/
+    filtre: mots_cles
+  - id: actu-grenoble
+    nom: Actu.fr — Grenoble
+    url: https://actu.fr/grenoble/rss.xml
+    site: https://actu.fr/auvergne-rhone-alpes/isere/grenoble_38185/
+    filtre: mots_cles
+  - id: actu-saint-etienne
+    nom: Actu.fr — Saint-Étienne
+    url: https://actu.fr/saint-etienne/rss.xml
+    site: https://actu.fr/auvergne-rhone-alpes/loire/saint-etienne_42218/
+    filtre: mots_cles
+  - id: lepoint-lyon
+    nom: Le Point — Lyon
+    url: https://www.lepoint.fr/arc/outboundfeeds/rss/tags_slug/lyon/
+    site: https://www.lepoint.fr/
+    filtre: mots_cles
+  - id: lemonde-lyon
+    nom: Le Monde — Lyon
+    url: https://www.lemonde.fr/lyon/rss_full.xml
+    site: https://www.lemonde.fr/lyon/
+    filtre: mots_cles
+  - id: lemonde-grenoble
+    nom: Le Monde — Grenoble
+    url: https://www.lemonde.fr/grenoble/rss_full.xml
+    site: https://www.lemonde.fr/grenoble/
+    filtre: mots_cles
+  - id: lemonde-clermont
+    nom: Le Monde — Clermont-Ferrand
+    url: https://www.lemonde.fr/clermont-ferrand/rss_full.xml
+    site: https://www.lemonde.fr/clermont-ferrand/
+    filtre: mots_cles
+  - id: lemonde-saint-etienne
+    nom: Le Monde — Saint-Étienne
+    url: https://www.lemonde.fr/saint-etienne/rss_full.xml
+    site: https://www.lemonde.fr/saint-etienne/
+    filtre: mots_cles
+  - id: la-croix-aura
+    nom: La Croix — Auvergne-Rhône-Alpes
+    url: https://www.la-croix.com/feeds/rss/France/region-auvergne-rhone-alpes-actualite-info.xml
+    site: https://www.la-croix.com/
+    filtre: mots_cles
+  - id: tv5monde
+    nom: TV5 Monde
+    url: https://information.tv5monde.com/rsstaxo/all
+    site: https://information.tv5monde.com/
+    filtre: mots_cles
+  - id: atlantico
+    nom: Atlantico
+    url: https://rss.atlantico.fr
+    site: https://www.atlantico.fr/
+    filtre: mots_cles
+  - id: chaine-meteo
+    nom: La Chaîne Météo
+    url: https://actualite.lachainemeteo.com/meteo-rss/actualite-meteo.rss
+    site: https://actualite.lachainemeteo.com/
+    filtre: mots_cles
+  - id: reporterre
+    nom: Reporterre
+    url: https://reporterre.net/spip.php?page=backend-simple
+    site: https://reporterre.net/
+    filtre: mots_cles

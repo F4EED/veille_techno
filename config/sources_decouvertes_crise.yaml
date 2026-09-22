@@ -1,0 +1,152 @@
+comment: Sources ajoutées automatiquement à chaque lancement.
+flux:
+- id: dec-reporterre-net
+  nom: Reporterre, le média de l'écologie
+  url: https://reporterre.net/spip.php?page=backend-simple
+  site: https://reporterre.net/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-courrierinternational-com
+  nom: Courrier international
+  url: https://www.courrierinternational.com/feed/all/rss.xml
+  site: https://courrierinternational.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-information-tv5monde-com
+  nom: tv5monde
+  url: https://information.tv5monde.com/rsstaxo/all
+  site: https://information.tv5monde.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-actualite-lachainemeteo-com
+  nom: La Chaîne Météo
+  url: https://actualite.lachainemeteo.com/meteo-rss/actualite-meteo.rss
+  site: https://actualite.lachainemeteo.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-atlantico-fr
+  nom: Atlantico
+  url: https://rss.atlantico.fr
+  site: https://atlantico.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-cryptoast-fr
+  nom: Cryptoast
+  url: https://cryptoast.fr/feed/
+  site: https://cryptoast.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-la-croix-com
+  nom: La Croix
+  url: https://la-croix.com/feed
+  site: https://la-croix.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-sudradio-fr
+  nom: Sud Radio
+  url: https://sudradio.fr/feed
+  site: https://sudradio.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-placegrenet-fr
+  nom: Place Gre'net
+  url: https://placegrenet.fr/feed
+  site: https://placegrenet.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-making-of-afp-com
+  nom: AFP.com
+  url: https://making-of.afp.com/rss.xml
+  site: https://making-of.afp.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-aljazeera-com
+  nom: aljazeera.com
+  url: https://www.aljazeera.com/xml/rss/all.xml
+  site: https://aljazeera.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-theguardian-com
+  nom: The Guardian
+  url: https://www.theguardian.com/europe/rss
+  site: https://theguardian.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-factuel-afp-com
+  nom: Factuel AFP
+  url: https://factuel.afp.com/rss.xml
+  site: https://factuel.afp.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-www-pp-afp-com
+  nom: www-pp.afp.com
+  url: https://www-pp.afp.com/rss.xml
+  site: https://www-pp.afp.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-realinvestmentadvice-com
+  nom: Real Investment Advice
+  url: https://realinvestmentadvice.com/feed
+  site: https://realinvestmentadvice.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-oxfamfrance-org
+  nom: Oxfam France
+  url: https://www.oxfamfrance.org/feed/
+  site: https://oxfamfrance.org/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-lcp-fr
+  nom: lcp.fr
+  url: https://lcp.fr/rss.xml
+  site: https://lcp.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-slate-fr
+  nom: Slate.fr
+  url: https://slate.fr/rss.xml
+  site: https://slate.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-lejsl-com
+  nom: Le JSL
+  url: https://lejsl.com/rss
+  site: https://lejsl.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-reussir-fr
+  nom: Portail Réussir
+  url: https://reussir.fr/rss.xml
+  site: https://reussir.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-bienpublic-com
+  nom: Le Bien Public
+  url: https://bienpublic.com/rss
+  site: https://bienpublic.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-lecourrierdelatlas-com
+  nom: Le Courrier de l'Atlas
+  url: https://www.lecourrierdelatlas.com/feed/
+  site: https://lecourrierdelatlas.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-kohenavocats-fr
+  nom: Kohen Avocats
+  url: https://kohenavocats.fr/feed/
+  site: https://kohenavocats.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-fox13news-com
+  nom: FOX 13 Tampa Bay
+  url: https://www.fox13news.com/rss.xml
+  site: https://fox13news.com/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-macommune-info
+  nom: maCommune.info
+  url: https://macommune.info/feed
+  site: https://macommune.info/
+  filtre: mots_cles
+  decouverte: '2026-09-22'

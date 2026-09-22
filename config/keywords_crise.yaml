@@ -1,0 +1,150 @@
+# Veille Gestion de crise
+
+periode_jours: 7
+
+domaines:
+  gestion_crise:
+    label: Gestion de crise
+    priorite: 100
+    mots_cles:
+      - crise
+      - crisis
+      - crisi
+      - "gestion de crise"
+      - "crisis management"
+      - "gestione della crisi"
+      - "cellule de crise"
+      - "plan de crise"
+      - "poste de commandement"
+      - "salle de crise"
+      - orsec
+      - "continuité d'activité"
+      - "business continuity"
+
+  inondations:
+    label: Inondations
+    priorite: 95
+    mots_cles:
+      - inondation
+      - inondations
+      - flood
+      - flooding
+      - floods
+      - crue
+      - crues
+      - submersion
+      - "flash flood"
+      - "coulée de boue"
+      - "coulee de boue"
+      - ruissellement
+
+  seismes:
+    label: Tremblements de terre
+    priorite: 94
+    mots_cles:
+      - "tremblement de terre"
+      - "tremblements de terre"
+      - seisme
+      - séisme
+      - seismes
+      - séismes
+      - earthquake
+      - earthquakes
+      - tsunami
+      - tellurique
+
+  catastrophes:
+    label: Catastrophes
+    priorite: 90
+    mots_cles:
+      - catastrophe
+      - catastrophes
+      - disaster
+      - disasters
+      - calamite
+      - calamité
+      - "catastrophe naturelle"
+      - "natural disaster"
+      - "état de catastrophe"
+      - "etat de catastrophe"
+
+  alea_climatique:
+    label: Aléa climatique
+    priorite: 86
+    mots_cles:
+      - "aléa climatique"
+      - "alea climatique"
+      - "aléas climatiques"
+      - "climate hazard"
+      - "risque climatique"
+      - canicule
+      - tempete
+      - tempête
+      - vent
+      - "vent violent"
+      - "vents violents"
+      - rafale
+      - tornade
+      - tornado
+      - "trombe marine"
+      - neige
+      - "chute de neige"
+      - "tempête de neige"
+      - "tempete de neige"
+      - blizzard
+      - "coulée de neige"
+      - "coulee de neige"
+      - "coulée de boue"
+      - "coulee de boue"
+      - avalanche
+      - avalanches
+      - cyclone
+      - ouragan
+      - hurricane
+      - typhoon
+      - secheresse
+      - sécheresse
+      - drought
+      - "vague de chaleur"
+      - "feu de forêt"
+      - "feu de foret"
+      - wildfire
+
+  alea_technologique:
+    label: Aléa technologique
+    priorite: 85
+    mots_cles:
+      - "aléa technologique"
+      - "alea technologique"
+      - "aléas technologiques"
+      - "technological hazard"
+      - natech
+      - seveso
+      - "risque technologique"
+      - "accident industriel"
+      - "accident chimique"
+      - nucleaire
+      - nucléaire
+      - "rupture de barrage"
+      - "nuage toxique"
+      - "pollution accidentelle"
+
+tendances:
+  - id: gestion_crise
+    label: Gestion de crise
+    mots_cles: [crise, crisis, crisi, "gestion de crise", "crisis management"]
+  - id: inondations
+    label: Inondations et crues
+    mots_cles: [inondation, flood, crue, submersion]
+  - id: seismes
+    label: Séismes et tremblements de terre
+    mots_cles: [séisme, seisme, earthquake, "tremblement de terre", tsunami]
+  - id: catastrophes
+    label: Catastrophes
+    mots_cles: [catastrophe, disaster, calamité]
+  - id: alea_climatique
+    label: Aléa climatique
+    mots_cles: ["aléa climatique", canicule, tempête, vent, tornade, "trombe marine", neige, "coulée de neige", "coulée de boue", avalanche, cyclone, sécheresse, "feu de forêt"]
+  - id: alea_techno
+    label: Aléa technologique
+    mots_cles: ["aléa technologique", seveso, natech, "accident industriel", nucléaire]

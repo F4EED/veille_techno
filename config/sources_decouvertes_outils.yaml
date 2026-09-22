@@ -1,0 +1,8 @@
+comment: Sources ajoutées automatiquement à chaque lancement.
+flux:
+- id: dec-sapeurs-pompiers35-fr
+  nom: SDIS 35
+  url: https://sapeurs-pompiers35.fr/feed
+  site: https://sapeurs-pompiers35.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-22'

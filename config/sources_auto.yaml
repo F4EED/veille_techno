@@ -1,0 +1,80 @@
+comment: Sources ajoutées automatiquement à chaque lancement.
+flux:
+- id: dec-nicematin-com
+  nom: Nice-Matin
+  url: https://www.nicematin.com/rss
+  site: https://nicematin.com/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-sti-eduscol-education-fr
+  nom: éduscol STI
+  url: https://sti.eduscol.education.fr/accueil/RSS
+  site: https://sti.eduscol.education.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-controles-essais-mesures-fr
+  nom: Contrôles Essais Mesures
+  url: https://www.controles-essais-mesures.fr/feed/
+  site: https://controles-essais-mesures.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-paloaltonetworks-com
+  nom: Palo Alto Networks
+  url: https://paloaltonetworks.com/blog/feed
+  site: https://paloaltonetworks.com/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-radioscoop-com
+  nom: Radio SCOOP
+  url: https://radioscoop.com/rss
+  site: https://radioscoop.com/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-lnt-ma
+  nom: lnt.ma
+  url: https://lnt.ma/feed
+  site: https://lnt.ma/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-openaccessgovernment-org
+  nom: Open Access Government
+  url: https://www.openaccessgovernment.org/feed/
+  site: https://openaccessgovernment.org/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-electropages-com
+  nom: Electropages
+  url: https://electropages.com/rss
+  site: https://electropages.com/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-businessnews-com-tn
+  nom: Business News
+  url: https://businessnews.com.tn/feed/
+  site: https://businessnews.com.tn/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-sapeurs-pompiers35-fr
+  nom: SDIS 35
+  url: https://sapeurs-pompiers35.fr/feed
+  site: https://sapeurs-pompiers35.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-kohenavocats-fr
+  nom: Kohen Avocats
+  url: https://kohenavocats.fr/feed/
+  site: https://kohenavocats.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-fox13news-com
+  nom: FOX 13 Tampa Bay
+  url: https://www.fox13news.com/rss.xml
+  site: https://fox13news.com/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-macommune-info
+  nom: maCommune.info
+  url: https://macommune.info/feed
+  site: https://macommune.info/
+  filtre: mots_cles
+  decouverte: '2026-09-22'

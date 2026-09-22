@@ -1,0 +1,34 @@
+# Réseaux sociaux suivis pour toutes les veilles.
+# Chaque profil définit ses requêtes (requetes_rs) et hashtags Mastodon (mastodon_tags).
+
+reseaux:
+  - id: linkedin
+    label: LinkedIn
+    sites: [linkedin.com]
+    url: https://www.linkedin.com/
+  - id: x
+    label: X
+    sites: [x.com, twitter.com]
+    url: https://x.com/
+  - id: mastodon
+    label: Mastodon
+    sites:
+      - mastodon.social
+      - piaille.fr
+      - mamot.fr
+      - fosstodon.org
+      - infosec.exchange
+    url: https://joinmastodon.org/
+  - id: bluesky
+    label: Bluesky
+    sites: [bsky.app]
+    url: https://bsky.app/
+  - id: threads
+    label: Threads
+    sites: [threads.net]
+    url: https://www.threads.net/
+
+mastodon_instances:
+  - https://mastodon.social
+  - https://piaille.fr
+  - https://fosstodon.org

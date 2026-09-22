@@ -1,0 +1,17 @@
+.venv/
+.vendor/
+__pycache__/
+*.pyc
+.python-version
+config/decouverte_cache*.yaml
+config/traduction_cache.json
+config/email.secrets.yaml
+.index_veille.html
+.archives_veille.html
+config/rapports_courants.yaml
+
+# Rapports générés localement (le site Pages Perso les publie)
+Veille_*.pdf
+Veille_*.html
+Veille_*.md
+

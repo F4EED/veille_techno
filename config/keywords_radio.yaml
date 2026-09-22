@@ -1,0 +1,132 @@
+# Veille Radio / radioamateur
+
+periode_jours: 7
+
+domaines:
+  radioamateur:
+    label: Radioamateur
+    priorite: 100
+    mots_cles:
+      - radioamateur
+      - "radio amateur"
+      - "radio-amateur"
+      - radiomateur
+      - hamradio
+      - "ham radio"
+      - "ham-radio"
+      - "amateur radio"
+      - om
+      - yagi
+      - qso
+      - qsl
+      - iaru
+      - arrl
+      - "réseau des émetteurs"
+      - "indicatif radio"
+
+  modes_digitaux:
+    label: Modes digitaux
+    priorite: 90
+    mots_cles:
+      - "modes digitaux"
+      - "mode digital"
+      - "digital modes"
+      - "digital mode"
+      - ft8
+      - ft4
+      - js8
+      - js8call
+      - psk31
+      - rtty
+      - varac
+      - vara
+      - winlink
+      - "packet radio"
+      - ax25
+      - "ax.25"
+      - dstar
+      - "d-star"
+      - c4fm
+      - fusion
+      - codec2
+      - freedv
+
+  trafic:
+    label: Trafic
+    priorite: 85
+    mots_cles:
+      - trafic
+      - "trafic radio"
+      - "radio traffic"
+      - "traffic net"
+      - "net control"
+      - "réseau de trafic"
+      - "reseau de trafic"
+      - "emergency net"
+      - "réseau d'urgence"
+      - ares
+      - races
+      - "message handling"
+
+  radio_pro:
+    label: Radio professionnelle
+    priorite: 80
+    mots_cles:
+      - radio
+      - "radio professionnelle"
+      - "réseau radio"
+      - "reseau radio"
+      - "poste radio"
+      - pmr
+      - tetra
+      - dmr
+      - "two-way radio"
+      - "land mobile"
+
+  sdr_aprs:
+    label: SDR, APRS & relais
+    priorite: 75
+    mots_cles:
+      - sdr
+      - "software defined radio"
+      - aprs
+      - relais
+      - repeater
+      - "hotspot radio"
+      - "rtl-sdr"
+      - rtlsdr
+      - websdr
+      - "qo-100"
+      - "qo100"
+
+  hf_vhf:
+    label: HF / VHF / UHF
+    priorite: 70
+    mots_cles:
+      - "ondes courtes"
+      - shortwave
+      - hf
+      - vhf
+      - uhf
+      - shf
+      - "bande amateur"
+      - "propagation hf"
+      - "sunspot"
+      - "indice solaire"
+
+tendances:
+  - id: hamradio
+    label: Radioamateur
+    mots_cles: [radioamateur, hamradio, "ham radio", "amateur radio"]
+  - id: modes_digitaux
+    label: Modes digitaux
+    mots_cles: [ft8, js8, winlink, dmr, "d-star", "modes digitaux", vara]
+  - id: trafic
+    label: Trafic radio
+    mots_cles: [trafic, "trafic radio", "net control", ares]
+  - id: radio_pro
+    label: Radio professionnelle
+    mots_cles: [pmr, tetra, dmr, "radio professionnelle"]
+  - id: sdr
+    label: SDR et APRS
+    mots_cles: [sdr, aprs, "rtl-sdr", repeater, relais]

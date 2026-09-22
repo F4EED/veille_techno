@@ -1,0 +1,18 @@
+actif: true
+expediteur: f4eed@free.fr
+expediteur_nom: Veille
+destinataires:
+  - frederic.f4eed@gmail.com
+  - frederic.bouchet@loire.fr
+publication:
+  actif: true
+  hote: ftpperso.free.fr
+  utilisateur: f4eed
+  dossier: veille
+  url_base: https://f4eed.pages-perso.free.fr
+smtp:
+  hote: smtp.free.fr
+  port: 465
+  utilisateur: f4eed@free.fr
+  demarrer_tls: false
+  ssl: true

@@ -1,0 +1,147 @@
+# Veille Black-out — France, déclarations de l'exécutif, réseau électrique.
+# Les alias (FR/EN, avec/sans accents) sont normalisés à l'exécution.
+# « emmanuel macron » n'est pas un mot-clé d'inclusion : il noierait le rapport.
+# Ses prises de parole récentes arrivent par le flux Élysée et les requêtes
+# Google News dédiées ; les articles de presse qui le citent sur ce thème
+# sont étiquetés par la tendance « macron ».
+
+periode_jours: 14
+
+domaines:
+  declarations_macron:
+    label: Macron, Élysée et exercice black-out
+    priorite: 100
+    mots_cles:
+      - cirn
+      - "comité interministériel pour la résilience"
+      - "comite interministériel pour la resilience"
+      - "exercice black-out"
+      - "exercice blackout"
+      - "exercice de black-out"
+      - "exercice de blackout"
+      - "black-out généralisé"
+      - "blackout généralisé"
+      - "black-out generalise"
+      - "tous résilients"
+      - "tous resilients"
+
+  crise_energetique:
+    label: Macron et crise énergétique
+    priorite: 98
+    mots_cles:
+      - ormuz
+      - "détroit d'ormuz"
+      - "detroit d'ormuz"
+      - "stocks stratégiques"
+      - "stocks strategiques"
+
+  blackout:
+    label: Black-out et panne géante
+    priorite: 96
+    mots_cles:
+      - blackout
+      - black-out
+      - "black out"
+      - "panne géante"
+      - "panne geante"
+      - "coupure généralisée"
+      - "coupure generalisee"
+      - "coupure nationale"
+      - "coupures nationales"
+      - "black-out électrique"
+      - "blackout électrique"
+      - "black-out electrique"
+      - "panne générale d'électricité"
+      - "panne generale d'electricite"
+      - "effondrement du réseau"
+      - "effondrement du reseau"
+
+  resilience_etat:
+    label: Résilience et services de l'État
+    priorite: 92
+    mots_cles:
+      - sgdsn
+      - "résilience nationale"
+      - "resilience nationale"
+      - "stratégie nationale de résilience"
+      - "strategie nationale de resilience"
+      - "revue nationale stratégique"
+      - "revue nationale strategique"
+      - "biens vitaux"
+      - "guide tous résilients"
+      - "secrétariat général de la défense"
+      - "secretariat general de la defense"
+
+  reseau_electrique:
+    label: Réseau, délestage et EcoWatt
+    priorite: 88
+    mots_cles:
+      - délestage
+      - delestage
+      - délestages
+      - delestages
+      - "coupures tournantes"
+      - "coupure tournante"
+      - ecowatt
+      - "mon ecowatt"
+      - monecowatt
+      - "signal ecowatt"
+      - "risque de coupure"
+      - "risque de coupures"
+      - "sécurité d'approvisionnement"
+      - "securite d'approvisionnement"
+      - "équilibre offre-demande"
+      - "equilibre offre-demande"
+      - blackstart
+      - "black start"
+      - îlotage
+      - ilotage
+      - "reconstitution du réseau"
+      - "reconstitution du reseau"
+      - "réseau électrique"
+      - "reseau electrique"
+      - "système électrique"
+      - "systeme electrique"
+
+  menaces:
+    label: Sabotage et cyberattaque du réseau
+    priorite: 84
+    mots_cles:
+      - "sabotage électrique"
+      - "sabotage electrique"
+      - "sabotage du réseau"
+      - "sabotage du reseau"
+      - "cyberattaque du réseau"
+      - "cyberattaque du reseau"
+      - "cyberattaque électrique"
+      - "poste électrique"
+      - "poste electrique"
+      - "poste source"
+      - "pylône électrique"
+      - "pylone electrique"
+      - "attaque du réseau électrique"
+      - "attaque du reseau electrique"
+
+tendances:
+  - id: energie
+    label: Crise énergétique et carburants
+    mots_cles: [ormuz, "stocks stratégiques", "détroit d'ormuz"]
+  - id: macron
+    label: Déclarations Macron et suites
+    mots_cles:
+      - "emmanuel macron"
+      - "président macron"
+      - "president macron"
+      - "président de la république"
+      - "president de la republique"
+      - elysée
+      - elysee
+  - id: blackout
+    label: Black-out
+    mots_cles: [blackout, black-out, "black out", "panne géante", "coupure généralisée"]
+  - id: exercice
+    label: Exercice et résilience de l'État
+    mots_cles: [cirn, sgdsn, "résilience nationale", "tous résilients", "exercice black-out"]
+  - id: reseau
+    label: RTE, Enedis, délestage
+    mots_cles: [délestage, ecowatt, "réseau électrique", "système électrique", enedis]

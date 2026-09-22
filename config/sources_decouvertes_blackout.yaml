@@ -1,0 +1,8 @@
+comment: Sources ajoutées automatiquement à chaque lancement.
+flux:
+- id: dec-businessnews-com-tn
+  nom: Business News
+  url: https://businessnews.com.tn/feed/
+  site: https://businessnews.com.tn/
+  filtre: mots_cles
+  decouverte: '2026-09-22'

@@ -1,0 +1,74 @@
+comment: Sources ajoutées automatiquement à chaque lancement.
+flux:
+- id: dec-daily-hamweekly-com
+  nom: Amateur Radio Daily
+  url: https://daily.hamweekly.com/atom.xml
+  site: https://daily.hamweekly.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-leprogres-fr
+  nom: Le Progrès
+  url: https://leprogres.fr/rss
+  site: https://leprogres.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-sapeurs-pompiers35-fr
+  nom: SDIS 35
+  url: https://sapeurs-pompiers35.fr/rss
+  site: https://sapeurs-pompiers35.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-rfi-fr
+  nom: RFI
+  url: https://www.rfi.fr/fr/rss
+  site: https://rfi.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-laval-maville-com
+  nom: MaVille.com
+  url: https://laval.maville.com/flux/rss/actu.php?c=loc
+  site: https://laval.maville.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-20minutes-fr
+  nom: 20 Minutes
+  url: https://www.20minutes.fr/feeds/rss-une.xml
+  site: https://20minutes.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-spectrum-ieee-org
+  nom: IEEE Spectrum
+  url: https://spectrum.ieee.org/feeds/feed.rss
+  site: https://spectrum.ieee.org/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-rezonodwes-com
+  nom: '- Rezo Nòdwès'
+  url: https://rezonodwes.com/feed/
+  site: https://rezonodwes.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-opensourceforu-com
+  nom: Open Source For You
+  url: https://www.opensourceforu.com/feed/
+  site: https://opensourceforu.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-capecoralbreeze-com
+  nom: capecoralbreeze.com
+  url: https://capecoralbreeze.com/feed
+  site: https://capecoralbreeze.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-le7-info
+  nom: Le7.info
+  url: https://le7.info/rss.xml
+  site: https://le7.info/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-dcreport-org
+  nom: DCReport.org
+  url: https://www.dcreport.org/comments/feed/
+  site: https://dcreport.org/
+  filtre: mots_cles
+  decouverte: '2026-09-11'

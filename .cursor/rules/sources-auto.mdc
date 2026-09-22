@@ -1,0 +1,24 @@
+---
+description: Ajouter automatiquement toute nouvelle source RSS pertinente aux listes de veille
+alwaysApply: true
+---
+
+# Sources : ajout automatique
+
+Dès qu’une source d’information pertinente est identifiée (presse nationale, Auvergne-Rhône-Alpes, informatique, technique, IA, développement, IoT, crise, radio, outils de PC), l’ajouter tout de suite à la liste, sans demander confirmation.
+
+## Où l’écrire
+
+- Presse généraliste nationale ou AURA → `config/sources_presse.yaml`
+- Informatique, technique, IA, développement → `config/sources_tech.yaml`
+- Spécifique IoT / crise / radio / outils PC → `config/sources.yaml`, `sources_crise.yaml`, `sources_radio.yaml` ou `sources_outils.yaml`
+- Presse régionale France entière (veilles crise et outils PC) → `config/sources_crise_territoires.yaml`
+- Source découverte au fil de l’eau, hors catégories ci-dessus → `config/sources_auto.yaml`
+
+## Règles
+
+- Vérifier que le flux RSS/Atom répond (XML, pas 404/HTML).
+- Ne pas dupliquer un `id` ni une URL déjà présents (y compris dans `sources_decouvertes*.yaml`).
+- `filtre: mots_cles` sauf source dédiée au périmètre (alors `filtre: aucun`).
+- Format identique aux fichiers existants (`id`, `nom`, `url`, `site`, `filtre`).
+- Si le site n’a pas de RSS public, l’ajouter en `google_news` avec `site:domaine.fr`.
