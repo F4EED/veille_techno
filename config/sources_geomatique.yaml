@@ -1,0 +1,726 @@
+# Sources RSS / Atom pour la veille Géomatique.
+# Presse nationale et Auvergne-Rhône-Alpes : config/sources_presse.yaml
+# Presse informatique / technique / IA / développement : config/sources_tech.yaml
+# Découvertes de chaque lancement : config/sources_decouvertes_geomatique.yaml
+# et config/sources_auto.yaml (communes à toutes les veilles).
+# Le flux RSS public du BRGM (https://www.brgm.fr/fr/rss/actualites.xml) répond
+# en XML mais ne contient aucun article : le BRGM est suivi via Google News.
+
+google_news:
+  - id: gn-geomatique-fr
+    label: Google News — Géomatique
+    query: 'géomatique OR géomaticien OR géomaticienne OR "information géographique" OR "information géolocalisée" OR géoportail OR géoplateforme OR Geotribu OR Afigéo'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    domaine: geomatique
+  - id: gn-qgis-outils
+    label: Google News — QGIS et outils de cartographie
+    query: 'QGIS OR PostGIS OR GeoServer OR "GRASS GIS" OR GDAL OR "outils géomatiques" OR "outils de géomatique" OR "outil géomatique" OR "outils de cartographie" OR "logiciel de cartographie" OR "logiciel SIG"'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    domaine: outils
+  - id: gn-carto-donnees
+    label: Google News — Données cartographiques
+    query: '"données géographiques" OR "données géospatiales" OR "données cartographiques" OR "base adresse nationale" OR "plan cadastral" OR "BD TOPO" OR "BD ORTHO" OR "modèle numérique de terrain"'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    domaine: donnees
+  - id: gn-geoai
+    label: Google News — IA géomatique
+    query: 'GeoAI OR "geospatial AI" OR "IA géospatiale" OR "IA géomatique" OR ("intelligence artificielle" AND (géomatique OR QGIS OR cartographie OR "données géographiques" OR télédétection))'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    domaine: ia
+  - id: gn-gis-en
+    label: Google News — GIS, QGIS, geospatial
+    query: 'QGIS OR PostGIS OR "geographic information system" OR "geospatial data" OR "web mapping" OR GeoAI OR "geospatial AI" OR "open source GIS"'
+    hl: en-US
+    gl: US
+    ceid: US:en
+    domaine: geomatique
+  - id: gn-ign
+    label: Google News — IGN
+    query: 'site:ign.fr'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    domaine: geomatique
+  - id: gn-osm
+    label: Google News — OpenStreetMap
+    query: 'site:openstreetmap.org OR site:openstreetmap.fr OR site:weeklyosm.eu'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    domaine: geomatique
+  - id: gn-brgm
+    label: Google News — BRGM
+    query: 'site:brgm.fr'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    domaine: geomatique
+  - id: gn-craig
+    label: Google News — CRAIG
+    query: 'site:www.craig.fr OR site:ids.craig.fr OR site:craig.fr'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    domaine: geomatique
+  - id: gn-portails-geo
+    label: Google News — Géoportail, Géoplateforme, Géorisques, SHOM
+    query: 'site:geoportail.gouv.fr OR site:cartes.gouv.fr OR site:geoportail-urbanisme.gouv.fr OR site:georisques.gouv.fr OR site:shom.fr OR site:cnig.gouv.fr'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    domaine: geomatique
+  - id: gn-presse-geo
+    label: Google News — Presse géomatique
+    query: 'site:geotribu.fr OR site:afigeo.asso.fr OR site:georezo.net OR site:sigmag.fr OR site:decryptageo.fr OR site:esrifrance.fr OR site:neogeo.fr OR site:oslandia.com'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    domaine: geomatique
+  - id: gn-carto-urgence
+    label: Google News — Cartographie d'urgence et de crise
+    query: '"cartographie d''urgence" OR "cartographie de crise" OR "cartographie humanitaire" OR "crisis mapping" OR "emergency mapping" OR "humanitarian mapping" OR "rapid mapping" OR CartONG OR MapAction OR "Missing Maps" OR UNOSAT OR "Copernicus EMS"'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    domaine: urgence
+  - id: gn-lidar-aerien
+    label: Google News — Lidar et prises de vue aériennes
+    query: 'lidar OR "lidar aéroporté" OR "airborne lidar" OR "aerial lidar" OR "nuage de points"'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    domaine: lidar
+  - id: gn-releves
+    label: Google News — Relevés et prises de vue aériennes
+    query: '"relevé topographique" OR "levé topographique" OR "prise de vue aérienne" OR "prises de vue aériennes" OR "imagerie aérienne" OR photogrammétrie OR orthophoto OR "levé par drone" OR "mobile mapping" OR "aerial survey"'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    domaine: releves
+  - id: gn-carto-urgence-orgs
+    label: Google News — HOT, Missing Maps, Copernicus EMS
+    query: 'site:hotosm.org OR site:missingmaps.org OR site:emergency.copernicus.eu OR site:unosat.org OR site:cartong.org OR site:mapaction.org'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    domaine: urgence
+  - id: gn-opendata-geo
+    label: Google News — Open data géographique
+    query: '("open data" OR "données ouvertes" OR opendata OR "licence ouverte") (cartographie OR géomatique OR SIG OR "données géographiques" OR adresse OR cadastre OR IGN OR SDIS OR QGIS OR lidar)'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    domaine: donnees
+  - id: gn-sdis-carto
+    label: Google News — Cartographie et open data des SDIS
+    query: '(SDIS OR SDMIS OR "sapeurs-pompiers" OR ENSOSP) (cartographie OR SIG OR géomatique OR "open data" OR "données ouvertes" OR lidar OR QGIS OR "point d''eau incendie" OR "prise de vue aérienne")'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    domaine: urgence
+  - id: gn-portails-opendata
+    label: Google News — data.gouv.fr, Etalab, DINUM
+    query: '(site:data.gouv.fr OR site:etalab.gouv.fr OR site:opendatafrance.fr OR site:numerique.gouv.fr OR site:adresse.data.gouv.fr OR site:transport.data.gouv.fr OR site:ensosp.fr OR site:pompiers.fr) (cartographie OR géomatique OR "données géographiques" OR "open data" OR "données ouvertes" OR SDIS OR cadastre OR adresse)'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    domaine: donnees
+
+requetes_rs:
+  - id: geomatique-fr
+    label: Géomatique (français)
+    query: 'géomatique OR QGIS OR "information géographique" OR géoportail OR "données géographiques" OR OpenStreetMap OR "géoplateforme"'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    filtre: mots_cles
+  - id: geomatique-en
+    label: GIS / geomatics (anglais)
+    query: 'QGIS OR "geographic information system" OR "geospatial data" OR GeoAI OR PostGIS OR "openstreetmap" OR "web mapping"'
+    hl: en-US
+    gl: US
+    ceid: US:en
+    filtre: mots_cles
+  - id: li-geomatique
+    label: géomatique / QGIS
+    reseaux: [linkedin]
+    query: 'géomatique OR géomaticien OR QGIS OR "information géographique" OR "données géographiques" OR OpenStreetMap OR IGN OR BRGM'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    filtre: mots_cles
+    domaine: geomatique
+  - id: li-geoai
+    label: IA géomatique
+    reseaux: [linkedin]
+    query: 'GeoAI OR "geospatial AI" OR "IA géospatiale" OR ("intelligence artificielle" AND (QGIS OR géomatique OR cartographie OR télédétection))'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    filtre: mots_cles
+    domaine: ia
+  - id: outils-geo
+    label: Outils géomatique et cartographie
+    query: '"outils géomatiques" OR "outil géomatique" OR "outils de cartographie" OR "logiciel de cartographie" OR "logiciel SIG" OR QGIS OR PostGIS OR GeoServer OR GDAL'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    filtre: mots_cles
+    domaine: outils
+  - id: lidar-aerien
+    label: Lidar
+    query: 'lidar OR "lidar aéroporté" OR "airborne lidar" OR "nuage de points"'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    filtre: mots_cles
+    domaine: lidar
+  - id: releves-aeriens
+    label: Relevés et vues aériennes
+    query: '"prise de vue aérienne" OR "relevé topographique" OR "levé topographique" OR photogrammétrie OR "levé par drone" OR "aerial survey"'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    filtre: mots_cles
+    domaine: releves
+  - id: opendata-sdis
+    label: Open data et cartographie SDIS
+    query: '("open data" OR "données ouvertes") (cartographie OR géomatique OR SDIS OR SIG) OR "cartographie SDIS" OR "SIG SDIS" OR "point d''eau incendie"'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    filtre: mots_cles
+    domaine: donnees
+  - id: carto-urgence
+    label: Cartographie d'urgence
+    query: '"cartographie d''urgence" OR "cartographie de crise" OR "cartographie humanitaire" OR "crisis mapping" OR "emergency mapping" OR CartONG OR MapAction OR "Missing Maps" OR UNOSAT'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    filtre: mots_cles
+    domaine: urgence
+
+mastodon_tags:
+  - QGIS
+  - OpenStreetMap
+  - GIS
+  - GeoAI
+  - PostGIS
+  - geomatics
+  - MissingMaps
+  - MapAction
+
+flux:
+  - id: geo-ign-actualites
+    nom: IGN — actualités
+    url: https://www.ign.fr/actualites/rss.xml
+    site: https://www.ign.fr/
+    filtre: aucun
+    domaine: geomatique
+  - id: geo-geoportail
+    nom: Géoportail
+    url: https://www.geoportail.gouv.fr/rss
+    site: https://www.geoportail.gouv.fr/
+    filtre: aucun
+    domaine: geomatique
+  - id: geo-osm-blog
+    nom: OpenStreetMap Blog
+    url: https://blog.openstreetmap.org/feed/
+    site: https://blog.openstreetmap.org/
+    filtre: aucun
+    domaine: geomatique
+  - id: geo-osm-fr
+    nom: OpenStreetMap France
+    url: https://www.openstreetmap.fr/feed/
+    site: https://www.openstreetmap.fr/
+    filtre: aucun
+    domaine: geomatique
+  - id: geo-weeklyosm-fr
+    nom: hebdoOSM
+    url: https://weeklyosm.eu/fr/feed/
+    site: https://weeklyosm.eu/fr/
+    filtre: aucun
+    domaine: geomatique
+  - id: geo-qgis-blog
+    nom: Blog QGIS
+    url: https://blog.qgis.org/feed/
+    site: https://blog.qgis.org/
+    filtre: aucun
+    domaine: outils
+  - id: geo-qgis-releases
+    nom: QGIS — versions
+    url: https://github.com/qgis/QGIS/releases.atom
+    site: https://github.com/qgis/QGIS/releases
+    filtre: aucun
+    domaine: outils
+  - id: geo-geotribu
+    nom: Geotribu
+    url: https://geotribu.fr/feed_rss_created.xml
+    site: https://geotribu.fr/
+    filtre: aucun
+    domaine: geomatique
+  - id: geo-afigeo
+    nom: Afigéo
+    url: https://www.afigeo.asso.fr/feed/
+    site: https://www.afigeo.asso.fr/
+    filtre: aucun
+    domaine: geomatique
+  - id: geo-georezo
+    nom: GeoRezo
+    url: https://georezo.net/extern.php
+    site: https://georezo.net/
+    filtre: mots_cles
+  - id: geo-oslandia
+    nom: Oslandia
+    url: https://oslandia.com/feed/
+    site: https://oslandia.com/
+    filtre: mots_cles
+  - id: geo-neogeo
+    nom: Neogeo
+    url: https://neogeo.fr/feed/
+    site: https://neogeo.fr/
+    filtre: aucun
+    domaine: outils
+  - id: geo-cnig
+    nom: CNIG
+    url: https://cnig.gouv.fr/spip.php?page=backend-actu
+    site: https://cnig.gouv.fr/
+    filtre: aucun
+    domaine: geomatique
+  - id: geo-osgeo
+    nom: OSGeo
+    url: https://www.osgeo.org/foundation-news/feed/
+    site: https://www.osgeo.org/
+    filtre: aucun
+    domaine: outils
+  - id: geo-ogc
+    nom: OGC
+    url: https://www.ogc.org/feed/
+    site: https://www.ogc.org/
+    filtre: aucun
+    domaine: outils
+  - id: geo-grass
+    nom: GRASS GIS
+    url: https://grass.osgeo.org/news/index.xml
+    site: https://grass.osgeo.org/
+    filtre: aucun
+    domaine: outils
+  - id: geo-postgis
+    nom: PostGIS
+    url: https://postgis.net/feed.xml
+    site: https://postgis.net/
+    filtre: aucun
+    domaine: outils
+  - id: geo-gdal
+    nom: GDAL — versions
+    url: https://github.com/OSGeo/gdal/releases.atom
+    site: https://github.com/OSGeo/gdal/releases
+    filtre: aucun
+    domaine: outils
+  - id: geo-anita-graser
+    nom: Anita Graser
+    url: https://anitagraser.com/feed/
+    site: https://anitagraser.com/
+    filtre: aucun
+    domaine: outils
+  - id: geo-leaflet
+    nom: Leaflet
+    url: https://leafletjs.com/atom.xml
+    site: https://leafletjs.com/
+    filtre: aucun
+    domaine: outils
+  - id: geo-natural-earth
+    nom: Natural Earth
+    url: https://www.naturalearthdata.com/feed/
+    site: https://www.naturalearthdata.com/
+    filtre: aucun
+    domaine: geomatique
+  - id: geo-mapbox
+    nom: Mapbox
+    url: https://blog.mapbox.com/feed
+    site: https://blog.mapbox.com/
+    filtre: aucun
+    domaine: outils
+  - id: geo-gim
+    nom: GIM International
+    url: https://www.gim-international.com/rss/news.xml
+    site: https://www.gim-international.com/
+    filtre: aucun
+    domaine: geomatique
+  - id: geo-geoinformatics
+    nom: GeoInformatics
+    url: https://www.geoinformatics.com/feed/
+    site: https://www.geoinformatics.com/
+    filtre: aucun
+    domaine: geomatique
+  - id: geo-spatialsource
+    nom: Spatial Source
+    url: https://www.spatialsource.com.au/feed/
+    site: https://www.spatialsource.com.au/
+    filtre: aucun
+    domaine: geomatique
+  - id: geo-geospatial-world
+    nom: Geospatial World
+    url: https://geospatialworld.net/feed/
+    site: https://geospatialworld.net/
+    filtre: mots_cles
+  - id: geo-copernicus
+    nom: Copernicus
+    url: https://www.copernicus.eu/fr/rss.xml
+    site: https://www.copernicus.eu/fr
+    filtre: mots_cles
+  - id: geo-esa-terre
+    nom: ESA — observation de la Terre
+    url: https://www.esa.int/rssfeed/Our_Activities/Observing_the_Earth
+    site: https://www.esa.int/
+    filtre: mots_cles
+  - id: geo-reddit-gis
+    nom: Reddit r/gis
+    url: https://www.reddit.com/r/gis/.rss
+    site: https://www.reddit.com/r/gis/
+    filtre: mots_cles
+  - id: geo-cartong
+    nom: CartONG
+    url: https://www.cartong.org/feed/
+    site: https://www.cartong.org/
+    filtre: aucun
+    domaine: urgence
+  - id: geo-mapaction
+    nom: MapAction
+    url: https://mapaction.org/feed/
+    site: https://mapaction.org/
+    filtre: aucun
+    domaine: urgence
+  - id: geo-giscorps
+    nom: GISCorps
+    url: https://www.giscorps.org/feed/
+    site: https://www.giscorps.org/
+    filtre: aucun
+    domaine: urgence
+  - id: geo-heigit
+    nom: HeiGIT
+    url: https://heigit.org/feed/
+    site: https://heigit.org/
+    filtre: mots_cles
+  - id: geo-ban
+    nom: Base Adresse Nationale
+    url: https://ghost.adresse.data.gouv.fr/rss/
+    site: https://adresse.data.gouv.fr/
+    filtre: aucun
+    domaine: donnees
+  - id: geo-opendatafrance
+    nom: OpenDataFrance
+    url: https://www.opendatafrance.fr/feed/
+    site: https://www.opendatafrance.fr/
+    filtre: aucun
+    domaine: donnees
+  - id: geo-geomatick
+    nom: GEOMATICK
+    url: https://www.geomatick.com/feed/
+    site: https://www.geomatick.com/
+    filtre: mots_cles
+  - id: geo-sdis01
+    nom: SDIS 01 — Ain
+    url: https://www.sdis01.fr/index.php?format=feed&type=rss
+    site: https://www.sdis01.fr/
+    filtre: mots_cles
+  - id: geo-sdis11
+    nom: SDIS 11 — Aude
+    url: https://sdis11.fr/feed/
+    site: https://sdis11.fr/
+    filtre: mots_cles
+  - id: geo-sdis16
+    nom: SDIS 16 — Charente
+    url: https://www.pompiers-charente.org/rss/fr/news/news.xml
+    site: https://www.pompiers-charente.org/
+    filtre: mots_cles
+  - id: geo-sdis17
+    nom: SDIS 17 — Charente-Maritime
+    url: https://sdis17.fr/feed/
+    site: https://sdis17.fr/
+    filtre: mots_cles
+  - id: geo-sdis22
+    nom: SDIS 22 — Côtes-d'Armor
+    url: https://www.sdis22.fr/feed/
+    site: https://www.sdis22.fr/
+    filtre: mots_cles
+  - id: geo-sdis23
+    nom: SDIS 23 — Creuse
+    url: https://www.sdis23.fr/feed/
+    site: https://www.sdis23.fr/
+    filtre: mots_cles
+  - id: geo-sdis24
+    nom: SDIS 24 — Dordogne
+    url: https://www.sdis24.fr/feed/
+    site: https://www.sdis24.fr/
+    filtre: mots_cles
+  - id: geo-sdis25
+    nom: SDIS 25 — Doubs
+    url: https://www.sdis25.fr/feed/
+    site: https://www.sdis25.fr/
+    filtre: mots_cles
+  - id: geo-sdis27
+    nom: SDIS 27 — Eure
+    url: https://www.sapeurspompiers27.fr/feed/
+    site: https://www.sapeurspompiers27.fr/
+    filtre: mots_cles
+  - id: geo-sdis34
+    nom: SDIS 34 — Hérault
+    url: https://www.sdis34.fr/feed/
+    site: https://www.sdis34.fr/
+    filtre: mots_cles
+  - id: geo-sdis40
+    nom: SDIS 40 — Landes
+    url: https://www.sdis40.fr/?feed=rss2
+    site: https://www.sdis40.fr/
+    filtre: mots_cles
+  - id: geo-sdis49
+    nom: SDIS 49 — Maine-et-Loire
+    url: https://www.sdis49.fr/feed/
+    site: https://www.sdis49.fr/
+    filtre: mots_cles
+  - id: geo-sdis50
+    nom: SDIS 50 — Manche
+    url: https://www.sdis50.fr/feed/
+    site: https://www.sdis50.fr/
+    filtre: mots_cles
+  - id: geo-sdis52
+    nom: SDIS 52 — Haute-Marne
+    url: https://www.sdis52.fr/feed/
+    site: https://www.sdis52.fr/
+    filtre: mots_cles
+  - id: geo-sdis53
+    nom: SDIS 53 — Mayenne
+    url: https://www.sdis53.fr/feed/
+    site: https://www.sdis53.fr/
+    filtre: mots_cles
+  - id: geo-sdis57
+    nom: SDIS 57 — Moselle
+    url: https://www.sdis57.fr/home/index.php/feed/
+    site: https://www.sdis57.fr/
+    filtre: mots_cles
+  - id: geo-sdis61
+    nom: SDIS 61 — Orne
+    url: https://www.sdis61.fr/feed/
+    site: https://www.sdis61.fr/
+    filtre: mots_cles
+  - id: geo-sdis62
+    nom: SDIS 62 — Pas-de-Calais
+    url: https://www.sdis62.fr/feed/
+    site: https://www.sdis62.fr/
+    filtre: mots_cles
+  - id: geo-sdis66
+    nom: SDIS 66 — Pyrénées-Orientales
+    url: https://www.sdis66.fr/feed/
+    site: https://www.sdis66.fr/
+    filtre: mots_cles
+  - id: geo-sdis68
+    nom: SDIS 68 — Haut-Rhin
+    url: https://www.sdis68.fr/rss/actus.php
+    site: https://www.sdis68.fr/
+    filtre: mots_cles
+  - id: geo-sdis71
+    nom: SDIS 71 — Saône-et-Loire
+    url: https://www.sdis71.fr/feed/
+    site: https://www.sdis71.fr/
+    filtre: mots_cles
+  - id: geo-sdis72
+    nom: SDIS 72 — Sarthe
+    url: https://www.sdis72.fr/feed/
+    site: https://www.sdis72.fr/
+    filtre: mots_cles
+  - id: geo-sdis76
+    nom: SDIS 76 — Seine-Maritime
+    url: https://www.sdis76.fr/feed/
+    site: https://www.sdis76.fr/
+    filtre: mots_cles
+  - id: geo-sdis77
+    nom: SDIS 77 — Seine-et-Marne
+    url: https://www.sdis77.fr/feed/
+    site: https://www.sdis77.fr/
+    filtre: mots_cles
+  - id: geo-sdis79
+    nom: SDIS 79 — Deux-Sèvres
+    url: https://www.sdis79.fr/feed/
+    site: https://www.sdis79.fr/
+    filtre: mots_cles
+  - id: geo-sdis80
+    nom: SDIS 80 — Somme
+    url: https://sdis80.fr/feed/
+    site: https://sdis80.fr/
+    filtre: mots_cles
+  - id: geo-sdis81
+    nom: SDIS 81 — Tarn
+    url: https://www.sdis81.fr/feed/
+    site: https://www.sdis81.fr/
+    filtre: mots_cles
+  - id: geo-sdis82
+    nom: SDIS 82 — Tarn-et-Garonne
+    url: https://www.sdis82.fr/feed/
+    site: https://www.sdis82.fr/
+    filtre: mots_cles
+  - id: geo-sdis89
+    nom: SDIS 89 — Yonne
+    url: https://www.sdis89.fr/feed/
+    site: https://www.sdis89.fr/
+    filtre: mots_cles
+  - id: geo-sdis971
+    nom: SDIS 971 — Guadeloupe
+    url: https://www.sdis971.fr/feed/
+    site: https://www.sdis971.fr/
+    filtre: mots_cles
+  - id: geo-sis972
+    nom: SIS 972 — Martinique
+    url: https://sis972.fr/feed/
+    site: https://sis972.fr/
+    filtre: mots_cles
+  - id: geo-sdmis
+    nom: SDMIS — Rhône et métropole de Lyon
+    url: https://www.sdmis.fr/feed/
+    site: https://www.sdmis.fr/
+    filtre: mots_cles
+  - id: geo-pompiers13
+    nom: Pompiers 13 — Bouches-du-Rhône
+    url: https://pompiers13.org/feed/
+    site: https://pompiers13.org/
+    filtre: mots_cles
+
+  # --- GitHub (versions) ---
+  - id: geo-gh-geoserver
+    nom: GeoServer (GitHub)
+    url: https://github.com/geoserver/geoserver/releases.atom
+    site: https://github.com/geoserver/geoserver
+    filtre: aucun
+    domaine: outils
+  - id: geo-gh-postgis
+    nom: PostGIS (GitHub)
+    url: https://github.com/postgis/postgis/releases.atom
+    site: https://github.com/postgis/postgis
+    filtre: aucun
+    domaine: outils
+  - id: geo-gh-proj
+    nom: PROJ (GitHub)
+    url: https://github.com/OSGeo/PROJ/releases.atom
+    site: https://github.com/OSGeo/PROJ
+    filtre: aucun
+    domaine: outils
+  - id: geo-gh-grass
+    nom: GRASS GIS (GitHub)
+    url: https://github.com/OSGeo/grass/releases.atom
+    site: https://github.com/OSGeo/grass
+    filtre: aucun
+    domaine: outils
+  - id: geo-gh-openlayers
+    nom: OpenLayers (GitHub)
+    url: https://github.com/openlayers/openlayers/releases.atom
+    site: https://github.com/openlayers/openlayers
+    filtre: aucun
+    domaine: outils
+  - id: geo-gh-maplibre
+    nom: MapLibre (GitHub)
+    url: https://github.com/maplibre/maplibre-gl-js/releases.atom
+    site: https://github.com/maplibre/maplibre-gl-js
+    filtre: aucun
+    domaine: outils
+  - id: geo-gh-geopandas
+    nom: GeoPandas (GitHub)
+    url: https://github.com/geopandas/geopandas/releases.atom
+    site: https://github.com/geopandas/geopandas
+    filtre: aucun
+    domaine: outils
+  - id: geo-gh-pdal
+    nom: PDAL (GitHub)
+    url: https://github.com/PDAL/PDAL/releases.atom
+    site: https://github.com/PDAL/PDAL
+    filtre: aucun
+    domaine: lidar
+  - id: geo-gh-id
+    nom: iD — OpenStreetMap (GitHub)
+    url: https://github.com/openstreetmap/iD/releases.atom
+    site: https://github.com/openstreetmap/iD
+    filtre: aucun
+    domaine: geomatique
+  - id: geo-gh-tasking-manager
+    nom: HOT Tasking Manager (GitHub)
+    url: https://github.com/hotosm/tasking-manager/releases.atom
+    site: https://github.com/hotosm/tasking-manager
+    filtre: aucun
+    domaine: urgence
+  - id: geo-gh-cartes-gouv
+    nom: cartes.gouv.fr (GitHub IGN)
+    url: https://github.com/IGNF/cartes.gouv.fr-entree-carto/releases.atom
+    site: https://github.com/IGNF/cartes.gouv.fr-entree-carto
+    filtre: aucun
+    domaine: donnees
+
+# Services WMS vérifiés (GetCapabilities). Ce ne sont pas des flux d'articles :
+# l'adresse se colle dans QGIS. Ils figurent dans la liste des sources du rapport.
+wms:
+  - id: wms-ign-raster
+    nom: WMS — IGN Géoplateforme (raster)
+    url: https://data.geopf.fr/wms-r/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities
+    site: https://cartes.gouv.fr/
+  - id: wms-ign-vecteur
+    nom: WMS — IGN Géoplateforme (vecteur)
+    url: https://data.geopf.fr/wms-v/wms?SERVICE=WMS&REQUEST=GetCapabilities
+    site: https://cartes.gouv.fr/
+  - id: wms-brgm-geologie
+    nom: WMS — BRGM géologie
+    url: https://geoservices.brgm.fr/geologie?SERVICE=WMS&REQUEST=GetCapabilities
+    site: https://www.brgm.fr/
+  - id: wms-brgm-risques
+    nom: WMS — BRGM risques
+    url: https://geoservices.brgm.fr/risques?SERVICE=WMS&REQUEST=GetCapabilities
+    site: https://www.brgm.fr/
+  - id: wms-brgm-infoterre
+    nom: WMS — BRGM InfoTerre
+    url: https://infoterre.brgm.fr/geoserver/ows?SERVICE=WMS&REQUEST=GetCapabilities
+    site: https://infoterre.brgm.fr/
+  - id: wms-georisques
+    nom: WMS — Géorisques
+    url: https://georisques.gouv.fr/services?SERVICE=WMS&REQUEST=GetCapabilities
+    site: https://www.georisques.gouv.fr/
+  - id: wms-georisques-mapsref
+    nom: WMS — Géorisques (mapsref BRGM)
+    url: https://mapsref.brgm.fr/wxs/georisques/risques?SERVICE=WMS&REQUEST=GetCapabilities
+    site: https://www.georisques.gouv.fr/
+  - id: wms-shom
+    nom: WMS — SHOM
+    url: https://services.data.shom.fr/INSPIRE/wms/r?SERVICE=WMS&REQUEST=GetCapabilities
+    site: https://www.shom.fr/
+  - id: wms-osm-fr
+    nom: WMS — OpenStreetMap France
+    url: https://wms.openstreetmap.fr/wms?SERVICE=WMS&REQUEST=GetCapabilities
+    site: https://wms.openstreetmap.fr/
+  - id: wms-sandre
+    nom: WMS — Sandre (masses d'eau)
+    url: https://services.sandre.eaufrance.fr/geo/mdo?SERVICE=WMS&REQUEST=GetCapabilities
+    site: https://www.sandre.eaufrance.fr/
+  - id: wms-grandlyon
+    nom: WMS — Data Grand Lyon
+    url: https://download.data.grandlyon.com/wms/grandlyon?SERVICE=WMS&REQUEST=GetCapabilities
+    site: https://data.grandlyon.com/
+  - id: wms-sdis35
+    nom: WMS — SDIS 35 (GéoBretagne)
+    url: https://geobretagne.fr/geoserver/sdis35/wms?SERVICE=WMS&REQUEST=GetCapabilities
+    site: https://geobretagne.fr/
+  - id: wms-sigloire
+    nom: WMS — SIG Loire (dont SDIS 44)
+    url: https://datacarto.sigloire.fr/wms?SERVICE=WMS&REQUEST=GetCapabilities
+    site: https://www.sigloire.fr/
+  - id: wms-craig-public
+    nom: WMS — CRAIG (accès ouvert)
+    url: https://ids.craig.fr/wxs/public/wms?SERVICE=WMS&REQUEST=GetCapabilities
+    site: https://ids.craig.fr/
+  - id: wms-craig-pcrs
+    nom: WMS — CRAIG PCRS
+    url: https://ids.craig.fr/wxs/pcrs/wms?SERVICE=WMS&REQUEST=GetCapabilities
+    site: https://ids.craig.fr/

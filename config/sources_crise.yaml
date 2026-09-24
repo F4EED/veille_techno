@@ -281,3 +281,29 @@ flux:
     url: https://www.bfmtv.com/rss/environnement/
     site: https://www.bfmtv.com/environnement/
     filtre: mots_cles
+
+  # --- GitHub (versions) ---
+  - id: crise-gh-ushahidi
+    nom: Ushahidi (GitHub)
+    url: https://github.com/ushahidi/platform/releases.atom
+    site: https://github.com/ushahidi/platform
+    filtre: aucun
+    domaine: gestion_crise
+  - id: crise-gh-oq
+    nom: OpenQuake (GitHub)
+    url: https://github.com/gem/oq-engine/releases.atom
+    site: https://github.com/gem/oq-engine
+    filtre: aucun
+    domaine: seismes
+  - id: crise-gh-inasafe
+    nom: InaSAFE (GitHub)
+    url: https://github.com/inasafe/inasafe/releases.atom
+    site: https://github.com/inasafe/inasafe
+    filtre: aucun
+    domaine: catastrophes
+  - id: crise-gh-climada
+    nom: CLIMADA (GitHub)
+    url: https://github.com/CLIMADA-project/climada_python/releases.atom
+    site: https://github.com/CLIMADA-project/climada_python
+    filtre: aucun
+    domaine: alea_climatique

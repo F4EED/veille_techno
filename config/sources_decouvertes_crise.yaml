@@ -150,3 +150,129 @@ flux:
   site: https://macommune.info/
   filtre: mots_cles
   decouverte: '2026-09-22'
+- id: dec-pressegauche-org
+  nom: Presse-toi à gauche
+  url: https://pressegauche.org/spip.php?page=backend
+  site: https://pressegauche.org/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-laist-com
+  nom: LAist
+  url: https://laist.com/index.atom
+  site: https://laist.com/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-latribune-fr
+  nom: La Tribune
+  url: https://latribune.fr/feed.xml
+  site: https://latribune.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-batiactu-com
+  nom: Batiactu
+  url: https://batiactu.com/accueil.rss
+  site: https://batiactu.com/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-bridgemi-com
+  nom: Bridge Michigan
+  url: https://bridgemi.com/feed/
+  site: https://bridgemi.com/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-wtaj-com
+  nom: WTAJ
+  url: https://wtaj.com/feed
+  site: https://wtaj.com/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-lorient-maville-com
+  nom: MaVille.com
+  url: https://lorient.maville.com/flux/rss/meteo.php
+  site: https://lorient.maville.com/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-fastcompany-com
+  nom: Fast Company
+  url: https://fastcompany.com/rss
+  site: https://fastcompany.com/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-hawaiicatholicherald-com
+  nom: Hawaii Catholic Herald
+  url: https://hawaiicatholicherald.com/feed/
+  site: https://hawaiicatholicherald.com/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-edito-seloger-com
+  nom: SeLoger
+  url: https://edito.seloger.com/feed
+  site: https://edito.seloger.com/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-cidj-com
+  nom: CIDJ
+  url: https://cidj.com/rss.xml
+  site: https://cidj.com/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-dentaire365-fr
+  nom: Dentaire365
+  url: https://dentaire365.fr/feed
+  site: https://dentaire365.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-mcetv-ouest-france-fr
+  nom: MCE TV
+  url: https://mcetv.ouest-france.fr/feed/
+  site: https://mcetv.ouest-france.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-premiere-fr
+  nom: Première
+  url: https://premiere.fr/rss.xml
+  site: https://premiere.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-lyondemain-fr
+  nom: Lyon Demain
+  url: https://www.lyondemain.fr/feed/
+  site: https://lyondemain.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-lvsl-fr
+  nom: LVSL
+  url: https://lvsl.fr/feed/
+  site: https://lvsl.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-ktvq-com
+  nom: KTVQ
+  url: https://www.ktvq.com/index.rss
+  site: https://ktvq.com/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-innovationnewsnetwork-com
+  nom: Innovation News Network
+  url: https://www.innovationnewsnetwork.com/feed/
+  site: https://innovationnewsnetwork.com/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-npr-org
+  nom: NPR
+  url: https://feeds.npr.org/1002/rss.xml
+  site: https://npr.org/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-thefencepost-com
+  nom: The Fence Post
+  url: https://thefencepost.com/feed
+  site: https://thefencepost.com/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-abc7chicago-com
+  nom: ABC7 Chicago
+  url: https://abc7chicago.com/feed/
+  site: https://abc7chicago.com/
+  filtre: mots_cles
+  decouverte: '2026-09-23'

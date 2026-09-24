@@ -191,3 +191,17 @@ flux:
     url: https://www.reddit.com/r/EmergencyManagement/.rss
     site: https://www.reddit.com/r/EmergencyManagement/
     filtre: mots_cles
+
+  # --- GitHub (versions) ---
+  - id: outils-gh-sahana
+    nom: Sahana Eden (GitHub)
+    url: https://github.com/sahana/eden/releases.atom
+    site: https://github.com/sahana/eden
+    filtre: aucun
+    domaine: poste_commandement
+  - id: outils-gh-kobo
+    nom: KoboToolbox (GitHub)
+    url: https://github.com/kobotoolbox/kpi/releases.atom
+    site: https://github.com/kobotoolbox/kpi
+    filtre: aucun
+    domaine: outils_crise

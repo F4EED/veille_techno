@@ -5,13 +5,13 @@ alwaysApply: true
 
 # Sources : ajout automatique
 
-Dès qu’une source d’information pertinente est identifiée (presse nationale, Auvergne-Rhône-Alpes, informatique, technique, IA, développement, IoT, crise, radio, outils de PC), l’ajouter tout de suite à la liste, sans demander confirmation.
+Dès qu’une source d’information pertinente est identifiée (presse nationale, Auvergne-Rhône-Alpes, informatique, technique, IA, développement, IoT, crise, radio, outils de PC, géomatique, mesh), l’ajouter tout de suite à la liste, sans demander confirmation.
 
 ## Où l’écrire
 
 - Presse généraliste nationale ou AURA → `config/sources_presse.yaml`
 - Informatique, technique, IA, développement → `config/sources_tech.yaml`
-- Spécifique IoT / crise / radio / outils PC → `config/sources.yaml`, `sources_crise.yaml`, `sources_radio.yaml` ou `sources_outils.yaml`
+- Spécifique IoT / crise / radio / outils PC / géomatique / mesh → `config/sources.yaml`, `sources_crise.yaml`, `sources_radio.yaml`, `sources_outils.yaml`, `sources_geomatique.yaml` ou `sources_mesh.yaml`
 - Presse régionale France entière (veilles crise et outils PC) → `config/sources_crise_territoires.yaml`
 - Source découverte au fil de l’eau, hors catégories ci-dessus → `config/sources_auto.yaml`
 

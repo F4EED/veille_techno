@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Installation et envoi chaque jour à 7 h : ./installer-linux.sh
 set -euo pipefail
 cd "$(dirname "$0")"
 
@@ -14,9 +15,9 @@ if [[ "${1:-}" == "--profil" ]]; then
   exec python3 -u veille.py "$@"
 fi
 
-echo "Lancement de Veille_IOT, Veille_Crise, Veille_Radio, Veille_Outils_PC et Veille_Blackout en parallèle…"
+echo "Lancement de Veille_IOT, Veille_Crise, Veille_Radio, Veille_Outils_PC, Veille_Blackout, Veille_Geomatique et Veille_Mesh en parallèle…"
 pids=()
-profils=(iot crise radio outils blackout)
+profils=(iot crise radio outils blackout geomatique mesh)
 for profil in "${profils[@]}"; do
   python3 -u veille.py --profil "${profil}" "$@" &
   pids+=("$!")

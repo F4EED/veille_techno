@@ -85,6 +85,14 @@ google_news:
     ceid: FR:fr
     filtre: mots_cles
     site: https://news.google.com/
+  - id: gn-bl-selectra
+    label: Selectra
+    query: 'site:selectra.info'
+    hl: fr
+    gl: FR
+    ceid: FR:fr
+    filtre: mots_cles
+    site: https://selectra.info/
 
 requetes_rs:
   - id: bl-rs-fr
@@ -222,3 +230,41 @@ flux:
     url: https://www.cert.ssi.gouv.fr/feed/
     site: https://www.cert.ssi.gouv.fr/
     filtre: mots_cles
+
+  # --- GitHub (versions) ---
+  - id: bl-gh-antares
+    nom: Antares Simulator (GitHub)
+    url: https://github.com/AntaresSimulatorTeam/Antares_Simulator/releases.atom
+    site: https://github.com/AntaresSimulatorTeam/Antares_Simulator
+    filtre: aucun
+    domaine: reseau_electrique
+  - id: bl-gh-grid2op
+    nom: Grid2Op — RTE (GitHub)
+    url: https://github.com/rte-france/Grid2Op/releases.atom
+    site: https://github.com/rte-france/Grid2Op
+    filtre: aucun
+    domaine: reseau_electrique
+  - id: bl-gh-openems
+    nom: OpenEMS (GitHub)
+    url: https://github.com/OpenEMS/openems/releases.atom
+    site: https://github.com/OpenEMS/openems
+    filtre: aucun
+    domaine: reseau_electrique
+  - id: bl-gh-pypsa
+    nom: PyPSA (GitHub)
+    url: https://github.com/PyPSA/PyPSA/releases.atom
+    site: https://github.com/PyPSA/PyPSA
+    filtre: aucun
+    domaine: reseau_electrique
+  - id: bl-gh-emoncms
+    nom: Emoncms (GitHub)
+    url: https://github.com/emoncms/emoncms/releases.atom
+    site: https://github.com/emoncms/emoncms
+    filtre: aucun
+    domaine: reseau_electrique
+  - id: bl-gh-oemof
+    nom: oemof (GitHub)
+    url: https://github.com/oemof/oemof/releases.atom
+    site: https://github.com/oemof/oemof
+    filtre: aucun
+    domaine: reseau_electrique

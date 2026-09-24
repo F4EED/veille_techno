@@ -2,13 +2,15 @@
 
 from __future__ import annotations
 
-import fcntl
 import json
 import re
+import sys
 import threading
+import time
 import urllib.parse
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from contextlib import contextmanager
 from pathlib import Path
 from typing import Any
 
@@ -37,15 +39,55 @@ _cache_charge = False
 _erreur_affichee = False
 
 
+@contextmanager
+def _verrou_cache(exclusif: bool):
+    """Empêche deux veilles d'écrire le cache en même temps (Linux et Windows)."""
+    FICHIER_CACHE.parent.mkdir(parents=True, exist_ok=True)
+    verrou = FICHIER_CACHE.with_suffix(".lock")
+    with verrou.open("a+b") as handle:
+        if sys.platform == "win32":
+            import msvcrt
+
+            handle.seek(0, 2)
+            if handle.tell() < 1:
+                handle.write(b"\0")
+                handle.flush()
+            handle.seek(0)
+            while True:
+                try:
+                    msvcrt.locking(handle.fileno(), msvcrt.LK_NBLCK, 1)
+                    break
+                except OSError:
+                    time.sleep(0.05)
+            try:
+                yield
+            finally:
+                handle.seek(0)
+                try:
+                    msvcrt.locking(handle.fileno(), msvcrt.LK_UNLCK, 1)
+                except OSError:
+                    pass
+        else:
+            import fcntl
+
+            fcntl.flock(
+                handle.fileno(),
+                fcntl.LOCK_EX if exclusif else fcntl.LOCK_SH,
+            )
+            try:
+                yield
+            finally:
+                fcntl.flock(handle.fileno(), fcntl.LOCK_UN)
+
+
 def _charger_cache() -> None:
     global _cache_charge, _cache
     if _cache_charge:
         return
     if FICHIER_CACHE.exists():
         try:
-            with FICHIER_CACHE.open("r", encoding="utf-8") as handle:
-                fcntl.flock(handle.fileno(), fcntl.LOCK_SH)
-                brut = json.loads(handle.read() or "{}")
+            with _verrou_cache(False):
+                brut = json.loads(FICHIER_CACHE.read_text(encoding="utf-8") or "{}")
             _cache = {
                 k: v
                 for k, v in brut.items()
@@ -57,12 +99,13 @@ def _charger_cache() -> None:
 
 
 def _sauver_cache() -> None:
-    FICHIER_CACHE.parent.mkdir(parents=True, exist_ok=True)
-    with FICHIER_CACHE.open("a+", encoding="utf-8") as handle:
-        fcntl.flock(handle.fileno(), fcntl.LOCK_EX)
-        handle.seek(0)
+    with _verrou_cache(True):
         try:
-            existant = json.loads(handle.read() or "{}")
+            existant = (
+                json.loads(FICHIER_CACHE.read_text(encoding="utf-8") or "{}")
+                if FICHIER_CACHE.exists()
+                else {}
+            )
         except json.JSONDecodeError:
             existant = {}
         if not isinstance(existant, dict):
@@ -70,9 +113,10 @@ def _sauver_cache() -> None:
         with _cache_lock:
             existant.update(_cache)
             _cache.update({k: v for k, v in existant.items() if isinstance(v, str)})
-        handle.seek(0)
-        handle.truncate()
-        handle.write(json.dumps(existant, ensure_ascii=False, indent=0))
+        FICHIER_CACHE.write_text(
+            json.dumps(existant, ensure_ascii=False, indent=0),
+            encoding="utf-8",
+        )
 
 
 def _tokens(texte: str) -> list[str]:

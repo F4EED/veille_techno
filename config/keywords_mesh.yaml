@@ -1,0 +1,76 @@
+# Veille Mesh. Sous-rubriques du rapport, de la plus précise à la plus générale.
+# Un article va dans la rubrique de plus haute priorité qui matche.
+# « mesh » seul est évité : il attraperait les service mesh (Kubernetes, Istio).
+
+periode_jours: 7
+
+domaines:
+  meshtastic:
+    label: Meshtastic
+    priorite: 100
+    mots_cles:
+      - meshtastic
+      - "firmware meshtastic"
+      - "nœud meshtastic"
+      - "noeud meshtastic"
+
+  meshcore:
+    label: MeshCore
+    priorite: 100
+    mots_cles:
+      - meshcore
+      - "mesh core"
+      - "mesh-core"
+
+  general:
+    label: Général
+    priorite: 40
+    mots_cles:
+      - "mesh wifi"
+      - "wifi mesh"
+      - "wi-fi mesh"
+      - "wifi maillé"
+      - "wi-fi maillé"
+      - "réseau mesh"
+      - "reseau mesh"
+      - "réseaux mesh"
+      - "reseaux mesh"
+      - "réseau maillé"
+      - "reseau maille"
+      - "réseaux maillés"
+      - "reseaux mailles"
+      - "maillage radio"
+      - "mesh network"
+      - "mesh networking"
+      - "wireless mesh"
+      - "802.11s"
+      - "batman-adv"
+      - cjdns
+      - yggdrasil
+      - reticulum
+      - rnode
+      - "lora mesh"
+      - "mesh lora"
+      - "maillage lora"
+      - "réseau maillé lora"
+      - "reseau maille lora"
+      - wirepas
+      - "disaster radio"
+      - "disaster.radio"
+
+tendances:
+  - id: maillage_lora
+    label: Maillage LoRa
+    mots_cles:
+      - meshtastic
+      - meshcore
+      - reticulum
+      - "lora mesh"
+  - id: mesh_wifi
+    label: Mesh Wi-Fi
+    mots_cles:
+      - "mesh wifi"
+      - "wifi mesh"
+      - "802.11s"
+      - "batman-adv"
+      - "wireless mesh"

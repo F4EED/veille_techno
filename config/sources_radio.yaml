@@ -131,3 +131,65 @@ flux:
     url: https://daily.hamweekly.com/atom.xml
     site: https://daily.hamweekly.com/
     filtre: aucun
+
+  # --- GitHub (versions) ---
+  - id: radio-gh-gnuradio
+    nom: GNU Radio (GitHub)
+    url: https://github.com/gnuradio/gnuradio/releases.atom
+    site: https://github.com/gnuradio/gnuradio
+    filtre: aucun
+    domaine: sdr_aprs
+  - id: radio-gh-sdrangel
+    nom: SDRangel (GitHub)
+    url: https://github.com/f4exb/sdrangel/releases.atom
+    site: https://github.com/f4exb/sdrangel
+    filtre: aucun
+    domaine: sdr_aprs
+  - id: radio-gh-sdrpp
+    nom: SDR++ (GitHub)
+    url: https://github.com/AlexandreRouma/SDRPlusPlus/releases.atom
+    site: https://github.com/AlexandreRouma/SDRPlusPlus
+    filtre: aucun
+    domaine: sdr_aprs
+  - id: radio-gh-openwebrx
+    nom: OpenWebRX (GitHub)
+    url: https://github.com/jketterl/openwebrx/releases.atom
+    site: https://github.com/jketterl/openwebrx
+    filtre: aucun
+    domaine: sdr_aprs
+  - id: radio-gh-urh
+    nom: Universal Radio Hacker (GitHub)
+    url: https://github.com/jopohl/urh/releases.atom
+    site: https://github.com/jopohl/urh
+    filtre: aucun
+    domaine: sdr_aprs
+  - id: radio-gh-direwolf
+    nom: Dire Wolf (GitHub)
+    url: https://github.com/wb2osz/direwolf/releases.atom
+    site: https://github.com/wb2osz/direwolf
+    filtre: aucun
+    domaine: sdr_aprs
+  - id: radio-gh-hamlib
+    nom: Hamlib (GitHub)
+    url: https://github.com/hamlib/Hamlib/releases.atom
+    site: https://github.com/hamlib/Hamlib
+    filtre: aucun
+    domaine: radioamateur
+  - id: radio-gh-qdmr
+    nom: qdmr (GitHub)
+    url: https://github.com/hmatuschek/qdmr/releases.atom
+    site: https://github.com/hmatuschek/qdmr
+    filtre: aucun
+    domaine: modes_digitaux
+  - id: radio-gh-pat
+    nom: Pat Winlink (GitHub)
+    url: https://github.com/la5nta/pat/releases.atom
+    site: https://github.com/la5nta/pat
+    filtre: aucun
+    domaine: modes_digitaux
+  - id: radio-gh-dsd
+    nom: dsd-fme (GitHub)
+    url: https://github.com/lwvmobile/dsd-fme/releases.atom
+    site: https://github.com/lwvmobile/dsd-fme
+    filtre: aucun
+    domaine: modes_digitaux

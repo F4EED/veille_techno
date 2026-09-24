@@ -2,7 +2,7 @@
 
 Outil local de veille. Il interroge des flux RSS, Google News et les réseaux sociaux, classe les articles par thème, écrit un rapport PDF et HTML, l’envoie par e-mail, puis le dépose sur les Pages Perso Free.
 
-Cinq veilles tournent en parallèle :
+Sept veilles tournent en parallèle :
 
 | Profil | Rapport | Thème |
 | --- | --- | --- |
@@ -11,6 +11,8 @@ Cinq veilles tournent en parallèle :
 | `radio` | `Veille_Radio` | Radioamateur, modes digitaux, trafic |
 | `outils` | `Veille_Outils_PC` | Outils de gestion de crise et poste de commandement |
 | `blackout` | `Veille_Blackout` | Black-out, réseau électrique, déclarations de l’exécutif |
+| `geomatique` | `Veille_Geomatique` | Géomatique, QGIS, cartographie, données géographiques |
+| `mesh` | `Veille_Mesh` | Réseaux mesh, Meshtastic, MeshCore, mesh Wi-Fi |
 
 Le détail de chaque veille est dans [docs/profils.md](docs/profils.md).
 
@@ -24,7 +26,7 @@ cp config/email.secrets.yaml.example config/email.secrets.yaml
 ./lancer.sh
 ```
 
-`lancer.sh` installe les dépendances dans `.vendor` s’il le faut, puis lance les cinq profils.
+`lancer.sh` installe les dépendances dans `.vendor` s’il le faut, puis lance les sept profils.
 
 Un seul profil :
 
@@ -34,6 +36,8 @@ Un seul profil :
 ./lancer.sh --profil radio
 ./lancer.sh --profil outils
 ./lancer.sh --profil blackout
+./lancer.sh --profil geomatique
+./lancer.sh --profil mesh
 ```
 
 Options transmises à chaque veille :
@@ -46,6 +50,23 @@ Options transmises à chaque veille :
 ```
 
 La fenêtre par défaut est de 7 jours (`periode_jours` dans le fichier de mots-clés). La veille black-out remonte 14 jours. Les titres et résumés anglais sont traduits en français quand le service de traduction répond.
+
+## PC dédié, envoi à 7 h
+
+Copier ce dossier sur le PC qui reste allumé, puis lancer l’installeur une fois.
+
+Linux :
+
+```bash
+chmod +x installer-linux.sh
+./installer-linux.sh
+```
+
+Windows : double-clic sur `installer-windows.bat`.
+
+L’installeur met Python 3, les bibliothèques, la police des PDF et le mot de passe de la boîte mail. Il empêche la mise en veille et programme les sept veilles tous les jours à 7 h 00, à l’heure affichée par le PC. Si le PC était éteint à cette heure, l’envoi part au démarrage suivant. Le journal est `.runlogs/quotidien.log`.
+
+Essai immédiat : `./lancer.sh` ou `lancer.bat`.
 
 ## Où lire les résultats
 
@@ -63,7 +84,7 @@ Pages Perso ne fait qu’afficher les fichiers déposés par FTP. Le script Pyth
 
 ## Documentation
 
-- [Les cinq veilles](docs/profils.md)
+- [Les sept veilles](docs/profils.md)
 - [Sources, mots-clés et découverte](docs/sources.md)
 - [E-mail, publication et archives](docs/publication.md)
 
@@ -71,7 +92,10 @@ Pages Perso ne fait qu’afficher les fichiers déposés par FTP. Le script Pyth
 
 | Fichier | Rôle |
 | --- | --- |
-| `lancer.sh` | Lance une ou les cinq veilles |
+| `lancer.sh` | Lance une ou les sept veilles |
+| `installer-linux.sh` | Installe les prérequis et l’envoi quotidien à 7 h |
+| `installer-windows.bat` | Idem sous Windows |
+| `lancer.bat` | Lance les veilles sous Windows |
 | `veille.py` | Collecte, filtre, rapport HTML |
 | `traduction.py` | Traduction des titres et résumés anglais |
 | `rapport_pdf.py` | PDF |

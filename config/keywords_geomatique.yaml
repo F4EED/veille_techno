@@ -1,0 +1,284 @@
+# Veille Géomatique. Sous-rubriques du rapport, de la plus précise à la plus générale.
+# Un article va dans la rubrique de plus haute priorité qui matche.
+# « ign » seul est évité : il attraperait le site de jeux vidéo IGN.
+
+periode_jours: 7
+
+domaines:
+  lidar:
+    label: Lidar
+    priorite: 100
+    mots_cles:
+      - lidar
+      - "lidar aéroporté"
+      - "lidar aeroporte"
+      - "lidar terrestre"
+      - "lidar mobile"
+      - "airborne lidar"
+      - "aerial lidar"
+      - "nuage de points"
+      - "point cloud"
+
+  releves:
+    label: Relevés
+    priorite: 90
+    mots_cles:
+      - "prise de vue aérienne"
+      - "prise de vue aerienne"
+      - "prise de vues aériennes"
+      - "prises de vue aériennes"
+      - "prises de vues aériennes"
+      - "vue aérienne"
+      - "vues aériennes"
+      - "imagerie aérienne"
+      - "imagerie aerienne"
+      - "photographie aérienne"
+      - "photographie aerienne"
+      - "photo aérienne"
+      - "photo aerienne"
+      - "levé aérien"
+      - "leve aerien"
+      - "levés aériens"
+      - "levé topographique"
+      - "leve topographique"
+      - "levés topographiques"
+      - "relevé topographique"
+      - "releve topographique"
+      - "relevés topographiques"
+      - "releves topographiques"
+      - "relevé de terrain"
+      - "releve de terrain"
+      - "relevés de terrain"
+      - "releves de terrain"
+      - "levé de terrain"
+      - "levé par drone"
+      - "leve par drone"
+      - "relevé par drone"
+      - "releve par drone"
+      - "cartographie par drone"
+      - "mobile mapping"
+      - "station totale"
+      - "géomètre-expert"
+      - "geometre-expert"
+      - gnss
+      - orthophoto
+      - orthophotographie
+      - photogrammétrie
+      - photogrammetrie
+      - photogrammetry
+      - topographie
+      - "carte topographique"
+      - "aerial photography"
+      - "aerial imagery"
+      - "aerial survey"
+      - télédétection
+      - teledetection
+      - "remote sensing"
+
+  urgence:
+    label: Cartographie d'urgence
+    priorite: 85
+    mots_cles:
+      - "cartographie d'urgence"
+      - "cartographie d urgence"
+      - "cartographie de crise"
+      - "cartographie en crise"
+      - "cartographie humanitaire"
+      - "cartographie opérationnelle"
+      - "cartographie operationnelle"
+      - "carte de crise"
+      - "cartes de crise"
+      - "carte d'urgence"
+      - "crisis mapping"
+      - "crisis map"
+      - "emergency mapping"
+      - "emergency map"
+      - "humanitarian mapping"
+      - "rapid mapping"
+      - "missing maps"
+      - cartong
+      - mapaction
+      - "humanitarian openstreetmap"
+      - hotosm
+      - unosat
+      - "copernicus ems"
+      - giscorps
+      - "sig de crise"
+      - "sig d'urgence"
+      - "sig d urgence"
+      - "sig opérationnel"
+      - "sig operationnel"
+      - "point d'eau incendie"
+      - "points d'eau incendie"
+      - "défense extérieure contre l'incendie"
+      - "defense exterieure contre l'incendie"
+
+  ia:
+    label: IA géomatique
+    priorite: 80
+    mots_cles:
+      - geoai
+      - "geo ai"
+      - "geospatial ai"
+      - "ia géomatique"
+      - "ia geomatique"
+      - "ia géospatiale"
+      - "ia geospatiale"
+      - "intelligence artificielle géomatique"
+      - "intelligence artificielle géospatiale"
+      - "earth observation"
+      - "observation de la terre"
+
+  outils:
+    label: Outils
+    priorite: 70
+    mots_cles:
+      - "outil géomatique"
+      - "outils géomatiques"
+      - "outils de géomatique"
+      - "outil de géomatique"
+      - "logiciel géomatique"
+      - "logiciels géomatiques"
+      - "suite géomatique"
+      - "outil de cartographie"
+      - "outils de cartographie"
+      - "outils cartographiques"
+      - "outil cartographique"
+      - "logiciel de cartographie"
+      - "logiciels de cartographie"
+      - "logiciel sig"
+      - "logiciel de sig"
+      - "logiciels sig"
+      - "outil sig"
+      - "outils sig"
+      - "sig open source"
+      - "open source gis"
+      - qgis
+      - "quantum gis"
+      - postgis
+      - geoserver
+      - mapserver
+      - gdal
+      - "grass gis"
+      - arcgis
+      - "arcgis pro"
+      - esri
+      - mapbox
+      - openlayers
+      - leafletjs
+      - "leaflet.js"
+      - geopandas
+      - "web mapping"
+      - webmapping
+      - "carte interactive"
+
+  donnees:
+    label: Données
+    priorite: 60
+    mots_cles:
+      - "données géographiques"
+      - "donnees geographiques"
+      - "données géospatiales"
+      - "donnees geospatiales"
+      - "données cartographiques"
+      - "donnees cartographiques"
+      - "donnée cartographique"
+      - "geospatial data"
+      - "spatial data"
+      - "base de données géographique"
+      - "base de donnees geographique"
+      - "gestion des données géographiques"
+      - "gestion des donnees geographiques"
+      - géoportail
+      - geoportail
+      - géoplateforme
+      - geoplateforme
+      - "data.geopf"
+      - "modèle numérique de terrain"
+      - "modele numerique de terrain"
+      - "modèle numérique d'élévation"
+      - mnt
+      - "bd topo"
+      - bdtopo
+      - "bd ortho"
+      - bdortho
+      - "plan cadastral"
+      - "pci vecteur"
+      - "base adresse nationale"
+      - "adresse nationale"
+      - shapefile
+      - "fichier shape"
+      - wms
+      - wfs
+      - wmts
+      - "référentiel géographique"
+      - "referentiel geographique"
+      - "open data"
+      - opendata
+      - "données ouvertes"
+      - "donnees ouvertes"
+      - "donnée ouverte"
+      - "licence ouverte"
+
+  geomatique:
+    label: Général
+    priorite: 40
+    mots_cles:
+      - géomatique
+      - geomatics
+      - géomaticien
+      - géomaticienne
+      - geomaticien
+      - geomaticienne
+      - geomatician
+      - "information géographique"
+      - "information geographique"
+      - "geographic information"
+      - "geographical information"
+      - "information géolocalisée"
+      - "information geolocalisee"
+      - "système d'information géographique"
+      - "systeme d'information geographique"
+      - "geographic information system"
+      - "systèmes d'information géographique"
+      - sig
+      - gis
+      - cartographie
+      - cartographique
+      - cartographiques
+      - cartographer
+      - "cartographie numérique"
+      - "cartographie numerique"
+      - "digital mapping"
+      - "fond de carte"
+      - "fonds de carte"
+      - openstreetmap
+      - "open street map"
+      - osm
+      - weeklyosm
+      - "l'ign"
+      - "ign.fr"
+      - "institut géographique national"
+      - "institut geographique national"
+      - "institut national de l'information géographique"
+      - brgm
+      - géorisques
+      - georisques
+      - afigéo
+      - afigeo
+      - cnig
+      - "conseil national de l'information géolocalisée"
+      - "conseil national de l'information geolocalisee"
+      - shom
+      - "service hydrographique"
+      - geotribu
+      - georezo
+      - "géo rézo"
+
+tendances:
+  - id: qgis
+    label: QGIS
+    mots_cles: [qgis, postgis, geoserver, gdal, "grass gis"]
+  - id: institutions
+    label: IGN, OSM, BRGM
+    mots_cles: [openstreetmap, "l'ign", brgm, géorisques, afigéo, cnig, shom, geotribu]

@@ -6,3 +6,33 @@ flux:
   site: https://businessnews.com.tn/
   filtre: mots_cles
   decouverte: '2026-09-22'
+- id: dec-lopinion-fr
+  nom: l'Opinion
+  url: https://www.lopinion.fr/index.rss
+  site: https://lopinion.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-realites-com-tn
+  nom: Réalités Magazine
+  url: https://realites.com.tn/fr/feed/
+  site: https://realites.com.tn/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-touteleurope-eu
+  nom: Touteleurope.eu
+  url: https://touteleurope.eu/feed
+  site: https://touteleurope.eu/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-gazdaujourdhui-fr
+  nom: Gaz d'aujourd'hui
+  url: https://gazdaujourdhui.fr/feed
+  site: https://gazdaujourdhui.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-timefrance-fr
+  nom: TIME France
+  url: https://www.timefrance.fr/feed/
+  site: https://timefrance.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-23'

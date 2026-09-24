@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import html as html_stdlib
+import json
 import re
 import urllib.parse
 from collections import Counter
@@ -455,4 +456,210 @@ def decouvrir_sources(
         print(f"{etiquette}  {len(nouvelles)} nouvelle(s) source(s) intégrée(s).", flush=True)
     else:
         print(f"{etiquette}  Aucune nouvelle source pertinente.", flush=True)
+    return nouvelles
+
+
+FICHIER_WMS = CONFIG / "sources_wms_decouvertes.yaml"
+MAX_SONDES_WMS = 16
+MAX_NOUVEAUX_WMS = 8
+
+REQUETES_WMS_DATAGOUV = (
+    "format=wms&page_size=40&page=1&sort=-created",
+    "format=wms&page_size=40&page=2&sort=-created",
+    "format=wms&q=SDIS&page_size=20",
+    "format=wms&q=lidar&page_size=20",
+    "format=wms&q=orthophoto&page_size=20",
+    "format=wms&q=cadastre&page_size=15",
+)
+
+
+def cle_wms(url: str) -> str:
+    parse = urllib.parse.urlparse(url.strip())
+    chemin = parse.path.rstrip("/")
+    if chemin.lower().endswith("/ows"):
+        chemin = chemin[:-4] + "/wms"
+    return f"{parse.scheme or 'https'}://{hote_url(url)}{chemin}".lower()
+
+
+def wms_connu(cle: str, connus: set[str]) -> bool:
+    if cle in connus:
+        return True
+    if f"{cle}/wms" in connus:
+        return True
+    if cle.endswith("/wms") and cle[: -len("/wms")] in connus:
+        return True
+    return False
+
+
+def url_capabilities(url: str) -> str:
+    if "request=getcapabilities" in url.lower():
+        return url
+    separateur = "&" if "?" in url else "?"
+    return f"{url}{separateur}SERVICE=WMS&REQUEST=GetCapabilities"
+
+
+def charger_wms_decouverts(fichier: Path | None = None) -> list[Source]:
+    cfg = charger_optionnel(fichier or FICHIER_WMS)
+    services: list[Source] = []
+    for item in cfg.get("wms") or []:
+        adresse = str(item.get("url") or "").strip()
+        if not adresse:
+            continue
+        services.append(
+            Source(
+                identifiant=str(item.get("id") or "wms"),
+                nom=str(item.get("nom") or "WMS"),
+                url=adresse,
+                site=adresse,
+                filtre="aucun",
+                domaine="donnees",
+            )
+        )
+    return services
+
+
+def enregistrer_wms(nouvelles: list[Source], fichier: Path | None = None) -> None:
+    cible = fichier or FICHIER_WMS
+    cfg = charger_optionnel(cible)
+    flux = list(cfg.get("wms") or [])
+    existants = {cle_wms(str(item.get("url") or "")) for item in flux}
+    aujourd_hui = datetime.now().strftime("%Y-%m-%d")
+    for source in nouvelles:
+        cle = cle_wms(source.url)
+        if cle in existants:
+            continue
+        flux.append(
+            {
+                "id": source.identifiant,
+                "nom": source.nom,
+                "url": source.url,
+                "site": source.site or source.url,
+                "decouverte": aujourd_hui,
+            }
+        )
+        existants.add(cle)
+    cible.parent.mkdir(parents=True, exist_ok=True)
+    cible.write_text(
+        yaml.safe_dump(
+            {
+                "comment": "Services WMS ajoutés automatiquement à chaque lancement.",
+                "wms": flux,
+            },
+            allow_unicode=True,
+            sort_keys=False,
+        ),
+        encoding="utf-8",
+    )
+
+
+def _url_ressemble_wms(url: str) -> bool:
+    bas = url.lower()
+    if not bas.startswith("http"):
+        return False
+    hote = hote_url(url)
+    if not hote.endswith((".fr", ".eu", ".org", ".com")):
+        return False
+    if "rie.gouv.fr" in hote or "wmts" in bas or "service=wfs" in bas or "getfeature" in bas:
+        return False
+    if "map=" in urllib.parse.urlparse(url).query.lower():
+        return False
+    return any(morceau in bas for morceau in ("/wms", "service=wms", "wmsserver", "/ows", "/wxs", "geoserver"))
+
+
+def candidats_wms_datagouv() -> list[str]:
+    """Services WMS cités dans les jeux data.gouv.fr, dédoublonnés par hôte et chemin."""
+    candidats: list[str] = []
+    vus: set[str] = set()
+    for requete in REQUETES_WMS_DATAGOUV:
+        url = "https://www.data.gouv.fr/api/1/datasets/?" + requete
+        try:
+            donnees = json.loads(telecharger(url, timeout=15))
+        except Exception:
+            continue
+        for jeu in donnees.get("data") or []:
+            for ressource in jeu.get("resources") or []:
+                adresse = str(ressource.get("url") or "").strip()
+                format_res = str(ressource.get("format") or "").lower()
+                if "wms" not in format_res and not _url_ressemble_wms(adresse):
+                    continue
+                if not _url_ressemble_wms(adresse):
+                    continue
+                cle = cle_wms(adresse)
+                if cle in vus:
+                    continue
+                vus.add(cle)
+                candidats.append(adresse.split("#", 1)[0])
+    return candidats
+
+
+def sonder_wms(url: str) -> tuple[bool, str, str]:
+    """Retourne (ok, nom, url GetCapabilities)."""
+    cible = url_capabilities(url)
+    try:
+        brut = telecharger(cible, timeout=12)
+    except Exception:
+        return False, "", cible
+    texte = brut[:6000].decode("utf-8", "replace")
+    bas = texte.lower()
+    if "wms_capabilities" not in bas and "wmt_ms_capabilities" not in bas:
+        return False, "", cible
+    titre = re.search(r"<Title>([^<]{2,90})</Title>", texte, re.IGNORECASE)
+    nom = nettoyer_html(titre.group(1)) if titre else hote_url(cible)
+    return True, nom or hote_url(cible), cible
+
+
+def decouvrir_wms(
+    connus: list[Source],
+    prefixe: str = "",
+    fichier: Path | None = None,
+) -> list[Source]:
+    """Cherche de nouveaux services WMS et les enregistre."""
+    etiquette = f"{prefixe} " if prefixe else ""
+    print(f"{etiquette}Recherche de nouveaux flux WMS…", flush=True)
+    connus_cles = {cle_wms(service.url) for service in connus if service.url}
+    identifiants = {service.identifiant for service in connus}
+    candidats = [
+        candidat
+        for candidat in candidats_wms_datagouv()
+        if not wms_connu(cle_wms(candidat), connus_cles)
+    ][:MAX_SONDES_WMS]
+    print(f"{etiquette}  {len(candidats)} adresse(s) WMS à vérifier.", flush=True)
+
+    nouvelles: list[Source] = []
+    for candidat in candidats:
+        if len(nouvelles) >= MAX_NOUVEAUX_WMS:
+            break
+        ok, nom, cible = sonder_wms(candidat)
+        if not ok:
+            continue
+        cle = cle_wms(cible)
+        if wms_connu(cle, connus_cles):
+            continue
+        identifiant = "wms-dec-" + re.sub(r"[^a-z0-9]+", "-", cle.split("://", 1)[-1]).strip("-")[:48]
+        if identifiant in identifiants:
+            continue
+        libelle = nom
+        if any(service.nom == f"WMS — {libelle}" for service in (*connus, *nouvelles)):
+            segment = urllib.parse.urlparse(cible).path.rstrip("/").rsplit("/", 2)
+            precision = segment[-2] if len(segment) >= 2 else hote_url(cible)
+            libelle = f"{nom} ({precision})"
+        service = Source(
+            identifiant=identifiant,
+            nom=f"WMS — {libelle}",
+            url=cible,
+            site=cible,
+            filtre="aucun",
+            domaine="donnees",
+            nouvelle=True,
+        )
+        nouvelles.append(service)
+        identifiants.add(identifiant)
+        connus_cles.add(cle)
+        print(f"{etiquette}  + {service.nom} — {service.url}", flush=True)
+
+    if nouvelles:
+        enregistrer_wms(nouvelles, fichier or FICHIER_WMS)
+        print(f"{etiquette}  {len(nouvelles)} nouveau(x) flux WMS intégré(s).", flush=True)
+    else:
+        print(f"{etiquette}  Aucun nouveau flux WMS.", flush=True)
     return nouvelles

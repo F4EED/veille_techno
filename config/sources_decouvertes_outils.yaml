@@ -6,3 +6,15 @@ flux:
   site: https://sapeurs-pompiers35.fr/
   filtre: mots_cles
   decouverte: '2026-09-22'
+- id: dec-wqad-com
+  nom: wqad.com
+  url: https://www.youtube.com/feeds/videos.xml?channel_id=UCRlWXcripH3oV_v6uSb9ASw
+  site: https://wqad.com/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-atl-direct
+  nom: ATL Direct
+  url: https://atl.direct/feed/
+  site: https://atl.direct/
+  filtre: mots_cles
+  decouverte: '2026-09-23'

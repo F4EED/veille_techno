@@ -72,3 +72,39 @@ flux:
   site: https://dcreport.org/
   filtre: mots_cles
   decouverte: '2026-09-11'
+- id: dec-newsshooter-com
+  nom: Newsshooter
+  url: https://newsshooter.com/feed
+  site: https://newsshooter.com/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-midilibre-fr
+  nom: midilibre.fr
+  url: https://www.midilibre.fr/rss.xml
+  site: https://midilibre.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-oisehebdo-fr
+  nom: Oise Hebdo
+  url: https://www.oisehebdo.fr/feed/
+  site: https://oisehebdo.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-hebdo39-net
+  nom: Hebdo39
+  url: https://hebdo39.net/feed/
+  site: https://hebdo39.net/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-springvillejournal-com
+  nom: Springville Journal
+  url: https://springvillejournal.com/feed
+  site: https://springvillejournal.com/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-trackandfieldnews-com
+  nom: trackandfieldnews.com
+  url: https://trackandfieldnews.com/feed/
+  site: https://trackandfieldnews.com/
+  filtre: mots_cles
+  decouverte: '2026-09-23'

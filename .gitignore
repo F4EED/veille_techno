@@ -1,14 +1,18 @@
 .venv/
 .vendor/
+.python-veille
+.runlogs/
+fonts/*.ttf
 __pycache__/
 *.pyc
 .python-version
 config/decouverte_cache*.yaml
 config/traduction_cache.json
-config/email.secrets.yaml
+config/traduction_cache.lock
 .index_veille.html
 .archives_veille.html
 config/rapports_courants.yaml
+config/email.secrets.yaml
 
 # Rapports générés localement (le site Pages Perso les publie)
 Veille_*.pdf

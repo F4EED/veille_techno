@@ -15,6 +15,8 @@ Quand l’envoi d’e-mail est actif, `publication.py` dépose le PDF et le HTML
 - [la page du jour](https://f4eed.pages-perso.free.fr/veille/)
 - [la page des anciennes veilles](https://f4eed.pages-perso.free.fr/veille/archives.html)
 
+Ces deux pages tiennent sur un petit écran : une seule colonne, textes qui reviennent à la ligne, marges pour les encoches, et liens assez hauts pour le doigt.
+
 L’archive regroupe les rapports dont le nom contient une date (`Veille_<Profil>_AAAA-MM-JJ.pdf` ou `Veille_<Profil>_AAAA-MM-JJ_HH-MM-SS.pdf`), du plus récent au plus ancien, avec le PDF et la lecture dans le navigateur. Les copies courtes `Veille_IOT.pdf` et les autres alias sans date n’y figurent pas.
 
 Les noms des rapports du jour sont mémorisés dans `config/rapports_courants.yaml`, lui aussi ignoré par git. La page d’accueil s’en sert pour pointer vers le fichier horodaté.

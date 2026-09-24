@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Le bouton Actualiser relance les cinq veilles sur ce poste."""
+"""Le bouton Actualiser relance les sept veilles sur ce poste."""
 
 from __future__ import annotations
 
@@ -82,7 +82,7 @@ def demarrer_si_besoin() -> None:
             return
         _etat["running"] = True
         _etat["code"] = None
-        _etat["lignes"] = ["Relance des cinq veilles (IoT, crise, radio, outils de PC, black-out)…"]
+        _etat["lignes"] = ["Relance des sept veilles (IoT, crise, radio, outils de PC, black-out, géomatique, mesh)…"]
     threading.Thread(target=_lancer, name="veille-actualiser", daemon=True).start()
 
 

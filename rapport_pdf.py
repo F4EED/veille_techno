@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 import re
 from datetime import datetime
 from pathlib import Path
@@ -22,9 +23,30 @@ from veille import (
     tronquer,
 )
 
-POLICE = "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf"
-POLICE_GRAS = "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf"
-POLICE_ITAL = "/usr/share/fonts/truetype/liberation/LiberationSans-Italic.ttf"
+def chemins_polices() -> tuple[str, str, str]:
+    """Liberation Sans (déposée par les installeurs) ou Arial, déjà présente sous Windows."""
+    racines = [
+        Path(__file__).resolve().parent / "fonts",
+        Path("/usr/share/fonts/truetype/liberation"),
+        Path("/usr/share/fonts/liberation"),
+        Path("/usr/share/fonts/liberation-sans"),
+        Path("/usr/share/fonts/TTF"),
+    ]
+    windir = os.environ.get("WINDIR") or os.environ.get("SystemRoot")
+    racines.append(Path(windir) / "Fonts" if windir else Path(r"C:\Windows\Fonts"))
+    jeux = (
+        ("LiberationSans-Regular.ttf", "LiberationSans-Bold.ttf", "LiberationSans-Italic.ttf"),
+        ("arial.ttf", "arialbd.ttf", "ariali.ttf"),
+    )
+    for dossier in racines:
+        for noms in jeux:
+            chemins = tuple(dossier / nom for nom in noms)
+            if all(chemin.is_file() for chemin in chemins):
+                return tuple(str(chemin) for chemin in chemins)
+    raise FileNotFoundError(
+        "Police PDF introuvable (Liberation Sans ou Arial). "
+        "Relancez installer-linux.sh ou installer-windows.bat."
+    )
 
 THEMES = {
     "iot": {
@@ -62,6 +84,20 @@ THEMES = {
         "fond": (250, 246, 238),
         "accroche": "Black-out, réseau électrique et déclarations de l'exécutif",
     },
+    "geomatique": {
+        "accent": (13, 110, 79),
+        "clair": (226, 242, 234),
+        "or": (184, 138, 58),
+        "fond": (244, 248, 244),
+        "accroche": "Géomatique, QGIS, cartographie et données géographiques",
+    },
+    "mesh": {
+        "accent": (29, 78, 137),
+        "clair": (226, 236, 246),
+        "or": (70, 140, 214),
+        "fond": (244, 247, 251),
+        "accroche": "Réseaux mesh, Meshtastic, MeshCore et mesh Wi-Fi",
+    },
 }
 
 
@@ -98,9 +134,10 @@ class RapportPDF(FPDF):
         self.couverture = True
         self.set_auto_page_break(auto=True, margin=18)
         self.set_margins(16, 16, 16)
-        self.add_font("Lib", "", POLICE)
-        self.add_font("Lib", "B", POLICE_GRAS)
-        self.add_font("Lib", "I", POLICE_ITAL)
+        regular, gras, italique = chemins_polices()
+        self.add_font("Lib", "", regular)
+        self.add_font("Lib", "B", gras)
+        self.add_font("Lib", "I", italique)
         self.set_title(f"{profil.titre} — {date_lue}")
         self.set_author("Veille")
         self.set_creator("Veille locale")
@@ -140,9 +177,10 @@ class RapportPDF(FPDF):
 
 
 def _cartes_stats(pdf: RapportPDF, items: list[tuple[str, str]], y: float) -> None:
-    largeur = 42
     espace = 3
     x0 = 16
+    n = max(len(items), 1)
+    largeur = (178 - espace * (n - 1)) / n
     for i, (valeur, libelle) in enumerate(items):
         x = x0 + i * (largeur + espace)
         pdf.set_fill_color(255, 255, 255)
@@ -303,6 +341,7 @@ def ecrire_rapport_pdf(
     depuis: datetime,
     nouvelles: list[Source] | None = None,
     profil: Profil | None = None,
+    services_wms: list[Source] | None = None,
 ) -> None:
     profil = profil or charger_profils()["iot"]
     theme = THEMES.get(profil.identifiant, THEMES["iot"])
@@ -322,6 +361,7 @@ def ecrire_rapport_pdf(
     date_lue = date_longue_fr()
     genere = datetime.now().strftime("%d/%m/%Y à %H:%M")
     nouvelles = nouvelles or []
+    services_wms = services_wms or []
 
     pdf = RapportPDF(profil, theme, date_lue)
     pdf.add_page()
@@ -368,6 +408,7 @@ def ecrire_rapport_pdf(
             (str(len(articles)), "articles"),
             (str(len(sources)), "sources"),
             (str(len(nouvelles)), "nouvelles sources"),
+            *([(str(len(services_wms)), "flux WMS")] if services_wms else []),
             (f"{sum(1 for a in articles if a.domaines)}", "classés"),
         ],
         102,
@@ -451,6 +492,23 @@ def ecrire_rapport_pdf(
         _titre_section(pdf, f"{profil.orphelins}  ({len(orphelins)})")
         for article in orphelins:
             _fiche(pdf, article, par_id, par_tendance)
+
+    if services_wms:
+        nouveaux = sum(1 for service in services_wms if service.nouvelle)
+        _titre_section(pdf, f"Flux WMS  ({len(services_wms)}, dont {nouveaux} nouveau(x))")
+        for service in services_wms:
+            if pdf.reste() < 12:
+                pdf.add_page()
+            nom = texte_pdf(service.nom)
+            if service.nouvelle:
+                nom = f"{nom}  (nouveau)"
+            pdf.set_font("Lib", "B", 9)
+            pdf.set_text_color(*theme["accent"])
+            pdf.cell(0, 5, nom[:90], new_x="LMARGIN", new_y="NEXT")
+            pdf.set_font("Lib", "", 8)
+            pdf.set_text_color(90, 86, 82)
+            pdf.multi_cell(0, 4, texte_pdf(service.url), link=service.url)
+            pdf.ln(1)
 
     _titre_section(pdf, "Sources interrogées")
     erreurs_par_nom = {nom: motif for nom, motif in erreurs}

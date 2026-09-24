@@ -210,3 +210,21 @@ flux:
   site: https://electropages.com/
   filtre: mots_cles
   decouverte: '2026-09-22'
+- id: dec-itforbusiness-fr
+  nom: ITforBusiness.fr
+  url: https://www.itforbusiness.fr/feed
+  site: https://itforbusiness.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-lest-eclair-fr
+  nom: L'Est éclair
+  url: https://lest-eclair.fr/rss.xml
+  site: https://lest-eclair.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-latribune-fr
+  nom: La Tribune
+  url: https://latribune.fr/feed.xml
+  site: https://latribune.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-23'

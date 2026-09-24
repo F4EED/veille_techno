@@ -382,3 +382,53 @@ flux:
     url: https://cityramag.fr/feed/
     site: https://cityramag.fr/
     filtre: mots_cles
+
+  # --- GitHub (versions) ---
+  - id: iot-gh-chirpstack
+    nom: ChirpStack (GitHub)
+    url: https://github.com/chirpstack/chirpstack/releases.atom
+    site: https://github.com/chirpstack/chirpstack
+    filtre: aucun
+    domaine: lorawan
+  - id: iot-gh-ttn
+    nom: The Things Stack (GitHub)
+    url: https://github.com/TheThingsNetwork/lorawan-stack/releases.atom
+    site: https://github.com/TheThingsNetwork/lorawan-stack
+    filtre: aucun
+    domaine: lorawan
+  - id: iot-gh-esphome
+    nom: ESPHome (GitHub)
+    url: https://github.com/esphome/esphome/releases.atom
+    site: https://github.com/esphome/esphome
+    filtre: aucun
+    domaine: iot
+  - id: iot-gh-tasmota
+    nom: Tasmota (GitHub)
+    url: https://github.com/arendst/Tasmota/releases.atom
+    site: https://github.com/arendst/Tasmota
+    filtre: aucun
+    domaine: iot
+  - id: iot-gh-zigbee2mqtt
+    nom: Zigbee2MQTT (GitHub)
+    url: https://github.com/Koenkk/zigbee2mqtt/releases.atom
+    site: https://github.com/Koenkk/zigbee2mqtt
+    filtre: aucun
+    domaine: iot
+  - id: iot-gh-mosquitto
+    nom: Mosquitto (GitHub)
+    url: https://github.com/eclipse-mosquitto/mosquitto/releases.atom
+    site: https://github.com/eclipse-mosquitto/mosquitto
+    filtre: aucun
+    domaine: iot
+  - id: iot-gh-nodered
+    nom: Node-RED (GitHub)
+    url: https://github.com/node-red/node-red/releases.atom
+    site: https://github.com/node-red/node-red
+    filtre: aucun
+    domaine: iot
+  - id: iot-gh-thingsboard
+    nom: ThingsBoard (GitHub)
+    url: https://github.com/thingsboard/thingsboard/releases.atom
+    site: https://github.com/thingsboard/thingsboard
+    filtre: aucun
+    domaine: industrie

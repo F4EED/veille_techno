@@ -34,6 +34,7 @@ CONFIG = ROOT / "config"
 USER_AGENT = "Mozilla/5.0 (compatible; VeilleIOT/1.0; outil local de veille technique)"
 TIMEOUT_S = 18
 MAX_WORKERS = 10
+DATE_MIN = datetime(2025, 1, 1, tzinfo=timezone.utc)
 MOIS_FR = (
     "janvier",
     "février",
@@ -115,6 +116,14 @@ def extraire_date(entry: Any) -> datetime | None:
             except ValueError:
                 continue
     return None
+
+
+def avant_2025(date: datetime | None) -> bool:
+    if date is None:
+        return False
+    if date.tzinfo is None:
+        date = date.replace(tzinfo=timezone.utc)
+    return date.astimezone(timezone.utc) < DATE_MIN
 
 
 def extraire_lien(entry: Any) -> str:
@@ -354,6 +363,69 @@ def charger_profils() -> dict[str, Profil]:
             sujet_email="Veille_Blackout",
             orphelins="Autres articles des sources black-out",
             sources_extra=(CONFIG / "sources_crise_territoires.yaml",),
+        ),
+        "geomatique": Profil(
+            identifiant="geomatique",
+            titre="Veille_Geomatique",
+            perimetre=(
+                "Rubrique Géomatique, avec sous-rubriques Lidar, Relevés, "
+                "Cartographie d'urgence, IA, Outils, Données et Général. "
+                "Institutions suivies : IGN, Géoportail, "
+                "OpenStreetMap, BRGM, Géorisques, CNIG, SHOM. Sources : flux RSS, "
+                "Google News, presse nationale, Auvergne-Rhône-Alpes, "
+                "informatique / technique / IA, LinkedIn, X, Mastodon, Bluesky et Threads."
+            ),
+            prefixe_sortie="Veille_Geomatique",
+            alias_sortie="Veille_Geomatique.pdf",
+            keywords=CONFIG / "keywords_geomatique.yaml",
+            sources=CONFIG / "sources_geomatique.yaml",
+            decouvertes=CONFIG / "sources_decouvertes_geomatique.yaml",
+            cache=CONFIG / "decouverte_cache_geomatique.yaml",
+            requetes_web=(
+                "géomatique RSS feed blog",
+                "QGIS RSS feed blog",
+                "OpenStreetMap OR weeklyOSM RSS",
+                '"données géographiques" OR "géoplateforme" OR géoportail RSS',
+                "PostGIS OR GDAL OR GeoServer OR \"GRASS GIS\" RSS",
+                "GeoAI OR \"geospatial AI\" OR \"IA géospatiale\" RSS",
+                '"cartographie d\'urgence" OR "crisis mapping" OR CartONG OR MapAction RSS',
+                'lidar OR "prise de vue aérienne" OR "aerial survey" RSS',
+                "site:ign.fr OR site:brgm.fr OR site:geotribu.fr RSS",
+                "site:osgeo.org OR site:qgis.org cartographie RSS",
+                '"Auvergne-Rhône-Alpes" géomatique OR QGIS OR cartographie RSS',
+            ),
+            sujet_email="Veille_Geomatique",
+            orphelins="Autres articles des sources géomatique",
+        ),
+        "mesh": Profil(
+            identifiant="mesh",
+            titre="Veille_Mesh",
+            perimetre=(
+                "Rubrique Mesh, avec sous-rubriques Meshtastic, MeshCore et Général. "
+                "Réseaux mesh, mesh Wi-Fi, Meshtastic, MeshCore, Reticulum, "
+                "802.11s et protocoles de maillage voisins. Sources : flux RSS, "
+                "Google News, presse nationale, Auvergne-Rhône-Alpes, "
+                "informatique / technique / IA, LinkedIn, X, Mastodon, Bluesky et Threads."
+            ),
+            prefixe_sortie="Veille_Mesh",
+            alias_sortie="Veille_Mesh.pdf",
+            keywords=CONFIG / "keywords_mesh.yaml",
+            sources=CONFIG / "sources_mesh.yaml",
+            decouvertes=CONFIG / "sources_decouvertes_mesh.yaml",
+            cache=CONFIG / "decouverte_cache_mesh.yaml",
+            requetes_web=(
+                "Meshtastic RSS feed blog",
+                "MeshCore RSS feed blog",
+                '"mesh wifi" OR "wifi mesh" OR "802.11s" RSS',
+                "Reticulum OR RNode mesh RSS",
+                '"réseau maillé" OR "wireless mesh" RSS',
+                "site:meshtastic.org OR site:meshcore.io RSS",
+                "site:reticulum.network OR site:unsigned.io RSS",
+                'site:linkedin.com Meshtastic OR MeshCore OR "mesh wifi"',
+                'site:x.com OR site:mastodon.social Meshtastic MeshCore RSS',
+            ),
+            sujet_email="Veille_Mesh",
+            orphelins="Autres articles des sources mesh",
         ),
     }
 
@@ -712,6 +784,8 @@ COULEURS_PROFIL = {
     "radio": "#1e3a5f",
     "outils": "#4a5c2a",
     "blackout": "#5c3d12",
+    "geomatique": "#0d6e4f",
+    "mesh": "#1d4e89",
 }
 
 CSS_RAPPORT = """
@@ -762,8 +836,10 @@ def ecrire_rapport(
     duree_s: float,
     nouvelles: list[Source] | None = None,
     profil: Profil | None = None,
+    services_wms: list[Source] | None = None,
 ) -> None:
     profil = profil or charger_profils()["iot"]
+    services_wms = services_wms or []
     par_id = {d.identifiant: d for d in domaines}
     par_tendance = {t.identifiant: t for t in tendances}
     comptes: dict[str, int] = {d.identifiant: 0 for d in domaines}
@@ -776,7 +852,7 @@ def ecrire_rapport(
     date_lue = date_longue_fr()
     genere = datetime.now().strftime("%d/%m/%Y à %H:%M")
     stats = (
-        f"{len(articles)} article(s) · {len(sources)} source(s) · "
+        f"{len(articles)} article(s) · {len(sources)} source(s) · {len(services_wms)} flux WMS · "
         f"depuis le {depuis.astimezone().strftime('%d/%m/%Y')} · généré le {genere}"
     )
 
@@ -841,6 +917,10 @@ def ecrire_rapport(
     if orphelins:
         sommaire.append(
             f'<li><a href="#{ancre(profil.orphelins)}">{echap_html(profil.orphelins)} <strong>{len(orphelins)}</strong></a></li>'
+        )
+    if services_wms:
+        sommaire.append(
+            f'<li><a href="#flux-wms">Flux WMS <strong>{len(services_wms)}</strong></a></li>'
         )
     sommaire.append('<li><a href="#sources">Sources</a></li></ul>')
 
@@ -910,6 +990,26 @@ def ecrire_rapport(
     if orphelins:
         ajouter_section(profil.orphelins, orphelins, compact=len(orphelins) > 8)
 
+    bloc_wms = ""
+    if services_wms:
+        lignes_wms = ["<table><thead><tr><th>Service</th><th>GetCapabilities</th></tr></thead><tbody>"]
+        for service in services_wms:
+            nom = echap_html(service.nom)
+            if service.nouvelle:
+                nom = f"<strong>{nom}</strong> (nouveau)"
+            lignes_wms.append(
+                f"<tr><td>{nom}</td>"
+                f"<td><a href=\"{echap_html(service.url)}\">{echap_html(service.url)}</a></td></tr>"
+            )
+        lignes_wms.append("</tbody></table>")
+        bloc_wms = (
+            '<section id="flux-wms"><h2>Flux WMS</h2>'
+            f'<p class="compte">{len(services_wms)} service(s), '
+            f"dont {sum(1 for service in services_wms if service.nouvelle)} nouveau(x)</p>"
+            + "\n".join(lignes_wms)
+            + "</section>"
+        )
+
     erreurs_par_nom = {nom: motif for nom, motif in erreurs}
     lignes_src = ["<table><thead><tr><th>Source</th><th>Statut</th></tr></thead><tbody>"]
     for source in sources:
@@ -954,6 +1054,7 @@ def ecrire_rapport(
 <h2>Tendances détectées</h2>
 {bloc_tendances}
 {" ".join(sections)}
+{bloc_wms}
 <section id="sources">
 <h2>Sources</h2>
 {" ".join(lignes_src)}
@@ -971,8 +1072,23 @@ def collecter(
     jours: int,
     decouvrir: bool = True,
     profil: Profil | None = None,
-) -> tuple[list[Article], list[Source], list[tuple[str, str]], list[Domaine], list[Tendance], datetime, list[Source]]:
-    from decouverte import charger_sources_decouvertes, decouvrir_sources
+) -> tuple[
+    list[Article],
+    list[Source],
+    list[tuple[str, str]],
+    list[Domaine],
+    list[Tendance],
+    datetime,
+    list[Source],
+    list[Source],
+]:
+    from decouverte import (
+        charger_sources_decouvertes,
+        charger_wms_decouverts,
+        cle_wms,
+        decouvrir_sources,
+        decouvrir_wms,
+    )
 
     profil = profil or charger_profils()["iot"]
     prefixe = f"[{profil.identifiant}]"
@@ -1013,9 +1129,18 @@ def collecter(
                 continue
             print(f"{prefixe}   ✓ {source.nom} — {len(entrees)} entrée(s)", flush=True)
             if source.ignorer_date:
-                entrees = entrees[:18]
+                fraiches = []
+                for entree in entrees:
+                    if avant_2025(extraire_date(entree)):
+                        continue
+                    fraiches.append(entree)
+                    if len(fraiches) >= 18:
+                        break
+                entrees = fraiches
             for entree in entrees:
                 date = extraire_date(entree)
+                if avant_2025(date):
+                    continue
                 if date and date < depuis and not source.ignorer_date:
                     continue
                 titre = nettoyer_html(entree.get("title") or "")
@@ -1029,6 +1154,9 @@ def collecter(
                 domaines_ok, mots, tendances_ok = matcher(texte, domaines, tendances)
                 if source.domaine and source.domaine not in domaines_ok:
                     domaines_ok = [source.domaine] + domaines_ok
+                if profil.identifiant in {"geomatique", "mesh"} and len(domaines_ok) > 1:
+                    priorites = {d.identifiant: d.priorite for d in domaines}
+                    domaines_ok.sort(key=lambda ident: priorites.get(ident, 0), reverse=True)
                 if source.filtre == "mots_cles" and not domaines_ok:
                     continue
                 articles.append(
@@ -1044,6 +1172,37 @@ def collecter(
                     )
                 )
 
+    services_wms: list[Source] = []
+    cles_wms: set[str] = set()
+
+    def _ajouter_wms(service: Source) -> None:
+        cle = cle_wms(service.url)
+        if not cle or cle in cles_wms:
+            return
+        cles_wms.add(cle)
+        services_wms.append(service)
+
+    if "wms" in src_cfg:
+        for item in src_cfg.get("wms") or []:
+            adresse = str(item.get("url") or "").strip()
+            if not adresse:
+                continue
+            _ajouter_wms(
+                Source(
+                    identifiant=str(item.get("id") or "wms"),
+                    nom=str(item.get("nom") or "WMS"),
+                    url=adresse,
+                    site=adresse,
+                    filtre="aucun",
+                    domaine="donnees",
+                )
+            )
+        for service in charger_wms_decouverts():
+            _ajouter_wms(service)
+        if decouvrir:
+            for service in decouvrir_wms(services_wms, prefixe=prefixe):
+                _ajouter_wms(service)
+
     vus: set[str] = set()
     uniques: list[Article] = []
     for article in sorted(articles, key=lambda a: a.date or datetime.min.replace(tzinfo=timezone.utc), reverse=True):
@@ -1051,7 +1210,7 @@ def collecter(
             continue
         vus.add(article.cle_dedup)
         uniques.append(article)
-    return uniques, sources, erreurs, domaines, tendances, depuis, nouvelles
+    return uniques, sources, erreurs, domaines, tendances, depuis, nouvelles, services_wms
 
 
 def main() -> int:
@@ -1089,7 +1248,7 @@ def main() -> int:
         sortie_html = ROOT / f"{profil.prefixe_sortie}_{date_nom}.html"
 
     debut = time()
-    articles, sources, erreurs, domaines, tendances, depuis, nouvelles = collecter(
+    articles, sources, erreurs, domaines, tendances, depuis, nouvelles, services_wms = collecter(
         jours,
         decouvrir=not args.sans_decouverte,
         profil=profil,
@@ -1099,10 +1258,33 @@ def main() -> int:
 
         traduire_articles(articles, prefixe=f"[{profil.identifiant}]")
     duree = time() - debut
-    ecrire_rapport(sortie_html, articles, domaines, tendances, sources, erreurs, depuis, duree, nouvelles, profil)
+    ecrire_rapport(
+        sortie_html,
+        articles,
+        domaines,
+        tendances,
+        sources,
+        erreurs,
+        depuis,
+        duree,
+        nouvelles,
+        profil,
+        services_wms,
+    )
     from rapport_pdf import ecrire_rapport_pdf
 
-    ecrire_rapport_pdf(sortie_pdf, articles, domaines, tendances, sources, erreurs, depuis, nouvelles, profil)
+    ecrire_rapport_pdf(
+        sortie_pdf,
+        articles,
+        domaines,
+        tendances,
+        sources,
+        erreurs,
+        depuis,
+        nouvelles,
+        profil,
+        services_wms,
+    )
     from publication import memoriser_rapport
 
     memoriser_rapport(profil.identifiant, sortie_pdf, sortie_html)
@@ -1116,7 +1298,9 @@ def main() -> int:
     print(f"[{profil.identifiant}] Rapport PDF  : {sortie_pdf}", flush=True)
     print(
         f"[{profil.identifiant}] {len(articles)} article(s) retenu(s), "
-        f"{len(nouvelles)} nouvelle(s) source(s), {len(erreurs)} source(s) en erreur.",
+        f"{len(nouvelles)} nouvelle(s) source(s), "
+        f"{sum(1 for service in services_wms if service.nouvelle)} nouveau(x) flux WMS, "
+        f"{len(erreurs)} source(s) en erreur.",
         flush=True,
     )
 

@@ -14,7 +14,7 @@ import yaml
 from veille import CONFIG, MOIS_FR, date_longue_fr
 
 _ARCHIVE_NOM = re.compile(
-    r"^(Veille_(?:Outils_PC|Blackout|IOT|Crise|Radio))"
+    r"^(Veille_(?:Outils_PC|Blackout|Geomatique|Mesh|IOT|Crise|Radio))"
     r"_(\d{4})-(\d{2})-(\d{2})(?:_(\d{2})-(\d{2})-(\d{2}))?\.(pdf|html)$"
 )
 _ORDRE_VEILLES = (
@@ -23,6 +23,8 @@ _ORDRE_VEILLES = (
     ("Veille_Radio", "radio"),
     ("Veille_Outils_PC", "outils"),
     ("Veille_Blackout", "blackout"),
+    ("Veille_Geomatique", "geomatique"),
+    ("Veille_Mesh", "mesh"),
 )
 
 THEMES_WEB = {
@@ -31,6 +33,8 @@ THEMES_WEB = {
     "radio": ("#1e3a5f", "Radioamateur, modes digitaux et trafic"),
     "outils": ("#4a5c2a", "Outils de gestion de crise et poste de commandement"),
     "blackout": ("#5c3d12", "Black-out, réseau électrique et déclarations de l'exécutif"),
+    "geomatique": ("#0d6e4f", "Géomatique, QGIS, cartographie et données géographiques"),
+    "mesh": ("#1d4e89", "Réseaux mesh, Meshtastic, MeshCore et mesh Wi-Fi"),
 }
 
 
@@ -116,6 +120,8 @@ def _index_html() -> str:
         ("Veille_Radio", "radio", "Veille_Radio.pdf", "Veille_Radio.html"),
         ("Veille_Outils_PC", "outils", "Veille_Outils_PC.pdf", "Veille_Outils_PC.html"),
         ("Veille_Blackout", "blackout", "Veille_Blackout.pdf", "Veille_Blackout.html"),
+        ("Veille_Geomatique", "geomatique", "Veille_Geomatique.pdf", "Veille_Geomatique.html"),
+        ("Veille_Mesh", "mesh", "Veille_Mesh.pdf", "Veille_Mesh.html"),
     ]
     cartes = [
         (
@@ -148,21 +154,69 @@ def _index_html() -> str:
 <meta http-equiv="Cache-Control" content="no-cache">
 <title>Veilles — {escape(date_lue)}</title>
 <style>
-body {{ margin:0; font:18px/1.45 "Segoe UI", sans-serif; background:#f4f1ea; color:#1c1917; }}
-header {{ background:#1c1917; color:#fff; padding:2.2rem 1.25rem 1.8rem; }}
-header p {{ margin:.4rem 0 0; opacity:.85; }}
-.aide {{ margin:.85rem 0 0; font-size:.85rem; opacity:.75; }}
-.aide a {{ color:#fff; }}
-main {{ max-width:720px; margin:0 auto; padding:1.5rem 1rem 3rem; }}
-.carte {{ display:block; background:#fff; border-radius:16px; padding:1.2rem 1.3rem 1.1rem;
-  text-decoration:none; color:inherit; border-left:8px solid var(--accent); box-shadow:0 6px 18px rgba(0,0,0,.06); }}
-.carte + .alt {{ margin:.35rem 0 1.4rem; }}
-.pastille {{ display:inline-block; background:var(--accent); color:#fff; border-radius:999px;
-  font-size:.72rem; letter-spacing:.06em; padding:.15rem .55rem; margin-bottom:.55rem; }}
-.carte strong {{ display:block; font-size:1.35rem; }}
-.carte em {{ display:block; margin:.35rem 0 .8rem; color:#57534e; font-style:normal; }}
-.lien {{ color:var(--accent); font-weight:600; }}
-.alt a {{ color:#57534e; font-size:.92rem; }}
+*, *::before, *::after {{ box-sizing: border-box; }}
+html {{ -webkit-text-size-adjust: 100%; }}
+body {{
+  margin: 0;
+  font: 1rem/1.45 "Segoe UI", sans-serif;
+  background: #f4f1ea;
+  color: #1c1917;
+  overflow-wrap: anywhere;
+}}
+header {{
+  background: #1c1917;
+  color: #fff;
+  padding: max(1.25rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) 1.15rem max(1rem, env(safe-area-inset-left));
+}}
+h1 {{ margin: 0; font-size: clamp(1.45rem, 6vw, 2rem); line-height: 1.15; }}
+header p {{ margin: .45rem 0 0; opacity: .85; font-size: clamp(.9rem, 3.4vw, 1rem); }}
+.aide {{ margin: .7rem 0 0; font-size: 1rem; opacity: .9; }}
+.aide a {{ color: #fff; display: inline-block; padding: .45rem 0; min-height: 44px; }}
+main {{
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1rem max(1rem, env(safe-area-inset-right)) max(2rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+}}
+.carte {{
+  display: block;
+  background: #fff;
+  border-radius: 14px;
+  padding: 1rem 1rem .85rem;
+  text-decoration: none;
+  color: inherit;
+  border-left: 6px solid var(--accent);
+  box-shadow: 0 6px 18px rgba(0,0,0,.06);
+}}
+.carte + .alt {{ margin: .1rem 0 1rem; }}
+.pastille {{
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 999px;
+  font-size: .72rem;
+  letter-spacing: .06em;
+  padding: .2rem .55rem;
+  margin-bottom: .5rem;
+}}
+.carte strong {{ display: block; font-size: clamp(1.15rem, 4.8vw, 1.35rem); line-height: 1.2; }}
+.carte em {{
+  display: block;
+  margin: .35rem 0 .65rem;
+  color: #57534e;
+  font-style: normal;
+  font-size: .95rem;
+}}
+.lien {{ color: var(--accent); font-weight: 600; display: inline-block; padding: .2rem 0; }}
+.alt a {{
+  color: #57534e;
+  font-size: .95rem;
+  display: inline-block;
+  padding: .65rem 0;
+  min-height: 44px;
+}}
+@media (max-width: 420px) {{
+  .carte {{ border-radius: 12px; border-left-width: 5px; padding: .9rem .85rem .75rem; }}
+}}
 </style>
 </head>
 <body>
@@ -254,19 +308,50 @@ def _archives_html(noms: set[str] | None = None) -> str:
 <meta http-equiv="Cache-Control" content="no-cache">
 <title>Anciennes veilles — {escape(date_lue)}</title>
 <style>
-body {{ margin:0; font:18px/1.45 "Segoe UI", sans-serif; background:#f4f1ea; color:#1c1917; }}
-header {{ background:#1c1917; color:#fff; padding:2.2rem 1.25rem 1.8rem; }}
-header a {{ color:#fff; }}
-header p {{ margin:.4rem 0 0; opacity:.85; }}
-main {{ max-width:720px; margin:0 auto; padding:1.5rem 1rem 3rem; }}
-section {{ background:#fff; border-radius:16px; border-left:8px solid var(--accent);
-  box-shadow:0 6px 18px rgba(0,0,0,.06); padding:1rem 1.2rem 1.1rem; margin:0 0 1.2rem; }}
-h2 {{ margin:0; font-size:1.25rem; }}
-.accroche {{ margin:.2rem 0 .8rem; color:#57534e; }}
-ul {{ margin:0; padding:0; list-style:none; }}
-li {{ padding:.35rem 0; border-top:1px solid #e7e5e4; }}
-li span {{ display:inline-block; min-width:16rem; }}
-a {{ color:var(--accent,#5c3d12); }}
+*, *::before, *::after {{ box-sizing: border-box; }}
+html {{ -webkit-text-size-adjust: 100%; }}
+body {{
+  margin: 0;
+  font: 1rem/1.45 "Segoe UI", sans-serif;
+  background: #f4f1ea;
+  color: #1c1917;
+  overflow-wrap: anywhere;
+}}
+header {{
+  background: #1c1917;
+  color: #fff;
+  padding: max(1.25rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) 1.15rem max(1rem, env(safe-area-inset-left));
+}}
+header a {{ color: #fff; display: inline-block; padding: .45rem 0; min-height: 44px; }}
+h1 {{ margin: 0; font-size: clamp(1.45rem, 6vw, 2rem); line-height: 1.15; }}
+header p {{ margin: .45rem 0 0; opacity: .85; }}
+main {{
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1rem max(1rem, env(safe-area-inset-right)) max(2rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+}}
+section {{
+  background: #fff;
+  border-radius: 14px;
+  border-left: 6px solid var(--accent);
+  box-shadow: 0 6px 18px rgba(0,0,0,.06);
+  padding: 1rem .95rem 1.05rem;
+  margin: 0 0 1rem;
+}}
+h2 {{ margin: 0; font-size: clamp(1.1rem, 4.5vw, 1.25rem); }}
+.accroche {{ margin: .25rem 0 .7rem; color: #57534e; font-size: .95rem; }}
+ul {{ margin: 0; padding: 0; list-style: none; }}
+li {{
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem .75rem;
+  align-items: baseline;
+  padding: .7rem 0;
+  border-top: 1px solid #e7e5e4;
+}}
+li span {{ flex: 1 1 12rem; }}
+li a {{ padding: .35rem 0; min-height: 44px; display: inline-flex; align-items: center; }}
+a {{ color: var(--accent, #5c3d12); }}
 </style>
 </head>
 <body>
