@@ -55,11 +55,17 @@ La fenêtre par défaut est de 7 jours (`periode_jours` dans le fichier de mots-
 
 Copier ce dossier sur le PC qui reste allumé, puis lancer l’installeur une fois.
 
-Linux :
+Linux (Ubuntu ou Debian, dont Debian 13) :
 
 ```bash
 chmod +x installer-linux.sh
 ./installer-linux.sh
+```
+
+Si le compte Debian n’a pas sudo :
+
+```bash
+su -c './installer-linux.sh'
 ```
 
 Windows : double-clic sur `installer-windows.bat`.
@@ -93,7 +99,7 @@ Pages Perso ne fait qu’afficher les fichiers déposés par FTP. Le script Pyth
 | Fichier | Rôle |
 | --- | --- |
 | `lancer.sh` | Lance une ou les sept veilles |
-| `installer-linux.sh` | Installe les prérequis et l’envoi quotidien à 7 h |
+| `installer-linux.sh` | Installe les prérequis et l’envoi quotidien à 7 h (Ubuntu et Debian) |
 | `installer-windows.bat` | Idem sous Windows |
 | `lancer.bat` | Lance les veilles sous Windows |
 | `veille.py` | Collecte, filtre, rapport HTML |

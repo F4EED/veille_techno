@@ -1,17 +1,27 @@
 #!/usr/bin/env bash
-# Installe la veille sur un PC Linux et l'envoie chaque jour à 7 h 00.
+# Installe la veille sur Ubuntu ou Debian (dont Debian 13) et l'envoie chaque jour à 7 h 00.
 # Usage, depuis ce dossier : ./installer-linux.sh
+# Sur Debian, si le compte n'a pas sudo : su -c './installer-linux.sh'
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "${ROOT}"
 
-if [[ "${EUID}" -eq 0 && -z "${SUDO_USER:-}" ]]; then
-  echo "Lancez ./installer-linux.sh avec le compte du PC. Le script demandera sudo pour les paquets."
-  exit 1
+if [[ -n "${SUDO_USER:-}" ]]; then
+  RUN_USER="${SUDO_USER}"
+elif [[ "${EUID}" -eq 0 ]]; then
+  # Debian se gère souvent en root (su), Ubuntu avec sudo.
+  _login="$(logname 2>/dev/null || true)"
+  if [[ -n "${_login}" && "${_login}" != "root" ]] && runuser -u "${_login}" -- test -w "${ROOT}"; then
+    RUN_USER="${_login}"
+    echo "Installation pour le compte ${RUN_USER}."
+  else
+    RUN_USER="root"
+    echo "Installation pour le compte root."
+  fi
+else
+  RUN_USER="$(id -un)"
 fi
-
-RUN_USER="${SUDO_USER:-$(id -un)}"
 RUN_GROUP="$(id -gn "${RUN_USER}")"
 LIBERATION_URL="https://github.com/liberationfonts/liberation-fonts/files/7261482/liberation-fonts-ttf-2.1.5.tar.gz"
 LIBERATION_SHA256="7191c669bf38899f73a2094ed00f7b800553364f90e2637010a69c0e268f25d0"
@@ -24,17 +34,28 @@ POLICES=(
 as_user() {
   if [[ "$(id -un)" == "${RUN_USER}" ]]; then
     "$@"
+  elif [[ "${EUID}" -eq 0 ]]; then
+    runuser -u "${RUN_USER}" -- "$@"
   else
     sudo -u "${RUN_USER}" -H -- "$@"
   fi
 }
 
 need_sudo() {
-  if [[ "$(id -un)" == "root" ]]; then
+  if [[ "${EUID}" -eq 0 ]]; then
     "$@"
-  else
+  elif command -v sudo >/dev/null 2>&1; then
     sudo "$@"
+  else
+    echo "Ce compte ne peut pas installer de paquets." >&2
+    echo "Sur Debian : su -c './installer-linux.sh'" >&2
+    exit 1
   fi
+}
+
+# systemd 257 (Debian 13) prend les guillemets de WorkingDirectory au pied de la lettre.
+chemin_unite() {
+  printf '%s' "${1// /\\x20}"
 }
 
 python_ok() {
@@ -45,8 +66,9 @@ python_ok() {
 installer_paquets() {
   echo "Installation de Python, pip et des polices…"
   if command -v apt-get >/dev/null 2>&1; then
-    need_sudo apt-get update
-    need_sudo apt-get install -y python3 python3-pip ca-certificates curl tar fonts-liberation
+    need_sudo env DEBIAN_FRONTEND=noninteractive apt-get update
+    need_sudo env DEBIAN_FRONTEND=noninteractive apt-get install -y \
+      python3 python3-pip ca-certificates curl tar fonts-liberation
   elif command -v dnf >/dev/null 2>&1; then
     need_sudo dnf install -y python3 python3-pip ca-certificates curl tar liberation-sans-fonts
   elif command -v pacman >/dev/null 2>&1; then
@@ -204,6 +226,9 @@ planifier_systemd() {
   local service="/etc/systemd/system/veille-techno.service"
   local timer="/etc/systemd/system/veille-techno.timer"
   echo "Programmation systemd : tous les jours à 7 h 00."
+  local dossier_unite commande_unite
+  dossier_unite="$(chemin_unite "${ROOT}")"
+  commande_unite="$(chemin_unite "${ROOT}/lancer-planifie.sh")"
   need_sudo tee "${service}" >/dev/null <<EOF
 [Unit]
 Description=Veille techno (collecte, PDF, e-mail, publication)
@@ -213,8 +238,8 @@ After=network.target
 Type=oneshot
 User=${RUN_USER}
 Group=${RUN_GROUP}
-WorkingDirectory="${ROOT}"
-ExecStart="${ROOT}/lancer-planifie.sh"
+WorkingDirectory=${dossier_unite}
+ExecStart=${commande_unite}
 TimeoutStartSec=3h
 Nice=10
 EOF
@@ -282,7 +307,7 @@ if [[ "$(id -un)" != "${RUN_USER}" ]]; then
   fi
 fi
 
-if command -v systemctl >/dev/null 2>&1 && [[ "$(ps -p 1 -o comm=)" == "systemd" ]]; then
+if command -v systemctl >/dev/null 2>&1 && [[ -r /proc/1/comm ]] && [[ "$(tr -d '[:space:]' < /proc/1/comm)" == "systemd" ]]; then
   empecher_veille
   planifier_systemd
 else
@@ -294,7 +319,7 @@ echo
 echo "La veille est installée sur ce PC."
 echo "Envoi : tous les jours à 7 h 00 (heure affichée par le PC)."
 if command -v timedatectl >/dev/null 2>&1; then
-  timedatectl | awk '/Time zone|Local time/ { print }'
+  timedatectl 2>/dev/null | awk '/Time zone|Local time/ { print }' || true
 fi
 echo "Si le PC était éteint à 7 h, l'envoi part au démarrage suivant."
 echo "Journal : ${ROOT}/.runlogs/quotidien.log"
