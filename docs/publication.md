@@ -1,5 +1,7 @@
 # E-mail, publication et archives
 
+Pour ajouter un destinataire, changer la boîte qui envoie ou le site de `index.html`, suivre [paramétrage.md](paramétrage.md).
+
 ## E-mail
 
 `config/email.yaml` indique l’expéditeur, les destinataires et le serveur SMTP (`smtp.free.fr`, port 465, SSL).

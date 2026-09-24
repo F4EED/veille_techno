@@ -92,6 +92,7 @@ Pages Perso ne fait qu’afficher les fichiers déposés par FTP. Le script Pyth
 
 - [Les sept veilles](docs/profils.md)
 - [Sources, mots-clés et découverte](docs/sources.md)
+- [Paramétrer l’envoi et le site](docs/paramétrage.md)
 - [E-mail, publication et archives](docs/publication.md)
 
 ## Fichiers du programme
