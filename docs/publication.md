@@ -23,6 +23,6 @@ Les noms des rapports du jour sont mémorisés dans `config/rapports_courants.ya
 
 ## Ce que Pages Perso ne fait pas
 
-L’hébergement Free sert les fichiers déjà déposés, et du PHP. Il n’exécute pas Python. La collecte des flux, la fabrication des PDF et l’envoi des courriels restent sur le poste qui lance `./lancer.sh`.
+L’hébergement Free sert les fichiers déjà déposés, et du PHP. Il n’exécute pas Python. La collecte des flux, la fabrication des PDF, l’envoi des courriels et le dépôt FTP restent sur le poste qui lance `./lancer.sh` ou `lancer.bat`. L’installeur programme ce lancement tous les jours à 7 h 00.
 
 Un bouton « Actualiser » sur la page publique ne peut donc pas relancer une veille. Le fichier `serveur_actualiser.py` écoute seulement en local (`127.0.0.1:8765`) ; il n’est pas branché sur la page en ligne.

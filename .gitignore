@@ -9,6 +9,7 @@ __pycache__/
 config/decouverte_cache*.yaml
 config/traduction_cache.json
 config/traduction_cache.lock
+config/sources.lock
 .index_veille.html
 .archives_veille.html
 config/rapports_courants.yaml

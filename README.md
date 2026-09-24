@@ -14,7 +14,7 @@ Sept veilles tournent en parallèle :
 | `geomatique` | `Veille_Geomatique` | Géomatique, QGIS, cartographie, données géographiques |
 | `mesh` | `Veille_Mesh` | Réseaux mesh, Meshtastic, MeshCore, mesh Wi-Fi |
 
-Le détail de chaque veille est dans [docs/profils.md](docs/profils.md).
+Les sept lisent le même catalogue, `config/sources.yaml`. Une source ajoutée dans ce fichier est vue par toutes ; chaque veille ne garde que les articles qui correspondent à ses mots-clés. Le détail est dans [docs/profils.md](docs/profils.md).
 
 ## Lancer
 
@@ -102,4 +102,5 @@ Pages Perso ne fait qu’afficher les fichiers déposés par FTP. Le script Pyth
 | `decouverte.py` | Recherche de nouveaux flux RSS |
 | `email_envoi.py` | Envoi SMTP |
 | `publication.py` | Dépôt FTP et pages `index.html` / `archives.html` |
-| `config/` | Mots-clés, sources, e-mail |
+| `config/sources.yaml` | Catalogue unique lu par les sept veilles |
+| `config/` | Mots-clés, e-mail, réseaux sociaux |

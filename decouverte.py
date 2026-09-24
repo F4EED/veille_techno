@@ -5,9 +5,12 @@ from __future__ import annotations
 import html as html_stdlib
 import json
 import re
+import sys
+import time
 import urllib.parse
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
@@ -17,6 +20,7 @@ import yaml
 
 from veille import (
     CONFIG,
+    FICHIER_SOURCES,
     Domaine,
     Source,
     Tendance,
@@ -28,9 +32,15 @@ from veille import (
     telecharger,
 )
 
-FICHIER_DECOUVERTES = CONFIG / "sources_decouvertes.yaml"
+FICHIER_DECOUVERTES = FICHIER_SOURCES
 FICHIER_CACHE = CONFIG / "decouverte_cache.yaml"
-FICHIER_AUTO = CONFIG / "sources_auto.yaml"
+ENTETE_CATALOGUE = """# Catalogue unique des sources. Les sept veilles le lisent.
+# Une source ajoutée ici, à la main ou par la découverte, est vue par toutes.
+# filtre: mots_cles → l'article reste s'il contient un mot-clé de la veille.
+# filtre: aucun et profils → tous les articles pour les veilles listées ;
+# les autres veilles ne gardent que les articles qui matchent leurs mots-clés.
+
+"""
 MAX_CANDIDATS = 20
 MAX_NOUVELLES = 15
 RETRY_ECHECS_JOURS = 14
@@ -139,6 +149,7 @@ def charger_sources_decouvertes(fichier: Path | None = None) -> list[Source]:
                 site=item.get("site", ""),
                 filtre=item.get("filtre", "mots_cles"),
                 domaine=item.get("domaine", ""),
+                profils=tuple(str(p) for p in (item.get("profils") or []) if str(p).strip()),
             )
         )
     return sources
@@ -186,42 +197,100 @@ def enregistrer_cache(cache: dict[str, Any], echecs: dict[str, str], fichier: Pa
     )
 
 
-def enregistrer_flux(nouvelles: list[Source], cible: Path) -> None:
-    cfg = charger_optionnel(cible)
-    flux = list(cfg.get("flux") or [])
-    existants = {normaliser_url(item.get("url", "")) for item in flux}
-    aujourd_hui = datetime.now().strftime("%Y-%m-%d")
-    for source in nouvelles:
-        if normaliser_url(source.url) in existants:
-            continue
-        flux.append(
-            {
-                "id": source.identifiant,
-                "nom": source.nom,
-                "url": source.url,
-                "site": source.site,
-                "filtre": source.filtre,
-                "decouverte": aujourd_hui,
-            }
-        )
-        existants.add(normaliser_url(source.url))
-    cible.parent.mkdir(parents=True, exist_ok=True)
-    cible.write_text(
-        yaml.safe_dump(
-            {
-                "comment": "Sources ajoutées automatiquement à chaque lancement.",
-                "flux": flux,
-            },
-            allow_unicode=True,
-            sort_keys=False,
-        ),
+@contextmanager
+def _verrou_catalogue():
+    """Les sept veilles écrivent le même fichier en parallèle."""
+    verrou = CONFIG / "sources.lock"
+    with verrou.open("a+b") as handle:
+        if sys.platform == "win32":
+            import msvcrt
+
+            handle.seek(0, 2)
+            if handle.tell() < 1:
+                handle.write(b"\0")
+                handle.flush()
+            handle.seek(0)
+            while True:
+                try:
+                    msvcrt.locking(handle.fileno(), msvcrt.LK_NBLCK, 1)
+                    break
+                except OSError:
+                    time.sleep(0.05)
+            try:
+                yield
+            finally:
+                handle.seek(0)
+                try:
+                    msvcrt.locking(handle.fileno(), msvcrt.LK_UNLCK, 1)
+                except OSError:
+                    pass
+        else:
+            import fcntl
+
+            fcntl.flock(handle.fileno(), fcntl.LOCK_EX)
+            try:
+                yield
+            finally:
+                fcntl.flock(handle.fileno(), fcntl.LOCK_UN)
+
+
+def _ecrire_catalogue(cfg: dict[str, Any]) -> None:
+    FICHIER_SOURCES.write_text(
+        ENTETE_CATALOGUE + yaml.safe_dump(cfg, allow_unicode=True, sort_keys=False, width=10**9),
         encoding="utf-8",
     )
 
 
+def _identifiants_catalogue(cfg: dict[str, Any]) -> set[str]:
+    pris: set[str] = set()
+    for cle in ("google_news", "flux", "wms"):
+        for item in cfg.get(cle) or []:
+            identifiant = str(item.get("id") or "")
+            if identifiant:
+                pris.add(identifiant)
+    return pris
+
+
+def enregistrer_flux(nouvelles: list[Source], cible: Path | None = None) -> None:
+    del cible
+    if not nouvelles:
+        return
+    with _verrou_catalogue():
+        cfg = charger_optionnel(FICHIER_SOURCES)
+        if not isinstance(cfg, dict):
+            cfg = {}
+        flux = list(cfg.get("flux") or [])
+        existants = {normaliser_url(str(item.get("url") or "")) for item in flux}
+        identifiants = _identifiants_catalogue(cfg)
+        aujourd_hui = datetime.now().strftime("%Y-%m-%d")
+        for source in nouvelles:
+            if normaliser_url(source.url) in existants:
+                continue
+            identifiant = source.identifiant
+            if identifiant in identifiants:
+                numero = 2
+                while f"{identifiant}-{numero}" in identifiants:
+                    numero += 1
+                identifiant = f"{identifiant}-{numero}"
+            flux.append(
+                {
+                    "id": identifiant,
+                    "nom": source.nom,
+                    "url": source.url,
+                    "site": source.site,
+                    "filtre": "mots_cles",
+                    "decouverte": aujourd_hui,
+                }
+            )
+            existants.add(normaliser_url(source.url))
+            identifiants.add(identifiant)
+        cfg["flux"] = flux
+        _ecrire_catalogue(cfg)
+
+
 def enregistrer_decouvertes(nouvelles: list[Source], fichier: Path | None = None) -> None:
-    enregistrer_flux(nouvelles, fichier or FICHIER_DECOUVERTES)
-    enregistrer_flux(nouvelles, FICHIER_AUTO)
+    del fichier
+    enregistrer_flux(nouvelles)
 
 
 def extraire_editeur(entree: Any) -> tuple[str, str]:
@@ -459,7 +528,7 @@ def decouvrir_sources(
     return nouvelles
 
 
-FICHIER_WMS = CONFIG / "sources_wms_decouvertes.yaml"
+FICHIER_WMS = FICHIER_SOURCES
 MAX_SONDES_WMS = 16
 MAX_NOUVEAUX_WMS = 8
 
@@ -519,37 +588,40 @@ def charger_wms_decouverts(fichier: Path | None = None) -> list[Source]:
 
 
 def enregistrer_wms(nouvelles: list[Source], fichier: Path | None = None) -> None:
-    cible = fichier or FICHIER_WMS
-    cfg = charger_optionnel(cible)
-    flux = list(cfg.get("wms") or [])
-    existants = {cle_wms(str(item.get("url") or "")) for item in flux}
-    aujourd_hui = datetime.now().strftime("%Y-%m-%d")
-    for source in nouvelles:
-        cle = cle_wms(source.url)
-        if cle in existants:
-            continue
-        flux.append(
-            {
-                "id": source.identifiant,
-                "nom": source.nom,
-                "url": source.url,
-                "site": source.site or source.url,
-                "decouverte": aujourd_hui,
-            }
-        )
-        existants.add(cle)
-    cible.parent.mkdir(parents=True, exist_ok=True)
-    cible.write_text(
-        yaml.safe_dump(
-            {
-                "comment": "Services WMS ajoutés automatiquement à chaque lancement.",
-                "wms": flux,
-            },
-            allow_unicode=True,
-            sort_keys=False,
-        ),
-        encoding="utf-8",
-    )
+    del fichier
+    if not nouvelles:
+        return
+    with _verrou_catalogue():
+        cfg = charger_optionnel(FICHIER_SOURCES)
+        if not isinstance(cfg, dict):
+            cfg = {}
+        flux = list(cfg.get("wms") or [])
+        existants = {cle_wms(str(item.get("url") or "")) for item in flux}
+        identifiants = _identifiants_catalogue(cfg)
+        aujourd_hui = datetime.now().strftime("%Y-%m-%d")
+        for source in nouvelles:
+            cle = cle_wms(source.url)
+            if cle in existants:
+                continue
+            identifiant = source.identifiant
+            if identifiant in identifiants:
+                numero = 2
+                while f"{identifiant}-{numero}" in identifiants:
+                    numero += 1
+                identifiant = f"{identifiant}-{numero}"
+            flux.append(
+                {
+                    "id": identifiant,
+                    "nom": source.nom,
+                    "url": source.url,
+                    "site": source.site or source.url,
+                    "decouverte": aujourd_hui,
+                }
+            )
+            existants.add(cle)
+            identifiants.add(identifiant)
+        cfg["wms"] = flux
+        _ecrire_catalogue(cfg)
 
 
 def _url_ressemble_wms(url: str) -> bool:

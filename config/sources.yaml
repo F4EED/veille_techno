@@ -1,434 +1,4571 @@
-# Sources RSS / Atom pour la veille IoT.
-# filtre: aucun  → tous les articles de la période
-# filtre: mots_cles → uniquement si un mot-clé du fichier keywords.yaml matche
-# Presse nationale et Auvergne-Rhône-Alpes : config/sources_presse.yaml
-# Presse informatique / technique / IA / développement : config/sources_tech.yaml
-# (fichiers communs à toutes les veilles).
+# Catalogue unique des sources. Les sept veilles le lisent.
+# Une source ajoutée ici, à la main ou par la découverte, est vue par toutes.
+# filtre: mots_cles → l'article reste s'il contient un mot-clé de la veille.
+# filtre: aucun et profils → tous les articles pour les veilles listées ;
+# les autres veilles ne gardent que les articles qui matchent leurs mots-clés.
 
 google_news:
-  - id: gn-iot-fr
-    label: Google News — IoT (français)
-    query: 'IoT OR "Internet des objets" OR "objets connectés" OR IIoT'
-    hl: fr
-    gl: FR
-    ceid: FR:fr
-    domaine: iot
-  - id: gn-iot-en
-    label: Google News — IoT (anglais)
-    query: 'IoT OR "Internet of Things" OR IIoT'
-    hl: en-US
-    gl: US
-    ceid: US:en
-    domaine: iot
-  - id: gn-lorawan
-    label: Google News — LoRaWAN
-    query: 'LoRaWAN OR "réseau LoRa" OR "The Things Network" OR ChirpStack OR Kerlink OR Actility'
-    hl: fr
-    gl: FR
-    ceid: FR:fr
-    domaine: lorawan
-  - id: gn-mesh
-    label: Google News — Meshtastic / Meshcore
-    query: 'Meshtastic OR Meshcore OR "LoRa mesh" OR "mesh LoRa"'
-    hl: en-US
-    gl: US
-    ceid: US:en
-    domaine: meshtastic_meshcore
-  - id: gn-industrie
-    label: Google News — Industrie / IIoT
-    query: '"IoT industriel" OR IIoT OR "industrie 4.0" OR "usine connectée"'
-    hl: fr
-    gl: FR
-    ceid: FR:fr
-    domaine: industrie
-  - id: gn-meteo-routiere
-    label: Google News — Météo routière
-    query: '"météo routière" OR "gestion routière" OR RWIS OR "viabilité hivernale" OR "température de chaussée" OR "capteur verglas" OR "station météo routière" OR (routes AND (capteur OR IoT OR LoRa))'
-    hl: fr
-    gl: FR
-    ceid: FR:fr
-    domaine: meteo_routiere
-  - id: gn-routes-crise
-    label: Google News — Routes, crise, main courante
-    query: '"gestion routière" OR "main courante" OR "gestion de crise" OR "cellule de crise" OR (routes AND (crise OR voirie OR IoT))'
-    hl: fr
-    gl: FR
-    ceid: FR:fr
-    filtre: mots_cles
-  - id: gn-radio
-    label: Google News — Radio
-    query: '"radio professionnelle" OR TETRA OR "réseau radio" OR PMR OR (radio AND (crise OR voirie OR LoRa OR IoT OR "main courante"))'
-    hl: fr
-    gl: FR
-    ceid: FR:fr
-    domaine: radio
-
-requetes_rs:
-  - id: iot-fr
-    label: IoT (français)
-    query: 'IoT OR IIoT OR LoRaWAN OR LoRa OR Meshtastic OR Meshcore OR "industrie 4.0" OR "objets connectés" OR "météo routière" OR "gestion routière" OR "main courante" OR "gestion de crise" OR radio'
-    hl: fr
-    gl: FR
-    ceid: FR:fr
-    filtre: mots_cles
-  - id: iot-en
-    label: IoT (anglais)
-    query: 'IoT OR IIoT OR LoRaWAN OR Meshtastic OR Meshcore OR "Industry 4.0" OR "road weather" OR RWIS OR "crisis management"'
-    hl: en-US
-    gl: US
-    ceid: US:en
-    filtre: mots_cles
-  - id: lora-mesh
-    label: LoRa / mesh
-    query: 'LoRaWAN OR Meshtastic OR Meshcore OR "LoRa mesh" OR Semtech'
-    hl: en-US
-    gl: US
-    ceid: US:en
-    filtre: mots_cles
-
-mastodon_tags:
-  - IoT
-  - LoRaWAN
-  - Meshtastic
-  - Meshcore
-  - IIoT
-
+- id: gn-iot-fr
+  label: Google News — IoT (français)
+  query: IoT OR "Internet des objets" OR "objets connectés" OR IIoT
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: iot
+  profils:
+  - iot
+  filtre: aucun
+- id: gn-iot-en
+  label: Google News — IoT (anglais)
+  query: IoT OR "Internet of Things" OR IIoT
+  hl: en-US
+  gl: US
+  ceid: US:en
+  domaine: iot
+  profils:
+  - iot
+  filtre: aucun
+- id: gn-lorawan
+  label: Google News — LoRaWAN
+  query: LoRaWAN OR "réseau LoRa" OR "The Things Network" OR ChirpStack OR Kerlink OR Actility
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: lorawan
+  profils:
+  - iot
+  filtre: aucun
+- id: gn-mesh
+  label: Google News — Meshtastic / Meshcore
+  query: Meshtastic OR Meshcore OR "LoRa mesh" OR "mesh LoRa"
+  hl: en-US
+  gl: US
+  ceid: US:en
+  domaine: meshtastic_meshcore
+  profils:
+  - iot
+  filtre: aucun
+- id: gn-industrie
+  label: Google News — Industrie / IIoT
+  query: '"IoT industriel" OR IIoT OR "industrie 4.0" OR "usine connectée"'
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: industrie
+  profils:
+  - iot
+  filtre: aucun
+- id: gn-meteo-routiere
+  label: Google News — Météo routière
+  query: '"météo routière" OR "gestion routière" OR RWIS OR "viabilité hivernale" OR "température de chaussée" OR "capteur verglas" OR "station météo routière" OR (routes AND (capteur OR IoT OR LoRa))'
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: meteo_routiere
+  profils:
+  - iot
+  filtre: aucun
+- id: gn-routes-crise
+  label: Google News — Routes, crise, main courante
+  query: '"gestion routière" OR "main courante" OR "gestion de crise" OR "cellule de crise" OR (routes AND (crise OR voirie OR IoT))'
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+- id: gn-radio
+  label: Google News — Radio
+  query: '"radio professionnelle" OR TETRA OR "réseau radio" OR PMR OR (radio AND (crise OR voirie OR LoRa OR IoT OR "main courante"))'
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: radio
+  profils:
+  - iot
+  filtre: aucun
+- id: gn-crise-fr
+  label: Google News — Gestion de crise (français)
+  query: '"gestion de crise" OR crise OR crisis OR crisi'
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: gestion_crise
+  profils:
+  - crise
+  filtre: aucun
+- id: gn-crise-en
+  label: Google News — Gestion de crise (anglais)
+  query: '"crisis management" OR crisis OR disaster'
+  hl: en-US
+  gl: US
+  ceid: US:en
+  domaine: gestion_crise
+  profils:
+  - crise
+  filtre: aucun
+- id: gn-inondations
+  label: Google News — Inondations
+  query: inondation OR inondations OR crue OR "flash flood" OR flooding
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: inondations
+  profils:
+  - crise
+  filtre: aucun
+- id: gn-seismes
+  label: Google News — Tremblements de terre
+  query: '"tremblement de terre" OR séisme OR seisme OR earthquake OR tsunami'
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: seismes
+  profils:
+  - crise
+  filtre: aucun
+- id: gn-catastrophes
+  label: Google News — Catastrophes
+  query: catastrophe OR catastrophes OR disaster OR "catastrophe naturelle"
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: catastrophes
+  profils:
+  - crise
+  filtre: aucun
+- id: gn-alea-climatique
+  label: Google News — Aléa climatique
+  query: '"aléa climatique" OR "risque climatique" OR canicule OR tempête OR "vent violent" OR tornade OR "trombe marine" OR "chute de neige" OR "coulée de neige" OR "coulée de boue" OR avalanche OR cyclone OR sécheresse OR "feu de forêt"'
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: alea_climatique
+  profils:
+  - crise
+  filtre: aucun
+- id: gn-alea-techno
+  label: Google News — Aléa technologique
+  query: '"aléa technologique" OR Seveso OR Natech OR "accident industriel" OR "risque technologique"'
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: alea_technologique
+  profils:
+  - crise
+  filtre: aucun
+- id: gn-vigilance-meteo
+  label: Vigilance Météo-France
+  query: site:vigilance.meteofrance.fr OR ((site:meteofrance.fr OR site:meteofrance.com) (vigilance OR alerte OR crue OR canicule OR tempête OR vent OR tornade OR neige OR avalanche OR orage))
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: alea_climatique
+  site: https://vigilance.meteofrance.fr/fr
+  profils:
+  - crise
+  filtre: aucun
+- id: gn-radioamateur-fr
+  label: Google News — Radioamateur (français)
+  query: radioamateur OR "radio amateur" OR hamradio OR "ham radio" OR radiomateur
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: radioamateur
+  profils:
+  - radio
+  filtre: aucun
+- id: gn-radioamateur-en
+  label: Google News — Radioamateur (anglais)
+  query: '"amateur radio" OR "ham radio" OR hamradio OR ARRL'
+  hl: en-US
+  gl: US
+  ceid: US:en
+  domaine: radioamateur
+  profils:
+  - radio
+  filtre: aucun
+- id: gn-modes-digitaux
+  label: Google News — Modes digitaux
+  query: FT8 OR JS8Call OR Winlink OR VARA OR "digital modes" OR "modes digitaux" OR DMR OR "D-STAR" OR C4FM
+  hl: en-US
+  gl: US
+  ceid: US:en
+  domaine: modes_digitaux
+  profils:
+  - radio
+  filtre: aucun
+- id: gn-trafic-radio
+  label: Google News — Trafic radio
+  query: '"trafic radio" OR (trafic AND (radioamateur OR "ham radio" OR PMR OR TETRA)) OR "emergency net" OR ARES'
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: trafic
+  profils:
+  - radio
+  filtre: aucun
+- id: gn-radio-pro
+  label: Google News — Radio professionnelle
+  query: '"radio professionnelle" OR TETRA OR PMR OR DMR OR "réseau radio"'
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: radio_pro
+  profils:
+  - radio
+  filtre: aucun
+- id: gn-sdr
+  label: Google News — SDR / APRS
+  query: SDR OR "software defined radio" OR APRS OR "RTL-SDR" OR WebSDR
+  hl: en-US
+  gl: US
+  ceid: US:en
+  domaine: sdr_aprs
+  profils:
+  - radio
+  filtre: aucun
+- id: gn-outils-crise-fr
+  label: Google News — Outils de gestion de crise (français)
+  query: '"outil de gestion de crise" OR "logiciel de gestion de crise" OR "système d''information de crise" OR SYNERGI OR NexSIS OR "main courante numérique"'
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: outils_crise
+  profils:
+  - outils
+  filtre: aucun
+- id: gn-outils-crise-en
+  label: Google News — Crisis management software
+  query: '"crisis management software" OR "emergency management platform" OR WebEOC OR Everbridge OR "emergency operations center"'
+  hl: en-US
+  gl: US
+  ceid: US:en
+  domaine: outils_crise
+  profils:
+  - outils
+  filtre: aucun
+- id: gn-poste-commandement
+  label: Google News — Poste de commandement
+  query: '"poste de commandement" OR PCO OR "salle de crise" OR "PC de crise" OR "centre opérationnel départemental"'
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: poste_commandement
+  profils:
+  - outils
+  filtre: aucun
+- id: gn-main-courante
+  label: Google News — Main courante
+  query: '"main courante" OR "main courante numérique" OR "main courante électronique"'
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: main_courante
+  profils:
+  - outils
+  filtre: aucun
+- id: gn-orsec-nexsis
+  label: Google News — ORSEC / NexSIS / SYNERGI
+  query: ORSEC OR NexSIS OR SYNERGI OR COGIC OR CODIS OR "plan communal de sauvegarde"
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: systemes_orsec
+  profils:
+  - outils
+  filtre: aucun
+- id: gn-editeurs-crise
+  label: Google News — Éditeurs (Everbridge, Hexagon, Systel…)
+  query: Everbridge OR WebEOC OR Juvare OR "Hexagon Safety" OR Systel OR Veoci OR Noggin OR AtHoc
+  hl: en-US
+  gl: US
+  ceid: US:en
+  domaine: editeurs
+  profils:
+  - outils
+  filtre: aucun
+- id: gn-gazette-localtis
+  label: Google News — Gazette / Localtis
+  query: site:lagazettedescommunes.com OR site:banquedesterritoires.fr ("gestion de crise" OR "poste de commandement" OR "main courante" OR NexSIS OR ORSEC)
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  site: https://www.lagazettedescommunes.com/
+- id: gn-bl-macron
+  label: Google News — Macron, black-out et électricité
+  query: ("Emmanuel Macron" OR "président Macron") (blackout OR "black-out" OR "black out" OR délestage OR "panne géante" OR EcoWatt OR "coupure d'électricité" OR "exercice black-out" OR SGDSN OR CIRN)
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  site: https://www.elysee.fr/
+- id: gn-bl-macron-energie
+  label: Google News — Macron et la crise énergétique
+  query: ("Emmanuel Macron") (énergie OR électricité OR carburant OR carburants OR "prix du gaz" OR Ormuz OR "stocks stratégiques" OR résilience OR blackout OR "black-out" OR délestage)
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: aucun
+  domaine: crise_energetique
+  site: https://www.elysee.fr/
+  profils:
+  - blackout
+- id: gn-bl-elysee
+  label: Élysée — énergie, électricité, résilience
+  query: site:elysee.fr (blackout OR "black-out" OR délestage OR électricité OR "réseau électrique" OR "résilience nationale" OR carburant OR Ormuz OR EcoWatt OR "crise énergétique")
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  site: https://www.elysee.fr/
+- id: gn-bl-etat
+  label: Google News — services de l'État
+  query: (site:sgdsn.gouv.fr OR site:gouvernement.fr OR site:info.gouv.fr OR site:vie-publique.fr OR site:service-public.fr OR site:interieur.gouv.fr OR site:ecologie.gouv.fr OR site:economie.gouv.fr) (blackout OR "black-out" OR délestage OR "panne géante" OR "résilience nationale" OR CIRN OR "Tous résilients" OR "coupure d'électricité" OR "système électrique")
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  site: https://www.sgdsn.gouv.fr/
+- id: gn-bl-parlement
+  label: Google News — Parlement, Vie publique, Cour des comptes
+  query: (site:senat.fr OR site:assemblee-nationale.fr OR site:ccomptes.fr OR site:vie-publique.fr OR site:legifrance.gouv.fr) (blackout OR "black-out" OR délestage OR "résilience nationale" OR "système électrique" OR "sécurité d'approvisionnement" OR EcoWatt)
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  site: https://www.vie-publique.fr/
+- id: gn-bl-operateurs
+  label: Google News — RTE, Enedis, EcoWatt, CRE
+  query: (site:rte-france.com OR site:enedis.fr OR site:monecowatt.fr OR site:cre.fr) (blackout OR "black-out" OR délestage OR EcoWatt OR "risque de coupure" OR "sécurité d'approvisionnement" OR "équilibre" OR marges OR "système électrique")
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  site: https://www.rte-france.com/
+- id: gn-bl-france
+  label: Google News — black-out en France
+  query: (blackout OR "black-out" OR "black out" OR "panne géante" OR "black-out électrique") (France OR français OR française OR RTE OR Enedis OR Macron OR SGDSN)
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  site: https://news.google.com/
+- id: gn-bl-delestage
+  label: Google News — délestage et EcoWatt
+  query: (délestage OR "coupures tournantes" OR EcoWatt OR "signal EcoWatt" OR "plan de délestage") (France OR français OR RTE OR Enedis OR électrique)
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  site: https://www.monecowatt.fr/
+- id: gn-bl-menaces
+  label: Google News — sabotage et cyberattaque du réseau
+  query: (sabotage OR cyberattaque) ("réseau électrique" OR "poste électrique" OR RTE OR Enedis) (France OR français OR européenne)
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  site: https://www.ssi.gouv.fr/
+- id: gn-bl-dossiers
+  label: Google News — dossiers de presse
+  query: (dossier OR enquête OR décryptage) (blackout OR "black-out" OR "panne géante" OR délestage) (France OR français)
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  site: https://news.google.com/
+- id: gn-bl-selectra
+  label: Selectra
+  query: site:selectra.info
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  site: https://selectra.info/
+- id: gn-geomatique-fr
+  label: Google News — Géomatique
+  query: géomatique OR géomaticien OR géomaticienne OR "information géographique" OR "information géolocalisée" OR géoportail OR géoplateforme OR Geotribu OR Afigéo
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: geomatique
+  profils:
+  - geomatique
+  filtre: aucun
+- id: gn-qgis-outils
+  label: Google News — QGIS et outils de cartographie
+  query: QGIS OR PostGIS OR GeoServer OR "GRASS GIS" OR GDAL OR "outils géomatiques" OR "outils de géomatique" OR "outil géomatique" OR "outils de cartographie" OR "logiciel de cartographie" OR "logiciel SIG"
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: outils
+  profils:
+  - geomatique
+  filtre: aucun
+- id: gn-carto-donnees
+  label: Google News — Données cartographiques
+  query: '"données géographiques" OR "données géospatiales" OR "données cartographiques" OR "base adresse nationale" OR "plan cadastral" OR "BD TOPO" OR "BD ORTHO" OR "modèle numérique de terrain"'
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: donnees
+  profils:
+  - geomatique
+  filtre: aucun
+- id: gn-geoai
+  label: Google News — IA géomatique
+  query: GeoAI OR "geospatial AI" OR "IA géospatiale" OR "IA géomatique" OR ("intelligence artificielle" AND (géomatique OR QGIS OR cartographie OR "données géographiques" OR télédétection))
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: ia
+  profils:
+  - geomatique
+  filtre: aucun
+- id: gn-gis-en
+  label: Google News — GIS, QGIS, geospatial
+  query: QGIS OR PostGIS OR "geographic information system" OR "geospatial data" OR "web mapping" OR GeoAI OR "geospatial AI" OR "open source GIS"
+  hl: en-US
+  gl: US
+  ceid: US:en
+  domaine: geomatique
+  profils:
+  - geomatique
+  filtre: aucun
+- id: gn-ign
+  label: Google News — IGN
+  query: site:ign.fr
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: geomatique
+  profils:
+  - geomatique
+  filtre: aucun
+- id: gn-osm
+  label: Google News — OpenStreetMap
+  query: site:openstreetmap.org OR site:openstreetmap.fr OR site:weeklyosm.eu
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: geomatique
+  profils:
+  - geomatique
+  filtre: aucun
+- id: gn-brgm
+  label: Google News — BRGM
+  query: site:brgm.fr
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: geomatique
+  profils:
+  - geomatique
+  filtre: aucun
+- id: gn-craig
+  label: Google News — CRAIG
+  query: site:www.craig.fr OR site:ids.craig.fr OR site:craig.fr
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: geomatique
+  profils:
+  - geomatique
+  filtre: aucun
+- id: gn-portails-geo
+  label: Google News — Géoportail, Géoplateforme, Géorisques, SHOM
+  query: site:geoportail.gouv.fr OR site:cartes.gouv.fr OR site:geoportail-urbanisme.gouv.fr OR site:georisques.gouv.fr OR site:shom.fr OR site:cnig.gouv.fr
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: geomatique
+  profils:
+  - geomatique
+  filtre: aucun
+- id: gn-presse-geo
+  label: Google News — Presse géomatique
+  query: site:geotribu.fr OR site:afigeo.asso.fr OR site:georezo.net OR site:sigmag.fr OR site:decryptageo.fr OR site:esrifrance.fr OR site:neogeo.fr OR site:oslandia.com
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: geomatique
+  profils:
+  - geomatique
+  filtre: aucun
+- id: gn-carto-urgence
+  label: Google News — Cartographie d'urgence et de crise
+  query: '"cartographie d''urgence" OR "cartographie de crise" OR "cartographie humanitaire" OR "crisis mapping" OR "emergency mapping" OR "humanitarian mapping" OR "rapid mapping" OR CartONG OR MapAction OR "Missing Maps" OR UNOSAT OR "Copernicus EMS"'
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: urgence
+  profils:
+  - geomatique
+  filtre: aucun
+- id: gn-lidar-aerien
+  label: Google News — Lidar et prises de vue aériennes
+  query: lidar OR "lidar aéroporté" OR "airborne lidar" OR "aerial lidar" OR "nuage de points"
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: lidar
+  profils:
+  - geomatique
+  filtre: aucun
+- id: gn-releves
+  label: Google News — Relevés et prises de vue aériennes
+  query: '"relevé topographique" OR "levé topographique" OR "prise de vue aérienne" OR "prises de vue aériennes" OR "imagerie aérienne" OR photogrammétrie OR orthophoto OR "levé par drone" OR "mobile mapping" OR "aerial survey"'
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: releves
+  profils:
+  - geomatique
+  filtre: aucun
+- id: gn-carto-urgence-orgs
+  label: Google News — HOT, Missing Maps, Copernicus EMS
+  query: site:hotosm.org OR site:missingmaps.org OR site:emergency.copernicus.eu OR site:unosat.org OR site:cartong.org OR site:mapaction.org
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: urgence
+  profils:
+  - geomatique
+  filtre: aucun
+- id: gn-opendata-geo
+  label: Google News — Open data géographique
+  query: ("open data" OR "données ouvertes" OR opendata OR "licence ouverte") (cartographie OR géomatique OR SIG OR "données géographiques" OR adresse OR cadastre OR IGN OR SDIS OR QGIS OR lidar)
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: donnees
+  profils:
+  - geomatique
+  filtre: aucun
+- id: gn-sdis-carto
+  label: Google News — Cartographie et open data des SDIS
+  query: (SDIS OR SDMIS OR "sapeurs-pompiers" OR ENSOSP) (cartographie OR SIG OR géomatique OR "open data" OR "données ouvertes" OR lidar OR QGIS OR "point d'eau incendie" OR "prise de vue aérienne")
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: urgence
+  profils:
+  - geomatique
+  filtre: aucun
+- id: gn-portails-opendata
+  label: Google News — data.gouv.fr, Etalab, DINUM
+  query: (site:data.gouv.fr OR site:etalab.gouv.fr OR site:opendatafrance.fr OR site:numerique.gouv.fr OR site:adresse.data.gouv.fr OR site:transport.data.gouv.fr OR site:ensosp.fr OR site:pompiers.fr) (cartographie OR géomatique OR "données géographiques" OR "open data" OR "données ouvertes" OR SDIS OR cadastre OR adresse)
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: donnees
+  profils:
+  - geomatique
+  filtre: aucun
+- id: gn-mesh-wifi
+  label: Google News — Mesh Wi-Fi et réseaux maillés
+  query: '"mesh wifi" OR "wifi mesh" OR "wi-fi mesh" OR "réseau mesh" OR "réseau maillé" OR "réseaux maillés" OR "wireless mesh" OR "802.11s" OR "batman-adv" OR Yggdrasil OR cjdns OR Reticulum OR "disaster radio"'
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: general
+  profils:
+  - mesh
+  filtre: aucun
+- id: gn-meshtastic
+  label: Google News — Meshtastic
+  query: Meshtastic
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: meshtastic
+  profils:
+  - mesh
+  filtre: aucun
+- id: gn-meshtastic-en
+  label: Google News — Meshtastic (anglais)
+  query: Meshtastic
+  hl: en-US
+  gl: US
+  ceid: US:en
+  domaine: meshtastic
+  profils:
+  - mesh
+  filtre: aucun
+- id: gn-meshcore
+  label: Google News — MeshCore
+  query: MeshCore OR "Mesh Core" LoRa
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: meshcore
+  profils:
+  - mesh
+  filtre: aucun
+- id: gn-meshcore-en
+  label: Google News — MeshCore (anglais)
+  query: MeshCore OR "Mesh Core" LoRa
+  hl: en-US
+  gl: US
+  ceid: US:en
+  domaine: meshcore
+  profils:
+  - mesh
+  filtre: aucun
+- id: gn-mesh-sites
+  label: Google News — Meshtastic, MeshCore, Reticulum
+  query: site:meshtastic.org OR site:meshcore.io OR site:blog.meshcore.io OR site:reticulum.network OR site:unsigned.io OR site:open-mesh.org
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  domaine: general
+  profils:
+  - mesh
+  filtre: aucun
+- id: gn-afp
+  label: AFP
+  query: site:afp.com OR site:agencetfrancepresse.com
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  site: https://www.afp.com/fr/
+- id: gn-lci-tf1
+  label: LCI / TF1 Info
+  query: site:lci.fr OR site:tf1info.fr
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  site: https://www.tf1info.fr/
+- id: gn-arte-lcp
+  label: Arte / LCP / Public Sénat
+  query: site:arte.tv OR site:lcp.fr OR site:publicsenat.fr
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  site: https://www.arte.tv/fr/
+- id: gn-rtl-echos
+  label: RTL / Les Echos
+  query: site:rtl.fr OR site:lesechos.fr
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  site: https://www.rtl.fr/
+- id: gn-presse-aura-pqr
+  label: Google News — PQR Auvergne-Rhône-Alpes
+  query: site:ledauphine.com OR site:leprogres.fr OR site:lamontagne.fr OR site:leveil.fr OR site:lemessager.fr OR site:lavoixdelain.fr OR site:zoomdici.fr
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  site: https://www.ledauphine.com/
+- id: gn-presse-aura-web
+  label: Google News — médias web AURA
+  query: site:lyoncapitale.fr OR site:lyonmag.com OR site:rue89lyon.fr OR site:placegrenet.fr OR site:tribunedelyon.fr OR site:zoomdici.fr OR site:mlyon.fr OR site:mesinfos.fr
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  site: https://www.lyoncapitale.fr/
+- id: gn-presse-it
+  label: Google News — presse informatique
+  query: site:journaldunet.com OR site:usine-digitale.fr OR site:usinenouvelle.com OR site:lemagit.fr OR site:itforbusiness.fr OR site:channelnews.fr OR site:cio-online.com
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  site: https://www.journaldunet.com/
+- id: gn-presse-ia
+  label: Google News — IA / data
+  query: site:actuia.com OR site:lebigdata.fr OR site:siecledigital.fr OR site:frenchweb.fr OR site:maddyness.com OR site:linformaticien.com
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  site: https://www.actuia.com/
+- id: gn-presse-tech-recherche
+  label: Google News — recherche / ingénierie
+  query: site:inria.fr OR site:hellofuture.orange.com OR site:polytechnique-insights.com OR site:industrie-techno.com OR site:alliancy.fr OR site:hardware.fr OR site:lemagit.fr
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  site: https://www.inria.fr/
+- id: gn-interieur-sgdsn
+  label: Intérieur / SGDSN / gouvernement
+  query: site:interieur.gouv.fr OR site:gouvernement.fr OR site:sgdsn.gouv.fr OR site:securite-civile.gouv.fr
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  site: https://www.interieur.gouv.fr/
+- id: gn-pqr-ouest
+  label: Google News — PQR Ouest
+  query: site:ouest-france.fr OR site:letelegramme.fr OR site:lanouvellerepublique.fr OR site:presseocean.fr OR site:lecourrierdelouest.fr
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  site: https://www.ouest-france.fr/
+- id: gn-pqr-nord
+  label: Google News — PQR Nord / Picardie
+  query: site:lavoixdunord.fr OR site:nordeclair.fr OR site:courrier-picard.fr OR site:lunion.fr OR site:lardennais.fr
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  site: https://www.lavoixdunord.fr/
+- id: gn-pqr-est
+  label: Google News — PQR Est
+  query: site:estrepublicain.fr OR site:republicain-lorrain.fr OR site:dna.fr OR site:lalsace.fr OR site:bienpublic.com OR site:lejsl.com
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  site: https://www.estrepublicain.fr/
+- id: gn-pqr-sud-ouest
+  label: Google News — PQR Sud-Ouest
+  query: site:sudouest.fr OR site:charentelibre.fr OR site:larepubliquedespyrenees.fr OR site:nrpyrenees.fr
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  site: https://www.sudouest.fr/
+- id: gn-pqr-occitanie-paca
+  label: Google News — PQR Occitanie / PACA
+  query: site:ladepeche.fr OR site:midilibre.fr OR site:laprovence.com OR site:nicematin.com OR site:varmatin.com OR site:corsematin.com
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  site: https://www.ladepeche.fr/
+- id: gn-pqr-centre-normandie
+  label: Google News — PQR Centre / Normandie
+  query: site:lyonne.fr OR site:leberry.fr OR site:larep.fr OR site:paris-normandie.fr OR site:tendanceouest.com
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  site: https://www.paris-normandie.fr/
 flux:
-  # --- Médias IoT dédiés ---
-  - id: iot-for-all
-    nom: IoT For All
-    url: https://www.iotforall.com/feed
-    site: https://www.iotforall.com/
-    filtre: aucun
-  - id: iot-business-news
-    nom: IoT Business News
-    url: https://iotbusinessnews.com/feed/
-    site: https://iotbusinessnews.com/
-    filtre: aucun
-  - id: iot-analytics
-    nom: IoT Analytics
-    url: https://iot-analytics.com/feed
-    site: https://iot-analytics.com/
-    filtre: aucun
-  - id: iot-now
-    nom: IoT Now
-    url: https://www.iot-now.com/feed/
-    site: https://www.iot-now.com/
-    filtre: aucun
-  - id: iot-tech-news
-    nom: IoT Tech News
-    url: https://iottechnews.com/feed/
-    site: https://iottechnews.com/
-    filtre: aucun
-  - id: iiot-world
-    nom: IIoT World
-    url: https://iiot-world.com/feed
-    site: https://iiot-world.com/
-    filtre: aucun
-  - id: connected-world
-    nom: Connected World
-    url: https://connectedworld.com/feed
-    site: https://connectedworld.com/
-    filtre: aucun
-  - id: iot-evolution
-    nom: IoT Evolution World
-    url: https://blog.iotevolutionworld.com/feed
-    site: https://www.iotevolutionworld.com/
-    filtre: aucun
-  - id: we-speak-iot
-    nom: We Speak IoT
-    url: https://wespeakiot.com/feed
-    site: https://wespeakiot.com/
-    filtre: aucun
-  - id: iot-times
-    nom: IoT Times
-    url: https://www.iottimes.com/rss
-    site: https://www.iottimes.com/
-    filtre: aucun
-  - id: electronics-foru-iot
-    nom: Electronics For You — IoT
-    url: https://iot.electronicsforu.com/feed
-    site: https://iot.electronicsforu.com/
-    filtre: aucun
-  - id: postscapes
-    nom: Postscapes
-    url: https://feeds.feedburner.com/iot
-    site: https://www.postscapes.com/
-    filtre: aucun
-  - id: iot-world-magazine
-    nom: IoT World Magazine
-    url: https://iotworldmagazine.com/feed
-    site: https://iotworldmagazine.com/
-    filtre: aucun
-  - id: the-iot-magazine
-    nom: The IoT Magazine
-    url: https://theiotmagazine.com/feed
-    site: https://theiotmagazine.com/
-    filtre: aucun
-
-  # --- Presse francophone ---
-  - id: iot-industriel
-    nom: IoT Industriel
-    url: https://iotindustriel.com/feed
-    site: https://iotindustriel.com/
-    filtre: aucun
-  - id: usine-connectee
-    nom: Usine Connectée
-    url: https://usineconnectee.fr/feed/
-    site: https://usineconnectee.fr/
-    filtre: aucun
-  - id: smart-city-mag
-    nom: Smart City Mag
-    url: https://www.smartcitymag.fr/actualites/feed/
-    site: https://www.smartcitymag.fr/
-    filtre: mots_cles
-  - id: smart-cities-dive
-    nom: Smart Cities Dive
-    url: https://www.smartcitiesdive.com/feeds/news/
-    site: https://www.smartcitiesdive.com/
-    filtre: mots_cles
-  - id: govtech-smart-cities
-    nom: GovTech Smart Cities
-    url: https://www.govtech.com/smart-cities.rss
-    site: https://www.govtech.com/smart-cities
-    filtre: mots_cles
-  - id: monde-informatique-iot
-    nom: Le Monde Informatique — IoT
-    url: https://www.lemondeinformatique.fr/flux-rss/thematique/internet-des-objets/rss.xml
-    site: https://www.lemondeinformatique.fr/
-    filtre: aucun
-  - id: silicon
-    nom: Silicon.fr
-    url: https://www.silicon.fr/feed
-    site: https://www.silicon.fr/
-    filtre: mots_cles
-  - id: electroniques
-    nom: Electroniques
-    url: https://www.electroniques.biz/feed/
-    site: https://www.electroniques.biz/
-    filtre: mots_cles
-
-  # --- LoRa / LoRaWAN / LPWAN ---
-  - id: semtech
-    nom: Semtech
-    url: https://blog.semtech.com/rss.xml
-    site: https://www.semtech.com/
-    filtre: aucun
-  - id: ttn-forum
-    nom: The Things Network — forum
-    url: https://www.thethingsnetwork.org/forum/latest.rss
-    site: https://www.thethingsnetwork.org/forum/
-    filtre: aucun
-  - id: actility
-    nom: Actility
-    url: https://www.actility.com/feed/
-    site: https://www.actility.com/
-    filtre: aucun
-  - id: helium
-    nom: Helium
-    url: https://blog.helium.com/feed
-    site: https://blog.helium.com/
-    filtre: aucun
-  - id: rakwireless
-    nom: RAKwireless
-    url: https://news.rakwireless.com/feed/
-    site: https://www.rakwireless.com/
-    filtre: aucun
-  - id: libelium
-    nom: Libelium
-    url: https://www.libelium.com/feed
-    site: https://www.libelium.com/
-    filtre: aucun
-  - id: emnify
-    nom: emnify
-    url: https://www.emnify.com/blog/rss.xml
-    site: https://www.emnify.com/
-    filtre: aucun
-  - id: soracom
-    nom: Soracom
-    url: https://www.soracom.io/feed
-    site: https://www.soracom.io/
-    filtre: aucun
-  - id: sierra-wireless
-    nom: Sierra Wireless / Semtech
-    url: https://www.sierrawireless.com/feed
-    site: https://www.sierrawireless.com/
-    filtre: mots_cles
-  - id: digi
-    nom: Digi
-    url: https://www.digi.com/blog/feed
-    site: https://www.digi.com/
-    filtre: mots_cles
-
-  # --- Mesh / Meshtastic / Meshcore / hardware ---
-  - id: meshtastic-blog
-    nom: Meshtastic Blog
-    url: https://meshtastic.org/blog/rss.xml
-    site: https://meshtastic.org/blog/
-    filtre: aucun
-  - id: meshtastic-releases
-    nom: Meshtastic firmware (GitHub)
-    url: https://github.com/meshtastic/firmware/releases.atom
-    site: https://github.com/meshtastic/firmware
-    filtre: aucun
-  - id: meshcore-ripple
-    nom: MeshCore (GitHub ripplebiz)
-    url: https://github.com/ripplebiz/MeshCore/releases.atom
-    site: https://github.com/ripplebiz/MeshCore
-    filtre: aucun
-  - id: meshcore-dev
-    nom: MeshCore (GitHub meshcore-dev)
-    url: https://github.com/meshcore-dev/MeshCore/releases.atom
-    site: https://github.com/meshcore-dev/MeshCore
-    filtre: aucun
-  - id: cnx-software
-    nom: CNX Software
-    url: https://www.cnx-software.com/feed/
-    site: https://www.cnx-software.com/
-    filtre: mots_cles
-  - id: hackaday-iot
-    nom: Hackaday — IoT
-    url: https://hackaday.com/tag/iot/feed/
-    site: https://hackaday.com/tag/iot/
-    filtre: aucun
-  - id: hackaday-lora
-    nom: Hackaday — LoRa
-    url: https://hackaday.com/tag/lora/feed/
-    site: https://hackaday.com/tag/lora/
-    filtre: aucun
-  - id: hackaday-meshtastic
-    nom: Hackaday — Meshtastic
-    url: https://hackaday.com/tag/meshtastic/feed/
-    site: https://hackaday.com/tag/meshtastic/
-    filtre: aucun
-  - id: seeed
-    nom: Seeed Studio
-    url: https://www.seeedstudio.com/blog/feed/
-    site: https://www.seeedstudio.com/blog/
-    filtre: mots_cles
-
-  # --- Cloud / industriels ---
-  - id: aws-iot
-    nom: AWS IoT Blog
-    url: https://aws.amazon.com/blogs/iot/feed/
-    site: https://aws.amazon.com/blogs/iot/
-    filtre: aucun
-  - id: cisco-iot
-    nom: Cisco Blogs
-    url: https://blogs.cisco.com/feed
-    site: https://blogs.cisco.com/
-    filtre: mots_cles
-
-  # --- Cybersécurité IoT ---
-  - id: attify
-    nom: Attify
-    url: https://blog.attify.com/rss/
-    site: https://blog.attify.com/
-    filtre: aucun
-  - id: krebsonsecurity
-    nom: Krebs on Security
-    url: https://krebsonsecurity.com/feed/
-    site: https://krebsonsecurity.com/
-    filtre: mots_cles
-
-  # --- Communautés ---
-  - id: reddit-iot
-    nom: Reddit r/IOT
-    url: https://www.reddit.com/r/IOT/.rss
-    site: https://www.reddit.com/r/IOT/
-    filtre: mots_cles
-  - id: reddit-lorawan
-    nom: Reddit r/LoRaWAN
-    url: https://www.reddit.com/r/LoRaWAN/.rss
-    site: https://www.reddit.com/r/LoRaWAN/
-    filtre: aucun
-  - id: reddit-lora
-    nom: Reddit r/LoRa
-    url: https://www.reddit.com/r/LoRa/.rss
-    site: https://www.reddit.com/r/LoRa/
-    filtre: aucun
-  - id: reddit-meshtastic
-    nom: Reddit r/meshtastic
-    url: https://www.reddit.com/r/meshtastic/.rss
-    site: https://www.reddit.com/r/meshtastic/
-    filtre: aucun
-  - id: reddit-meshcore
-    nom: Reddit r/MeshCore
-    url: https://www.reddit.com/r/MeshCore/.rss
-    site: https://www.reddit.com/r/MeshCore/
-    filtre: aucun
-  - id: objetconnecte
-    nom: Objet Connecté
-    url: https://objetconnecte.com/feed
-    site: https://objetconnecte.com/
-    filtre: aucun
-  - id: iot-insider
-    nom: IoT Insider
-    url: https://www.iotinsider.com/feed/
-    site: https://www.iotinsider.com/
-    filtre: aucun
-  - id: hackster
-    nom: Hackster.io
-    url: https://hackster.io/projects.rss?sort=recent
-    site: https://www.hackster.io/
-    filtre: mots_cles
-  - id: domo-blog
-    nom: Domo-blog
-    url: https://www.domo-blog.fr/feed/
-    site: https://www.domo-blog.fr/
-    filtre: mots_cles
-  - id: cityramag
-    nom: Cityramag
-    url: https://cityramag.fr/feed/
-    site: https://cityramag.fr/
-    filtre: mots_cles
-
-  # --- GitHub (versions) ---
-  - id: iot-gh-chirpstack
-    nom: ChirpStack (GitHub)
-    url: https://github.com/chirpstack/chirpstack/releases.atom
-    site: https://github.com/chirpstack/chirpstack
-    filtre: aucun
-    domaine: lorawan
-  - id: iot-gh-ttn
-    nom: The Things Stack (GitHub)
-    url: https://github.com/TheThingsNetwork/lorawan-stack/releases.atom
-    site: https://github.com/TheThingsNetwork/lorawan-stack
-    filtre: aucun
-    domaine: lorawan
-  - id: iot-gh-esphome
-    nom: ESPHome (GitHub)
-    url: https://github.com/esphome/esphome/releases.atom
-    site: https://github.com/esphome/esphome
-    filtre: aucun
-    domaine: iot
-  - id: iot-gh-tasmota
-    nom: Tasmota (GitHub)
-    url: https://github.com/arendst/Tasmota/releases.atom
-    site: https://github.com/arendst/Tasmota
-    filtre: aucun
-    domaine: iot
-  - id: iot-gh-zigbee2mqtt
-    nom: Zigbee2MQTT (GitHub)
-    url: https://github.com/Koenkk/zigbee2mqtt/releases.atom
-    site: https://github.com/Koenkk/zigbee2mqtt
-    filtre: aucun
-    domaine: iot
-  - id: iot-gh-mosquitto
-    nom: Mosquitto (GitHub)
-    url: https://github.com/eclipse-mosquitto/mosquitto/releases.atom
-    site: https://github.com/eclipse-mosquitto/mosquitto
-    filtre: aucun
-    domaine: iot
-  - id: iot-gh-nodered
-    nom: Node-RED (GitHub)
-    url: https://github.com/node-red/node-red/releases.atom
-    site: https://github.com/node-red/node-red
-    filtre: aucun
-    domaine: iot
-  - id: iot-gh-thingsboard
-    nom: ThingsBoard (GitHub)
-    url: https://github.com/thingsboard/thingsboard/releases.atom
-    site: https://github.com/thingsboard/thingsboard
-    filtre: aucun
-    domaine: industrie
+- id: iot-for-all
+  nom: IoT For All
+  url: https://www.iotforall.com/feed
+  site: https://www.iotforall.com/
+  filtre: aucun
+  profils:
+  - iot
+- id: iot-business-news
+  nom: IoT Business News
+  url: https://iotbusinessnews.com/feed/
+  site: https://iotbusinessnews.com/
+  filtre: aucun
+  profils:
+  - iot
+- id: iot-analytics
+  nom: IoT Analytics
+  url: https://iot-analytics.com/feed
+  site: https://iot-analytics.com/
+  filtre: aucun
+  profils:
+  - iot
+- id: iot-now
+  nom: IoT Now
+  url: https://www.iot-now.com/feed/
+  site: https://www.iot-now.com/
+  filtre: aucun
+  profils:
+  - iot
+- id: iot-tech-news
+  nom: IoT Tech News
+  url: https://iottechnews.com/feed/
+  site: https://iottechnews.com/
+  filtre: aucun
+  profils:
+  - iot
+- id: iiot-world
+  nom: IIoT World
+  url: https://iiot-world.com/feed
+  site: https://iiot-world.com/
+  filtre: aucun
+  profils:
+  - iot
+- id: connected-world
+  nom: Connected World
+  url: https://connectedworld.com/feed
+  site: https://connectedworld.com/
+  filtre: aucun
+  profils:
+  - iot
+- id: iot-evolution
+  nom: IoT Evolution World
+  url: https://blog.iotevolutionworld.com/feed
+  site: https://www.iotevolutionworld.com/
+  filtre: aucun
+  profils:
+  - iot
+- id: we-speak-iot
+  nom: We Speak IoT
+  url: https://wespeakiot.com/feed
+  site: https://wespeakiot.com/
+  filtre: aucun
+  profils:
+  - iot
+- id: iot-times
+  nom: IoT Times
+  url: https://www.iottimes.com/rss
+  site: https://www.iottimes.com/
+  filtre: aucun
+  profils:
+  - iot
+- id: electronics-foru-iot
+  nom: Electronics For You — IoT
+  url: https://iot.electronicsforu.com/feed
+  site: https://iot.electronicsforu.com/
+  filtre: aucun
+  profils:
+  - iot
+- id: postscapes
+  nom: Postscapes
+  url: https://feeds.feedburner.com/iot
+  site: https://www.postscapes.com/
+  filtre: aucun
+  profils:
+  - iot
+- id: iot-world-magazine
+  nom: IoT World Magazine
+  url: https://iotworldmagazine.com/feed
+  site: https://iotworldmagazine.com/
+  filtre: aucun
+  profils:
+  - iot
+- id: the-iot-magazine
+  nom: The IoT Magazine
+  url: https://theiotmagazine.com/feed
+  site: https://theiotmagazine.com/
+  filtre: aucun
+  profils:
+  - iot
+- id: iot-industriel
+  nom: IoT Industriel
+  url: https://iotindustriel.com/feed
+  site: https://iotindustriel.com/
+  filtre: aucun
+  profils:
+  - iot
+- id: usine-connectee
+  nom: Usine Connectée
+  url: https://usineconnectee.fr/feed/
+  site: https://usineconnectee.fr/
+  filtre: aucun
+  profils:
+  - iot
+- id: smart-city-mag
+  nom: Smart City Mag
+  url: https://www.smartcitymag.fr/actualites/feed/
+  site: https://www.smartcitymag.fr/
+  filtre: mots_cles
+- id: smart-cities-dive
+  nom: Smart Cities Dive
+  url: https://www.smartcitiesdive.com/feeds/news/
+  site: https://www.smartcitiesdive.com/
+  filtre: mots_cles
+- id: govtech-smart-cities
+  nom: GovTech Smart Cities
+  url: https://www.govtech.com/smart-cities.rss
+  site: https://www.govtech.com/smart-cities
+  filtre: mots_cles
+- id: monde-informatique-iot
+  nom: Le Monde Informatique — IoT
+  url: https://www.lemondeinformatique.fr/flux-rss/thematique/internet-des-objets/rss.xml
+  site: https://www.lemondeinformatique.fr/
+  filtre: aucun
+  profils:
+  - iot
+- id: silicon
+  nom: Silicon.fr
+  url: https://www.silicon.fr/feed
+  site: https://www.silicon.fr/
+  filtre: mots_cles
+- id: electroniques
+  nom: Electroniques
+  url: https://www.electroniques.biz/feed/
+  site: https://www.electroniques.biz/
+  filtre: mots_cles
+- id: semtech
+  nom: Semtech
+  url: https://blog.semtech.com/rss.xml
+  site: https://www.semtech.com/
+  filtre: aucun
+  profils:
+  - iot
+- id: ttn-forum
+  nom: The Things Network — forum
+  url: https://www.thethingsnetwork.org/forum/latest.rss
+  site: https://www.thethingsnetwork.org/forum/
+  filtre: aucun
+  profils:
+  - iot
+- id: actility
+  nom: Actility
+  url: https://www.actility.com/feed/
+  site: https://www.actility.com/
+  filtre: aucun
+  profils:
+  - iot
+- id: helium
+  nom: Helium
+  url: https://blog.helium.com/feed
+  site: https://blog.helium.com/
+  filtre: aucun
+  profils:
+  - iot
+- id: rakwireless
+  nom: RAKwireless
+  url: https://news.rakwireless.com/feed/
+  site: https://www.rakwireless.com/
+  filtre: aucun
+  profils:
+  - iot
+- id: libelium
+  nom: Libelium
+  url: https://www.libelium.com/feed
+  site: https://www.libelium.com/
+  filtre: aucun
+  profils:
+  - iot
+- id: emnify
+  nom: emnify
+  url: https://www.emnify.com/blog/rss.xml
+  site: https://www.emnify.com/
+  filtre: aucun
+  profils:
+  - iot
+- id: soracom
+  nom: Soracom
+  url: https://www.soracom.io/feed
+  site: https://www.soracom.io/
+  filtre: aucun
+  profils:
+  - iot
+- id: sierra-wireless
+  nom: Sierra Wireless / Semtech
+  url: https://www.sierrawireless.com/feed
+  site: https://www.sierrawireless.com/
+  filtre: mots_cles
+- id: digi
+  nom: Digi
+  url: https://www.digi.com/blog/feed
+  site: https://www.digi.com/
+  filtre: mots_cles
+- id: meshtastic-blog
+  nom: Meshtastic Blog
+  url: https://meshtastic.org/blog/rss.xml
+  site: https://meshtastic.org/blog/
+  filtre: aucun
+  profils:
+  - iot
+  - mesh
+  domaine: meshtastic
+- id: meshtastic-releases
+  nom: Meshtastic firmware (GitHub)
+  url: https://github.com/meshtastic/firmware/releases.atom
+  site: https://github.com/meshtastic/firmware
+  filtre: aucun
+  profils:
+  - iot
+  - mesh
+  domaine: meshtastic
+- id: meshcore-ripple
+  nom: MeshCore (GitHub ripplebiz)
+  url: https://github.com/ripplebiz/MeshCore/releases.atom
+  site: https://github.com/ripplebiz/MeshCore
+  filtre: aucun
+  profils:
+  - iot
+  - mesh
+  domaine: meshcore
+- id: meshcore-dev
+  nom: MeshCore (GitHub meshcore-dev)
+  url: https://github.com/meshcore-dev/MeshCore/releases.atom
+  site: https://github.com/meshcore-dev/MeshCore
+  filtre: aucun
+  profils:
+  - iot
+  - mesh
+  domaine: meshcore
+- id: cnx-software
+  nom: CNX Software
+  url: https://www.cnx-software.com/feed/
+  site: https://www.cnx-software.com/
+  filtre: mots_cles
+- id: hackaday-iot
+  nom: Hackaday — IoT
+  url: https://hackaday.com/tag/iot/feed/
+  site: https://hackaday.com/tag/iot/
+  filtre: aucun
+  profils:
+  - iot
+- id: hackaday-lora
+  nom: Hackaday — LoRa
+  url: https://hackaday.com/tag/lora/feed/
+  site: https://hackaday.com/tag/lora/
+  filtre: aucun
+  profils:
+  - iot
+- id: hackaday-meshtastic
+  nom: Hackaday — Meshtastic
+  url: https://hackaday.com/tag/meshtastic/feed/
+  site: https://hackaday.com/tag/meshtastic/
+  filtre: aucun
+  profils:
+  - iot
+  - mesh
+  domaine: meshtastic
+- id: seeed
+  nom: Seeed Studio
+  url: https://www.seeedstudio.com/blog/feed/
+  site: https://www.seeedstudio.com/blog/
+  filtre: mots_cles
+- id: aws-iot
+  nom: AWS IoT Blog
+  url: https://aws.amazon.com/blogs/iot/feed/
+  site: https://aws.amazon.com/blogs/iot/
+  filtre: aucun
+  profils:
+  - iot
+- id: cisco-iot
+  nom: Cisco Blogs
+  url: https://blogs.cisco.com/feed
+  site: https://blogs.cisco.com/
+  filtre: mots_cles
+- id: attify
+  nom: Attify
+  url: https://blog.attify.com/rss/
+  site: https://blog.attify.com/
+  filtre: aucun
+  profils:
+  - iot
+- id: krebsonsecurity
+  nom: Krebs on Security
+  url: https://krebsonsecurity.com/feed/
+  site: https://krebsonsecurity.com/
+  filtre: mots_cles
+- id: reddit-iot
+  nom: Reddit r/IOT
+  url: https://www.reddit.com/r/IOT/.rss
+  site: https://www.reddit.com/r/IOT/
+  filtre: mots_cles
+- id: reddit-lorawan
+  nom: Reddit r/LoRaWAN
+  url: https://www.reddit.com/r/LoRaWAN/.rss
+  site: https://www.reddit.com/r/LoRaWAN/
+  filtre: aucun
+  profils:
+  - iot
+- id: reddit-lora
+  nom: Reddit r/LoRa
+  url: https://www.reddit.com/r/LoRa/.rss
+  site: https://www.reddit.com/r/LoRa/
+  filtre: aucun
+  profils:
+  - iot
+- id: reddit-meshtastic
+  nom: Reddit r/meshtastic
+  url: https://www.reddit.com/r/meshtastic/.rss
+  site: https://www.reddit.com/r/meshtastic/
+  filtre: aucun
+  profils:
+  - iot
+  - mesh
+  domaine: meshtastic
+- id: reddit-meshcore
+  nom: Reddit r/MeshCore
+  url: https://www.reddit.com/r/MeshCore/.rss
+  site: https://www.reddit.com/r/MeshCore/
+  filtre: aucun
+  profils:
+  - iot
+- id: objetconnecte
+  nom: Objet Connecté
+  url: https://objetconnecte.com/feed
+  site: https://objetconnecte.com/
+  filtre: aucun
+  profils:
+  - iot
+  decouverte: '2026-09-11'
+- id: iot-insider
+  nom: IoT Insider
+  url: https://www.iotinsider.com/feed/
+  site: https://www.iotinsider.com/
+  filtre: aucun
+  profils:
+  - iot
+  decouverte: '2026-09-11'
+- id: hackster
+  nom: Hackster.io
+  url: https://hackster.io/projects.rss?sort=recent
+  site: https://www.hackster.io/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: domo-blog
+  nom: Domo-blog
+  url: https://www.domo-blog.fr/feed/
+  site: https://www.domo-blog.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: cityramag
+  nom: Cityramag
+  url: https://cityramag.fr/feed/
+  site: https://cityramag.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: iot-gh-chirpstack
+  nom: ChirpStack (GitHub)
+  url: https://github.com/chirpstack/chirpstack/releases.atom
+  site: https://github.com/chirpstack/chirpstack
+  filtre: aucun
+  domaine: lorawan
+  profils:
+  - iot
+- id: iot-gh-ttn
+  nom: The Things Stack (GitHub)
+  url: https://github.com/TheThingsNetwork/lorawan-stack/releases.atom
+  site: https://github.com/TheThingsNetwork/lorawan-stack
+  filtre: aucun
+  domaine: lorawan
+  profils:
+  - iot
+- id: iot-gh-esphome
+  nom: ESPHome (GitHub)
+  url: https://github.com/esphome/esphome/releases.atom
+  site: https://github.com/esphome/esphome
+  filtre: aucun
+  domaine: iot
+  profils:
+  - iot
+- id: iot-gh-tasmota
+  nom: Tasmota (GitHub)
+  url: https://github.com/arendst/Tasmota/releases.atom
+  site: https://github.com/arendst/Tasmota
+  filtre: aucun
+  domaine: iot
+  profils:
+  - iot
+- id: iot-gh-zigbee2mqtt
+  nom: Zigbee2MQTT (GitHub)
+  url: https://github.com/Koenkk/zigbee2mqtt/releases.atom
+  site: https://github.com/Koenkk/zigbee2mqtt
+  filtre: aucun
+  domaine: iot
+  profils:
+  - iot
+- id: iot-gh-mosquitto
+  nom: Mosquitto (GitHub)
+  url: https://github.com/eclipse-mosquitto/mosquitto/releases.atom
+  site: https://github.com/eclipse-mosquitto/mosquitto
+  filtre: aucun
+  domaine: iot
+  profils:
+  - iot
+- id: iot-gh-nodered
+  nom: Node-RED (GitHub)
+  url: https://github.com/node-red/node-red/releases.atom
+  site: https://github.com/node-red/node-red
+  filtre: aucun
+  domaine: iot
+  profils:
+  - iot
+- id: iot-gh-thingsboard
+  nom: ThingsBoard (GitHub)
+  url: https://github.com/thingsboard/thingsboard/releases.atom
+  site: https://github.com/thingsboard/thingsboard
+  filtre: aucun
+  domaine: industrie
+  profils:
+  - iot
+- id: reliefweb
+  nom: ReliefWeb
+  url: https://reliefweb.int/updates/rss.xml
+  site: https://reliefweb.int/
+  filtre: mots_cles
+- id: gdacs
+  nom: GDACS
+  url: https://www.gdacs.org/xml/rss.xml
+  site: https://www.gdacs.org/
+  filtre: aucun
+  profils:
+  - crise
+- id: usgs-seismes
+  nom: USGS Earthquakes
+  url: https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_week.atom
+  site: https://earthquake.usgs.gov/
+  filtre: aucun
+  profils:
+  - crise
+- id: emsc
+  nom: EMSC / CSEM
+  url: https://www.emsc-csem.org/service/rss/rss.php?typ=emsc
+  site: https://www.emsc-csem.org/
+  filtre: aucun
+  profils:
+  - crise
+- id: floodlist
+  nom: Floodlist
+  url: https://floodlist.com/feed
+  site: https://floodlist.com/
+  filtre: aucun
+  profils:
+  - crise
+- id: catnat
+  nom: Catnat
+  url: https://www.catnat.net/?format=feed&type=rss
+  site: https://www.catnat.net/
+  filtre: mots_cles
+- id: preventionweb
+  nom: PreventionWeb
+  url: https://www.preventionweb.net/rss.xml
+  site: https://www.preventionweb.net/
+  filtre: mots_cles
+- id: undrr
+  nom: UNDRR
+  url: https://www.undrr.org/rss.xml
+  site: https://www.undrr.org/
+  filtre: mots_cles
+- id: actu-environnement
+  nom: Actu-Environnement
+  url: https://www.actu-environnement.com/ae/news.xml
+  site: https://www.actu-environnement.com/
+  filtre: mots_cles
+- id: franceinfo-environnement
+  nom: Franceinfo — Environnement
+  url: https://www.franceinfo.fr/environnement.rss
+  site: https://www.franceinfo.fr/environnement/
+  filtre: mots_cles
+- id: lemonde-planete
+  nom: Le Monde — Planète
+  url: https://www.lemonde.fr/planete/rss_full.xml
+  site: https://www.lemonde.fr/planete/
+  filtre: mots_cles
+- id: bbc-science
+  nom: BBC Science & Environment
+  url: https://feeds.bbci.co.uk/news/science_and_environment/rss.xml
+  site: https://www.bbc.com/news/science_and_environment
+  filtre: mots_cles
+- id: gazette-communes
+  nom: La Gazette des communes
+  url: https://www.lagazettedescommunes.com/feed/
+  site: https://www.lagazettedescommunes.com/
+  filtre: mots_cles
+- id: localtis
+  nom: Localtis
+  url: https://www.banquedesterritoires.fr/rss.xml
+  site: https://www.banquedesterritoires.fr/
+  filtre: mots_cles
+- id: irma-articles
+  nom: IRMA Grenoble — articles
+  url: https://www.irma-grenoble.com/rss/articles.xml
+  site: https://irma-grenoble.com/
+  filtre: aucun
+  profils:
+  - crise
+- id: irma-breves
+  nom: IRMA Grenoble — brèves
+  url: https://www.irma-grenoble.com/rss/breves.xml
+  site: https://irma-grenoble.com/
+  filtre: aucun
+  profils:
+  - crise
+- id: irma-agenda
+  nom: IRMA Grenoble — agenda
+  url: https://www.irma-grenoble.com/rss/agenda.xml
+  site: https://irma-grenoble.com/
+  filtre: mots_cles
+- id: meteofrance-actu
+  nom: Météo-France — actualités
+  url: https://meteofrance.com/rss.xml
+  site: https://vigilance.meteofrance.fr/fr
+  filtre: mots_cles
+- id: franceinfo-meteo
+  nom: franceinfo — Météo
+  url: https://www.francetvinfo.fr/meteo.rss
+  site: https://www.francetvinfo.fr/meteo/
+  filtre: mots_cles
+- id: franceinfo-faits-divers
+  nom: franceinfo — Faits divers
+  url: https://www.francetvinfo.fr/faits-divers.rss
+  site: https://www.francetvinfo.fr/faits-divers/
+  filtre: mots_cles
+- id: bfmtv-environnement
+  nom: BFMTV — Environnement
+  url: https://www.bfmtv.com/rss/environnement/
+  site: https://www.bfmtv.com/environnement/
+  filtre: mots_cles
+- id: crise-gh-ushahidi
+  nom: Ushahidi (GitHub)
+  url: https://github.com/ushahidi/platform/releases.atom
+  site: https://github.com/ushahidi/platform
+  filtre: aucun
+  domaine: gestion_crise
+  profils:
+  - crise
+- id: crise-gh-oq
+  nom: OpenQuake (GitHub)
+  url: https://github.com/gem/oq-engine/releases.atom
+  site: https://github.com/gem/oq-engine
+  filtre: aucun
+  domaine: seismes
+  profils:
+  - crise
+- id: crise-gh-inasafe
+  nom: InaSAFE (GitHub)
+  url: https://github.com/inasafe/inasafe/releases.atom
+  site: https://github.com/inasafe/inasafe
+  filtre: aucun
+  domaine: catastrophes
+  profils:
+  - crise
+- id: crise-gh-climada
+  nom: CLIMADA (GitHub)
+  url: https://github.com/CLIMADA-project/climada_python/releases.atom
+  site: https://github.com/CLIMADA-project/climada_python
+  filtre: aucun
+  domaine: alea_climatique
+  profils:
+  - crise
+- id: arrl
+  nom: ARRL News
+  url: https://www.arrl.org/news/rss
+  site: https://www.arrl.org/
+  filtre: mots_cles
+- id: southgate
+  nom: Southgate Amateur Radio
+  url: https://www.southgatearc.org/news/rss
+  site: https://www.southgatearc.org/
+  filtre: aucun
+  profils:
+  - radio
+- id: amateurradio-com
+  nom: AmateurRadio.com
+  url: https://www.amateurradio.com/feed/
+  site: https://www.amateurradio.com/
+  filtre: aucun
+  profils:
+  - radio
+- id: rtl-sdr
+  nom: RTL-SDR
+  url: https://www.rtl-sdr.com/feed/
+  site: https://www.rtl-sdr.com/
+  filtre: mots_cles
+- id: swling
+  nom: The SWLing Post
+  url: https://swling.com/blog/feed/
+  site: https://swling.com/blog/
+  filtre: mots_cles
+- id: onallbands
+  nom: OnAllBands
+  url: https://www.onallbands.com/feed/
+  site: https://www.onallbands.com/
+  filtre: aucun
+  profils:
+  - radio
+- id: amsat
+  nom: AMSAT
+  url: https://www.amsat.org/feed/
+  site: https://www.amsat.org/
+  filtre: mots_cles
+- id: hackaday-ham
+  nom: Hackaday — Radioamateur
+  url: https://hackaday.com/tag/ham-radio/feed/
+  site: https://hackaday.com/tag/ham-radio/
+  filtre: aucun
+  profils:
+  - radio
+- id: reddit-amateurradio
+  nom: Reddit r/amateurradio
+  url: https://www.reddit.com/r/amateurradio/.rss
+  site: https://www.reddit.com/r/amateurradio/
+  filtre: mots_cles
+- id: reddit-hamradio
+  nom: Reddit r/HamRadio
+  url: https://www.reddit.com/r/HamRadio/.rss
+  site: https://www.reddit.com/r/HamRadio/
+  filtre: mots_cles
+- id: reddit-rtlsdr
+  nom: Reddit r/RTLSDR
+  url: https://www.reddit.com/r/RTLSDR/.rss
+  site: https://www.reddit.com/r/RTLSDR/
+  filtre: mots_cles
+- id: ham-weekly-daily
+  nom: Amateur Radio Daily
+  url: https://daily.hamweekly.com/atom.xml
+  site: https://daily.hamweekly.com/
+  filtre: aucun
+  profils:
+  - radio
+  decouverte: '2026-09-11'
+- id: radio-gh-gnuradio
+  nom: GNU Radio (GitHub)
+  url: https://github.com/gnuradio/gnuradio/releases.atom
+  site: https://github.com/gnuradio/gnuradio
+  filtre: aucun
+  domaine: sdr_aprs
+  profils:
+  - radio
+- id: radio-gh-sdrangel
+  nom: SDRangel (GitHub)
+  url: https://github.com/f4exb/sdrangel/releases.atom
+  site: https://github.com/f4exb/sdrangel
+  filtre: aucun
+  domaine: sdr_aprs
+  profils:
+  - radio
+- id: radio-gh-sdrpp
+  nom: SDR++ (GitHub)
+  url: https://github.com/AlexandreRouma/SDRPlusPlus/releases.atom
+  site: https://github.com/AlexandreRouma/SDRPlusPlus
+  filtre: aucun
+  domaine: sdr_aprs
+  profils:
+  - radio
+- id: radio-gh-openwebrx
+  nom: OpenWebRX (GitHub)
+  url: https://github.com/jketterl/openwebrx/releases.atom
+  site: https://github.com/jketterl/openwebrx
+  filtre: aucun
+  domaine: sdr_aprs
+  profils:
+  - radio
+- id: radio-gh-urh
+  nom: Universal Radio Hacker (GitHub)
+  url: https://github.com/jopohl/urh/releases.atom
+  site: https://github.com/jopohl/urh
+  filtre: aucun
+  domaine: sdr_aprs
+  profils:
+  - radio
+- id: radio-gh-direwolf
+  nom: Dire Wolf (GitHub)
+  url: https://github.com/wb2osz/direwolf/releases.atom
+  site: https://github.com/wb2osz/direwolf
+  filtre: aucun
+  domaine: sdr_aprs
+  profils:
+  - radio
+- id: radio-gh-hamlib
+  nom: Hamlib (GitHub)
+  url: https://github.com/hamlib/Hamlib/releases.atom
+  site: https://github.com/hamlib/Hamlib
+  filtre: aucun
+  domaine: radioamateur
+  profils:
+  - radio
+- id: radio-gh-qdmr
+  nom: qdmr (GitHub)
+  url: https://github.com/hmatuschek/qdmr/releases.atom
+  site: https://github.com/hmatuschek/qdmr
+  filtre: aucun
+  domaine: modes_digitaux
+  profils:
+  - radio
+- id: radio-gh-pat
+  nom: Pat Winlink (GitHub)
+  url: https://github.com/la5nta/pat/releases.atom
+  site: https://github.com/la5nta/pat
+  filtre: aucun
+  domaine: modes_digitaux
+  profils:
+  - radio
+- id: radio-gh-dsd
+  nom: dsd-fme (GitHub)
+  url: https://github.com/lwvmobile/dsd-fme/releases.atom
+  site: https://github.com/lwvmobile/dsd-fme
+  filtre: aucun
+  domaine: modes_digitaux
+  profils:
+  - radio
+- id: govtech-public-safety
+  nom: GovTech — Public Safety
+  url: https://www.govtech.com/public-safety.rss
+  site: https://www.govtech.com/public-safety
+  filtre: mots_cles
+- id: iaem
+  nom: IAEM
+  url: https://www.iaem.org/rss
+  site: https://www.iaem.org/
+  filtre: mots_cles
+- id: everbridge-blog
+  nom: Everbridge
+  url: https://www.everbridge.com/blog/feed/
+  site: https://www.everbridge.com/blog/
+  filtre: mots_cles
+- id: reddit-emergencymanagement
+  nom: Reddit r/EmergencyManagement
+  url: https://www.reddit.com/r/EmergencyManagement/.rss
+  site: https://www.reddit.com/r/EmergencyManagement/
+  filtre: mots_cles
+- id: outils-gh-sahana
+  nom: Sahana Eden (GitHub)
+  url: https://github.com/sahana/eden/releases.atom
+  site: https://github.com/sahana/eden
+  filtre: aucun
+  domaine: poste_commandement
+  profils:
+  - outils
+- id: outils-gh-kobo
+  nom: KoboToolbox (GitHub)
+  url: https://github.com/kobotoolbox/kpi/releases.atom
+  site: https://github.com/kobotoolbox/kpi
+  filtre: aucun
+  domaine: outils_crise
+  profils:
+  - outils
+- id: bl-elysee
+  nom: Élysée — actualités
+  url: https://www.elysee.fr/feed
+  site: https://www.elysee.fr/
+  filtre: mots_cles
+- id: bl-cde
+  nom: Connaissance des énergies
+  url: https://www.connaissancedesenergies.org/rss.xml
+  site: https://www.connaissancedesenergies.org/
+  filtre: mots_cles
+- id: bl-revolution-energetique
+  nom: Révolution énergétique
+  url: https://www.revolution-energetique.com/feed/
+  site: https://www.revolution-energetique.com/
+  filtre: mots_cles
+- id: bl-lenergeek
+  nom: L'EnerGeek
+  url: https://lenergeek.com/feed/
+  site: https://lenergeek.com/
+  filtre: mots_cles
+- id: bl-energynews
+  nom: EnergyNews
+  url: https://energynews.pro/feed/
+  site: https://energynews.pro/
+  filtre: mots_cles
+- id: bl-greenunivers
+  nom: GreenUnivers
+  url: https://www.greenunivers.com/feed/
+  site: https://www.greenunivers.com/
+  filtre: mots_cles
+- id: bl-journal-energie
+  nom: Journal de l'énergie
+  url: https://www.journaldelenergie.com/feed/
+  site: https://www.journaldelenergie.com/
+  filtre: mots_cles
+- id: bl-monde-energie
+  nom: Le Monde de l'énergie
+  url: https://www.lemondedelenergie.com/feed/
+  site: https://www.lemondedelenergie.com/
+  filtre: mots_cles
+- id: bl-politico
+  nom: POLITICO Europe
+  url: https://www.politico.eu/feed/
+  site: https://www.politico.eu/
+  filtre: mots_cles
+- id: bl-euractiv
+  nom: Euractiv France
+  url: https://www.euractiv.fr/feed/
+  site: https://www.euractiv.fr/
+  filtre: mots_cles
+- id: bl-lemonde-economie
+  nom: Le Monde — Économie
+  url: https://www.lemonde.fr/economie/rss_full.xml
+  site: https://www.lemonde.fr/economie/
+  filtre: mots_cles
+- id: bl-figaro-economie
+  nom: Le Figaro — Économie
+  url: https://www.lefigaro.fr/rss/figaro_economie.xml
+  site: https://www.lefigaro.fr/economie/
+  filtre: mots_cles
+- id: bl-liberation-economie
+  nom: Libération — Économie
+  url: https://www.liberation.fr/arc/outboundfeeds/rss/category/economie/?outputType=xml
+  site: https://www.liberation.fr/economie/
+  filtre: mots_cles
+- id: bl-franceinfo-energie
+  nom: franceinfo — Énergie
+  url: https://www.francetvinfo.fr/economie/energie.rss
+  site: https://www.francetvinfo.fr/economie/energie/
+  filtre: mots_cles
+- id: bl-bfm-economie
+  nom: BFMTV — Économie
+  url: https://www.bfmtv.com/rss/economie/
+  site: https://www.bfmtv.com/economie/
+  filtre: mots_cles
+- id: bl-20minutes-economie
+  nom: 20 Minutes — Économie
+  url: https://www.20minutes.fr/feeds/rss-economie.xml
+  site: https://www.20minutes.fr/economie/
+  filtre: mots_cles
+- id: bl-senat
+  nom: Sénat — communiqués
+  url: https://www.senat.fr/rss/presse.rss
+  site: https://www.senat.fr/
+  filtre: mots_cles
+- id: bl-assemblee
+  nom: Assemblée nationale
+  url: https://www.assemblee-nationale.fr/rss/rss.xml
+  site: https://www.assemblee-nationale.fr/
+  filtre: mots_cles
+- id: bl-publicsenat
+  nom: Public Sénat
+  url: https://www.publicsenat.fr/rss
+  site: https://www.publicsenat.fr/
+  filtre: mots_cles
+- id: bl-cert-ssi
+  nom: CERT-FR
+  url: https://www.cert.ssi.gouv.fr/feed/
+  site: https://www.cert.ssi.gouv.fr/
+  filtre: mots_cles
+- id: bl-gh-antares
+  nom: Antares Simulator (GitHub)
+  url: https://github.com/AntaresSimulatorTeam/Antares_Simulator/releases.atom
+  site: https://github.com/AntaresSimulatorTeam/Antares_Simulator
+  filtre: aucun
+  domaine: reseau_electrique
+  profils:
+  - blackout
+- id: bl-gh-grid2op
+  nom: Grid2Op — RTE (GitHub)
+  url: https://github.com/rte-france/Grid2Op/releases.atom
+  site: https://github.com/rte-france/Grid2Op
+  filtre: aucun
+  domaine: reseau_electrique
+  profils:
+  - blackout
+- id: bl-gh-openems
+  nom: OpenEMS (GitHub)
+  url: https://github.com/OpenEMS/openems/releases.atom
+  site: https://github.com/OpenEMS/openems
+  filtre: aucun
+  domaine: reseau_electrique
+  profils:
+  - blackout
+- id: bl-gh-pypsa
+  nom: PyPSA (GitHub)
+  url: https://github.com/PyPSA/PyPSA/releases.atom
+  site: https://github.com/PyPSA/PyPSA
+  filtre: aucun
+  domaine: reseau_electrique
+  profils:
+  - blackout
+- id: bl-gh-emoncms
+  nom: Emoncms (GitHub)
+  url: https://github.com/emoncms/emoncms/releases.atom
+  site: https://github.com/emoncms/emoncms
+  filtre: aucun
+  domaine: reseau_electrique
+  profils:
+  - blackout
+- id: bl-gh-oemof
+  nom: oemof (GitHub)
+  url: https://github.com/oemof/oemof/releases.atom
+  site: https://github.com/oemof/oemof
+  filtre: aucun
+  domaine: reseau_electrique
+  profils:
+  - blackout
+- id: geo-ign-actualites
+  nom: IGN — actualités
+  url: https://www.ign.fr/actualites/rss.xml
+  site: https://www.ign.fr/
+  filtre: aucun
+  domaine: geomatique
+  profils:
+  - geomatique
+- id: geo-geoportail
+  nom: Géoportail
+  url: https://www.geoportail.gouv.fr/rss
+  site: https://www.geoportail.gouv.fr/
+  filtre: aucun
+  domaine: geomatique
+  profils:
+  - geomatique
+- id: geo-osm-blog
+  nom: OpenStreetMap Blog
+  url: https://blog.openstreetmap.org/feed/
+  site: https://blog.openstreetmap.org/
+  filtre: aucun
+  domaine: geomatique
+  profils:
+  - geomatique
+- id: geo-osm-fr
+  nom: OpenStreetMap France
+  url: https://www.openstreetmap.fr/feed/
+  site: https://www.openstreetmap.fr/
+  filtre: aucun
+  domaine: geomatique
+  profils:
+  - geomatique
+- id: geo-weeklyosm-fr
+  nom: hebdoOSM
+  url: https://weeklyosm.eu/fr/feed/
+  site: https://weeklyosm.eu/fr/
+  filtre: aucun
+  domaine: geomatique
+  profils:
+  - geomatique
+- id: geo-qgis-blog
+  nom: Blog QGIS
+  url: https://blog.qgis.org/feed/
+  site: https://blog.qgis.org/
+  filtre: aucun
+  domaine: outils
+  profils:
+  - geomatique
+- id: geo-qgis-releases
+  nom: QGIS — versions
+  url: https://github.com/qgis/QGIS/releases.atom
+  site: https://github.com/qgis/QGIS/releases
+  filtre: aucun
+  domaine: outils
+  profils:
+  - geomatique
+- id: geo-geotribu
+  nom: Geotribu
+  url: https://geotribu.fr/feed_rss_created.xml
+  site: https://geotribu.fr/
+  filtre: aucun
+  domaine: geomatique
+  profils:
+  - geomatique
+- id: geo-afigeo
+  nom: Afigéo
+  url: https://www.afigeo.asso.fr/feed/
+  site: https://www.afigeo.asso.fr/
+  filtre: aucun
+  domaine: geomatique
+  profils:
+  - geomatique
+- id: geo-georezo
+  nom: GeoRezo
+  url: https://georezo.net/extern.php
+  site: https://georezo.net/
+  filtre: mots_cles
+- id: geo-oslandia
+  nom: Oslandia
+  url: https://oslandia.com/feed/
+  site: https://oslandia.com/
+  filtre: mots_cles
+- id: geo-neogeo
+  nom: Neogeo
+  url: https://neogeo.fr/feed/
+  site: https://neogeo.fr/
+  filtre: aucun
+  domaine: outils
+  profils:
+  - geomatique
+- id: geo-cnig
+  nom: CNIG
+  url: https://cnig.gouv.fr/spip.php?page=backend-actu
+  site: https://cnig.gouv.fr/
+  filtre: aucun
+  domaine: geomatique
+  profils:
+  - geomatique
+- id: geo-osgeo
+  nom: OSGeo
+  url: https://www.osgeo.org/foundation-news/feed/
+  site: https://www.osgeo.org/
+  filtre: aucun
+  domaine: outils
+  profils:
+  - geomatique
+- id: geo-ogc
+  nom: OGC
+  url: https://www.ogc.org/feed/
+  site: https://www.ogc.org/
+  filtre: aucun
+  domaine: outils
+  profils:
+  - geomatique
+- id: geo-grass
+  nom: GRASS GIS
+  url: https://grass.osgeo.org/news/index.xml
+  site: https://grass.osgeo.org/
+  filtre: aucun
+  domaine: outils
+  profils:
+  - geomatique
+- id: geo-postgis
+  nom: PostGIS
+  url: https://postgis.net/feed.xml
+  site: https://postgis.net/
+  filtre: aucun
+  domaine: outils
+  profils:
+  - geomatique
+- id: geo-gdal
+  nom: GDAL — versions
+  url: https://github.com/OSGeo/gdal/releases.atom
+  site: https://github.com/OSGeo/gdal/releases
+  filtre: aucun
+  domaine: outils
+  profils:
+  - geomatique
+- id: geo-anita-graser
+  nom: Anita Graser
+  url: https://anitagraser.com/feed/
+  site: https://anitagraser.com/
+  filtre: aucun
+  domaine: outils
+  profils:
+  - geomatique
+- id: geo-leaflet
+  nom: Leaflet
+  url: https://leafletjs.com/atom.xml
+  site: https://leafletjs.com/
+  filtre: aucun
+  domaine: outils
+  profils:
+  - geomatique
+- id: geo-natural-earth
+  nom: Natural Earth
+  url: https://www.naturalearthdata.com/feed/
+  site: https://www.naturalearthdata.com/
+  filtre: aucun
+  domaine: geomatique
+  profils:
+  - geomatique
+- id: geo-mapbox
+  nom: Mapbox
+  url: https://blog.mapbox.com/feed
+  site: https://blog.mapbox.com/
+  filtre: aucun
+  domaine: outils
+  profils:
+  - geomatique
+- id: geo-gim
+  nom: GIM International
+  url: https://www.gim-international.com/rss/news.xml
+  site: https://www.gim-international.com/
+  filtre: aucun
+  domaine: geomatique
+  profils:
+  - geomatique
+- id: geo-geoinformatics
+  nom: GeoInformatics
+  url: https://www.geoinformatics.com/feed/
+  site: https://www.geoinformatics.com/
+  filtre: aucun
+  domaine: geomatique
+  profils:
+  - geomatique
+- id: geo-spatialsource
+  nom: Spatial Source
+  url: https://www.spatialsource.com.au/feed/
+  site: https://www.spatialsource.com.au/
+  filtre: aucun
+  domaine: geomatique
+  profils:
+  - geomatique
+- id: geo-geospatial-world
+  nom: Geospatial World
+  url: https://geospatialworld.net/feed/
+  site: https://geospatialworld.net/
+  filtre: mots_cles
+- id: geo-copernicus
+  nom: Copernicus
+  url: https://www.copernicus.eu/fr/rss.xml
+  site: https://www.copernicus.eu/fr
+  filtre: mots_cles
+- id: geo-esa-terre
+  nom: ESA — observation de la Terre
+  url: https://www.esa.int/rssfeed/Our_Activities/Observing_the_Earth
+  site: https://www.esa.int/
+  filtre: mots_cles
+- id: geo-reddit-gis
+  nom: Reddit r/gis
+  url: https://www.reddit.com/r/gis/.rss
+  site: https://www.reddit.com/r/gis/
+  filtre: mots_cles
+- id: geo-cartong
+  nom: CartONG
+  url: https://www.cartong.org/feed/
+  site: https://www.cartong.org/
+  filtre: aucun
+  domaine: urgence
+  profils:
+  - geomatique
+- id: geo-mapaction
+  nom: MapAction
+  url: https://mapaction.org/feed/
+  site: https://mapaction.org/
+  filtre: aucun
+  domaine: urgence
+  profils:
+  - geomatique
+- id: geo-giscorps
+  nom: GISCorps
+  url: https://www.giscorps.org/feed/
+  site: https://www.giscorps.org/
+  filtre: aucun
+  domaine: urgence
+  profils:
+  - geomatique
+- id: geo-heigit
+  nom: HeiGIT
+  url: https://heigit.org/feed/
+  site: https://heigit.org/
+  filtre: mots_cles
+- id: geo-ban
+  nom: Base Adresse Nationale
+  url: https://ghost.adresse.data.gouv.fr/rss/
+  site: https://adresse.data.gouv.fr/
+  filtre: aucun
+  domaine: donnees
+  profils:
+  - geomatique
+- id: geo-opendatafrance
+  nom: OpenDataFrance
+  url: https://www.opendatafrance.fr/feed/
+  site: https://www.opendatafrance.fr/
+  filtre: aucun
+  domaine: donnees
+  profils:
+  - geomatique
+- id: geo-geomatick
+  nom: GEOMATICK
+  url: https://www.geomatick.com/feed/
+  site: https://www.geomatick.com/
+  filtre: mots_cles
+- id: geo-sdis01
+  nom: SDIS 01 — Ain
+  url: https://www.sdis01.fr/index.php?format=feed&type=rss
+  site: https://www.sdis01.fr/
+  filtre: mots_cles
+- id: geo-sdis11
+  nom: SDIS 11 — Aude
+  url: https://sdis11.fr/feed/
+  site: https://sdis11.fr/
+  filtre: mots_cles
+- id: geo-sdis16
+  nom: SDIS 16 — Charente
+  url: https://www.pompiers-charente.org/rss/fr/news/news.xml
+  site: https://www.pompiers-charente.org/
+  filtre: mots_cles
+- id: geo-sdis17
+  nom: SDIS 17 — Charente-Maritime
+  url: https://sdis17.fr/feed/
+  site: https://sdis17.fr/
+  filtre: mots_cles
+- id: geo-sdis22
+  nom: SDIS 22 — Côtes-d'Armor
+  url: https://www.sdis22.fr/feed/
+  site: https://www.sdis22.fr/
+  filtre: mots_cles
+- id: geo-sdis23
+  nom: SDIS 23 — Creuse
+  url: https://www.sdis23.fr/feed/
+  site: https://www.sdis23.fr/
+  filtre: mots_cles
+- id: geo-sdis24
+  nom: SDIS 24 — Dordogne
+  url: https://www.sdis24.fr/feed/
+  site: https://www.sdis24.fr/
+  filtre: mots_cles
+- id: geo-sdis25
+  nom: SDIS 25 — Doubs
+  url: https://www.sdis25.fr/feed/
+  site: https://www.sdis25.fr/
+  filtre: mots_cles
+- id: geo-sdis27
+  nom: SDIS 27 — Eure
+  url: https://www.sapeurspompiers27.fr/feed/
+  site: https://www.sapeurspompiers27.fr/
+  filtre: mots_cles
+- id: geo-sdis34
+  nom: SDIS 34 — Hérault
+  url: https://www.sdis34.fr/feed/
+  site: https://www.sdis34.fr/
+  filtre: mots_cles
+- id: geo-sdis40
+  nom: SDIS 40 — Landes
+  url: https://www.sdis40.fr/?feed=rss2
+  site: https://www.sdis40.fr/
+  filtre: mots_cles
+- id: geo-sdis49
+  nom: SDIS 49 — Maine-et-Loire
+  url: https://www.sdis49.fr/feed/
+  site: https://www.sdis49.fr/
+  filtre: mots_cles
+- id: geo-sdis50
+  nom: SDIS 50 — Manche
+  url: https://www.sdis50.fr/feed/
+  site: https://www.sdis50.fr/
+  filtre: mots_cles
+- id: geo-sdis52
+  nom: SDIS 52 — Haute-Marne
+  url: https://www.sdis52.fr/feed/
+  site: https://www.sdis52.fr/
+  filtre: mots_cles
+- id: geo-sdis53
+  nom: SDIS 53 — Mayenne
+  url: https://www.sdis53.fr/feed/
+  site: https://www.sdis53.fr/
+  filtre: mots_cles
+- id: geo-sdis57
+  nom: SDIS 57 — Moselle
+  url: https://www.sdis57.fr/home/index.php/feed/
+  site: https://www.sdis57.fr/
+  filtre: mots_cles
+- id: geo-sdis61
+  nom: SDIS 61 — Orne
+  url: https://www.sdis61.fr/feed/
+  site: https://www.sdis61.fr/
+  filtre: mots_cles
+- id: geo-sdis62
+  nom: SDIS 62 — Pas-de-Calais
+  url: https://www.sdis62.fr/feed/
+  site: https://www.sdis62.fr/
+  filtre: mots_cles
+- id: geo-sdis66
+  nom: SDIS 66 — Pyrénées-Orientales
+  url: https://www.sdis66.fr/feed/
+  site: https://www.sdis66.fr/
+  filtre: mots_cles
+- id: geo-sdis68
+  nom: SDIS 68 — Haut-Rhin
+  url: https://www.sdis68.fr/rss/actus.php
+  site: https://www.sdis68.fr/
+  filtre: mots_cles
+- id: geo-sdis71
+  nom: SDIS 71 — Saône-et-Loire
+  url: https://www.sdis71.fr/feed/
+  site: https://www.sdis71.fr/
+  filtre: mots_cles
+- id: geo-sdis72
+  nom: SDIS 72 — Sarthe
+  url: https://www.sdis72.fr/feed/
+  site: https://www.sdis72.fr/
+  filtre: mots_cles
+- id: geo-sdis76
+  nom: SDIS 76 — Seine-Maritime
+  url: https://www.sdis76.fr/feed/
+  site: https://www.sdis76.fr/
+  filtre: mots_cles
+- id: geo-sdis77
+  nom: SDIS 77 — Seine-et-Marne
+  url: https://www.sdis77.fr/feed/
+  site: https://www.sdis77.fr/
+  filtre: mots_cles
+- id: geo-sdis79
+  nom: SDIS 79 — Deux-Sèvres
+  url: https://www.sdis79.fr/feed/
+  site: https://www.sdis79.fr/
+  filtre: mots_cles
+- id: geo-sdis80
+  nom: SDIS 80 — Somme
+  url: https://sdis80.fr/feed/
+  site: https://sdis80.fr/
+  filtre: mots_cles
+- id: geo-sdis81
+  nom: SDIS 81 — Tarn
+  url: https://www.sdis81.fr/feed/
+  site: https://www.sdis81.fr/
+  filtre: mots_cles
+- id: geo-sdis82
+  nom: SDIS 82 — Tarn-et-Garonne
+  url: https://www.sdis82.fr/feed/
+  site: https://www.sdis82.fr/
+  filtre: mots_cles
+- id: geo-sdis89
+  nom: SDIS 89 — Yonne
+  url: https://www.sdis89.fr/feed/
+  site: https://www.sdis89.fr/
+  filtre: mots_cles
+- id: geo-sdis971
+  nom: SDIS 971 — Guadeloupe
+  url: https://www.sdis971.fr/feed/
+  site: https://www.sdis971.fr/
+  filtre: mots_cles
+- id: geo-sis972
+  nom: SIS 972 — Martinique
+  url: https://sis972.fr/feed/
+  site: https://sis972.fr/
+  filtre: mots_cles
+- id: geo-sdmis
+  nom: SDMIS — Rhône et métropole de Lyon
+  url: https://www.sdmis.fr/feed/
+  site: https://www.sdmis.fr/
+  filtre: mots_cles
+- id: geo-pompiers13
+  nom: Pompiers 13 — Bouches-du-Rhône
+  url: https://pompiers13.org/feed/
+  site: https://pompiers13.org/
+  filtre: mots_cles
+- id: geo-gh-geoserver
+  nom: GeoServer (GitHub)
+  url: https://github.com/geoserver/geoserver/releases.atom
+  site: https://github.com/geoserver/geoserver
+  filtre: aucun
+  domaine: outils
+  profils:
+  - geomatique
+- id: geo-gh-postgis
+  nom: PostGIS (GitHub)
+  url: https://github.com/postgis/postgis/releases.atom
+  site: https://github.com/postgis/postgis
+  filtre: aucun
+  domaine: outils
+  profils:
+  - geomatique
+- id: geo-gh-proj
+  nom: PROJ (GitHub)
+  url: https://github.com/OSGeo/PROJ/releases.atom
+  site: https://github.com/OSGeo/PROJ
+  filtre: aucun
+  domaine: outils
+  profils:
+  - geomatique
+- id: geo-gh-grass
+  nom: GRASS GIS (GitHub)
+  url: https://github.com/OSGeo/grass/releases.atom
+  site: https://github.com/OSGeo/grass
+  filtre: aucun
+  domaine: outils
+  profils:
+  - geomatique
+- id: geo-gh-openlayers
+  nom: OpenLayers (GitHub)
+  url: https://github.com/openlayers/openlayers/releases.atom
+  site: https://github.com/openlayers/openlayers
+  filtre: aucun
+  domaine: outils
+  profils:
+  - geomatique
+- id: geo-gh-maplibre
+  nom: MapLibre (GitHub)
+  url: https://github.com/maplibre/maplibre-gl-js/releases.atom
+  site: https://github.com/maplibre/maplibre-gl-js
+  filtre: aucun
+  domaine: outils
+  profils:
+  - geomatique
+- id: geo-gh-geopandas
+  nom: GeoPandas (GitHub)
+  url: https://github.com/geopandas/geopandas/releases.atom
+  site: https://github.com/geopandas/geopandas
+  filtre: aucun
+  domaine: outils
+  profils:
+  - geomatique
+- id: geo-gh-pdal
+  nom: PDAL (GitHub)
+  url: https://github.com/PDAL/PDAL/releases.atom
+  site: https://github.com/PDAL/PDAL
+  filtre: aucun
+  domaine: lidar
+  profils:
+  - geomatique
+- id: geo-gh-id
+  nom: iD — OpenStreetMap (GitHub)
+  url: https://github.com/openstreetmap/iD/releases.atom
+  site: https://github.com/openstreetmap/iD
+  filtre: aucun
+  domaine: geomatique
+  profils:
+  - geomatique
+- id: geo-gh-tasking-manager
+  nom: HOT Tasking Manager (GitHub)
+  url: https://github.com/hotosm/tasking-manager/releases.atom
+  site: https://github.com/hotosm/tasking-manager
+  filtre: aucun
+  domaine: urgence
+  profils:
+  - geomatique
+- id: geo-gh-cartes-gouv
+  nom: cartes.gouv.fr (GitHub IGN)
+  url: https://github.com/IGNF/cartes.gouv.fr-entree-carto/releases.atom
+  site: https://github.com/IGNF/cartes.gouv.fr-entree-carto
+  filtre: aucun
+  domaine: donnees
+  profils:
+  - geomatique
+- id: mesh-meshtastic-android
+  nom: Meshtastic Android (GitHub)
+  url: https://github.com/meshtastic/Meshtastic-Android/releases.atom
+  site: https://github.com/meshtastic/Meshtastic-Android
+  filtre: aucun
+  domaine: meshtastic
+  profils:
+  - mesh
+- id: mesh-meshtastic-web
+  nom: Meshtastic Web (GitHub)
+  url: https://github.com/meshtastic/web/releases.atom
+  site: https://github.com/meshtastic/web
+  filtre: aucun
+  domaine: meshtastic
+  profils:
+  - mesh
+- id: mesh-meshcore-blog
+  nom: MeshCore Blog
+  url: https://blog.meshcore.io/feed.xml
+  site: https://blog.meshcore.io/
+  filtre: aucun
+  domaine: meshcore
+  profils:
+  - mesh
+- id: mesh-reticulum
+  nom: Reticulum (GitHub)
+  url: https://github.com/markqvist/Reticulum/releases.atom
+  site: https://github.com/markqvist/Reticulum
+  filtre: aucun
+  domaine: general
+  profils:
+  - mesh
+- id: mesh-rnode
+  nom: RNode firmware (GitHub)
+  url: https://github.com/markqvist/RNode_Firmware/releases.atom
+  site: https://github.com/markqvist/RNode_Firmware
+  filtre: aucun
+  domaine: general
+  profils:
+  - mesh
+- id: mesh-yggdrasil
+  nom: Yggdrasil (GitHub)
+  url: https://github.com/yggdrasil-network/yggdrasil-go/releases.atom
+  site: https://github.com/yggdrasil-network/yggdrasil-go
+  filtre: aucun
+  domaine: general
+  profils:
+  - mesh
+- id: mesh-cjdns
+  nom: cjdns (GitHub)
+  url: https://github.com/cjdelisle/cjdns/releases.atom
+  site: https://github.com/cjdelisle/cjdns
+  filtre: aucun
+  domaine: general
+  profils:
+  - mesh
+- id: mesh-disaster-radio
+  nom: disaster.radio (GitHub)
+  url: https://github.com/sudomesh/disaster-radio/releases.atom
+  site: https://github.com/sudomesh/disaster-radio
+  filtre: aucun
+  domaine: general
+  profils:
+  - mesh
+- id: mesh-hackaday-mesh
+  nom: Hackaday — mesh
+  url: https://hackaday.com/tag/mesh/feed/
+  site: https://hackaday.com/tag/mesh/
+  filtre: mots_cles
+- id: mesh-openwrt
+  nom: OpenWrt
+  url: https://openwrt.org/feed.php
+  site: https://openwrt.org/
+  filtre: mots_cles
+- id: franceinfo-titres
+  nom: franceinfo — titres
+  url: https://www.francetvinfo.fr/titres.rss
+  site: https://www.francetvinfo.fr/
+  filtre: mots_cles
+- id: franceinfo-france
+  nom: franceinfo — France
+  url: https://www.francetvinfo.fr/france.rss
+  site: https://www.francetvinfo.fr/france/
+  filtre: mots_cles
+- id: franceinfo-monde
+  nom: franceinfo — Monde
+  url: https://www.francetvinfo.fr/monde.rss
+  site: https://www.francetvinfo.fr/monde/
+  filtre: mots_cles
+- id: bfmtv-24-7
+  nom: BFMTV — fil 24/7
+  url: https://www.bfmtv.com/rss/news-24-7/
+  site: https://www.bfmtv.com/
+  filtre: mots_cles
+- id: france24
+  nom: France 24
+  url: https://www.france24.com/fr/rss
+  site: https://www.france24.com/fr/
+  filtre: mots_cles
+- id: france24-france
+  nom: France 24 — France
+  url: https://www.france24.com/fr/france/rss
+  site: https://www.france24.com/fr/france/
+  filtre: mots_cles
+- id: rfi
+  nom: RFI
+  url: https://www.rfi.fr/fr/rss
+  site: https://www.rfi.fr/fr/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: cnews
+  nom: CNews
+  url: https://www.cnews.fr/rss.xml
+  site: https://www.cnews.fr/
+  filtre: mots_cles
+- id: euronews-fr
+  nom: Euronews
+  url: https://fr.euronews.com/rss
+  site: https://fr.euronews.com/
+  filtre: mots_cles
+- id: europe1
+  nom: Europe 1
+  url: https://www.europe1.fr/rss.xml
+  site: https://www.europe1.fr/
+  filtre: mots_cles
+- id: franceinter
+  nom: France Inter
+  url: https://www.radiofrance.fr/franceinter/rss
+  site: https://www.radiofrance.fr/franceinter
+  filtre: mots_cles
+- id: franceinfo-radio
+  nom: franceinfo — radio
+  url: https://www.radiofrance.fr/franceinfo/rss
+  site: https://www.radiofrance.fr/franceinfo
+  filtre: mots_cles
+- id: rmc
+  nom: RMC
+  url: https://rmc.bfmtv.com/rss/actualites/
+  site: https://rmc.bfmtv.com/
+  filtre: mots_cles
+- id: lemonde-une
+  nom: Le Monde — une
+  url: https://www.lemonde.fr/rss/une.xml
+  site: https://www.lemonde.fr/
+  filtre: mots_cles
+- id: lemonde-en-continu
+  nom: Le Monde — en continu
+  url: https://www.lemonde.fr/rss/en_continu.xml
+  site: https://www.lemonde.fr/
+  filtre: mots_cles
+- id: lefigaro-actu
+  nom: Le Figaro — actualités
+  url: https://www.lefigaro.fr/rss/figaro_actualites.xml
+  site: https://www.lefigaro.fr/
+  filtre: mots_cles
+- id: liberation
+  nom: Libération
+  url: https://www.liberation.fr/arc/outboundfeeds/rss-all/?outputType=xml
+  site: https://www.liberation.fr/
+  filtre: mots_cles
+- id: leparisien
+  nom: Le Parisien
+  url: https://feeds.leparisien.fr/leparisien/rss
+  site: https://www.leparisien.fr/
+  filtre: mots_cles
+- id: 20minutes-une
+  nom: 20 Minutes — une
+  url: https://www.20minutes.fr/feeds/rss-une.xml
+  site: https://www.20minutes.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: ouest-france-continu
+  nom: Ouest-France — en continu
+  url: https://www.ouest-france.fr/rss-en-continu.xml
+  site: https://www.ouest-france.fr/
+  filtre: mots_cles
+- id: la-croix
+  nom: La Croix
+  url: https://www.la-croix.com/RSS/UNIVERS
+  site: https://www.la-croix.com/
+  filtre: mots_cles
+- id: lexpress
+  nom: L'Express
+  url: https://www.lexpress.fr/arc/outboundfeeds/rss/alaune.xml
+  site: https://www.lexpress.fr/
+  filtre: mots_cles
+- id: lepoint
+  nom: Le Point
+  url: https://www.lepoint.fr/arc/outboundfeeds/rss/?outputType=xml
+  site: https://www.lepoint.fr/
+  filtre: mots_cles
+- id: lobs
+  nom: L'Obs
+  url: https://www.nouvelobs.com/rss.xml
+  site: https://www.nouvelobs.com/
+  filtre: mots_cles
+- id: humanite
+  nom: L'Humanité
+  url: https://www.humanite.fr/rss
+  site: https://www.humanite.fr/
+  filtre: mots_cles
+- id: huffpost-fr
+  nom: HuffPost France
+  url: https://www.huffingtonpost.fr/feeds/index.xml
+  site: https://www.huffingtonpost.fr/
+  filtre: mots_cles
+- id: mediapart
+  nom: Mediapart
+  url: https://www.mediapart.fr/articles/feed
+  site: https://www.mediapart.fr/
+  filtre: mots_cles
+- id: challenges
+  nom: Challenges
+  url: https://www.challenges.fr/rss.xml
+  site: https://www.challenges.fr/
+  filtre: mots_cles
+- id: marianne
+  nom: Marianne
+  url: https://www.marianne.net/rss.xml
+  site: https://www.marianne.net/
+  filtre: mots_cles
+- id: courrier-international
+  nom: Courrier international
+  url: https://www.courrierinternational.com/feed/all/rss.xml
+  site: https://www.courrierinternational.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: lejdd
+  nom: Le JDD
+  url: https://www.lejdd.fr/rss.xml
+  site: https://www.lejdd.fr/
+  filtre: mots_cles
+- id: france3-aura
+  nom: France 3 Auvergne-Rhône-Alpes
+  url: https://france3-regions.franceinfo.fr/auvergne-rhone-alpes/actu/rss
+  site: https://france3-regions.franceinfo.fr/auvergne-rhone-alpes/
+  filtre: mots_cles
+- id: franceinfo-aura
+  nom: franceinfo — Auvergne-Rhône-Alpes
+  url: https://www.franceinfo.fr/france/auvergne-rhone-alpes.rss
+  site: https://www.franceinfo.fr/france/auvergne-rhone-alpes/
+  filtre: mots_cles
+- id: franceinfo-lyon
+  nom: franceinfo — Lyon
+  url: https://www.franceinfo.fr/france/auvergne-rhone-alpes/rhone/lyon.rss
+  site: https://www.franceinfo.fr/france/auvergne-rhone-alpes/rhone/lyon/
+  filtre: mots_cles
+- id: ici-isere
+  nom: ICI Isère
+  url: https://www.ici.fr/rss/isere/a-la-une.xml
+  site: https://www.ici.fr/isere
+  filtre: mots_cles
+- id: ici-pays-auvergne
+  nom: ICI Pays d'Auvergne
+  url: https://www.ici.fr/rss/pays-d-auvergne/a-la-une.xml
+  site: https://www.ici.fr/pays-d-auvergne
+  filtre: mots_cles
+- id: ici-pays-savoie
+  nom: ICI Pays de Savoie
+  url: https://www.ici.fr/rss/pays-de-savoie/a-la-une.xml
+  site: https://www.ici.fr/pays-de-savoie
+  filtre: mots_cles
+- id: ici-saint-etienne
+  nom: ICI Saint-Étienne Loire
+  url: https://www.ici.fr/rss/saint-etienne-loire/a-la-une.xml
+  site: https://www.ici.fr/saint-etienne-loire
+  filtre: mots_cles
+- id: ici-drome-ardeche
+  nom: ICI Drôme Ardèche
+  url: https://www.ici.fr/rss/drome-ardeche/a-la-une.xml
+  site: https://www.ici.fr/drome-ardeche
+  filtre: mots_cles
+- id: bfm-lyon
+  nom: BFM Lyon
+  url: https://www.bfmtv.com/rss/lyon/
+  site: https://www.bfmtv.com/lyon/
+  filtre: mots_cles
+- id: bfm-saint-etienne
+  nom: BFM Saint-Étienne
+  url: https://www.bfmtv.com/rss/saint-etienne/
+  site: https://www.bfmtv.com/saint-etienne/
+  filtre: mots_cles
+- id: bfm-clermont
+  nom: BFM Clermont-Ferrand
+  url: https://www.bfmtv.com/rss/clermont-ferrand/
+  site: https://www.bfmtv.com/clermont-ferrand/
+  filtre: mots_cles
+- id: dauphine-isere
+  nom: Le Dauphiné Libéré — Isère
+  url: https://www.ledauphine.com/isere/rss
+  site: https://www.ledauphine.com/isere
+  filtre: mots_cles
+- id: dauphine-drome
+  nom: Le Dauphiné Libéré — Drôme
+  url: https://www.ledauphine.com/drome/rss
+  site: https://www.ledauphine.com/drome
+  filtre: mots_cles
+- id: dauphine-ardeche
+  nom: Le Dauphiné Libéré — Ardèche
+  url: https://www.ledauphine.com/ardeche/rss
+  site: https://www.ledauphine.com/ardeche
+  filtre: mots_cles
+- id: dauphine-savoie
+  nom: Le Dauphiné Libéré — Savoie
+  url: https://www.ledauphine.com/savoie/rss
+  site: https://www.ledauphine.com/savoie
+  filtre: mots_cles
+- id: dauphine-haute-savoie
+  nom: Le Dauphiné Libéré — Haute-Savoie
+  url: https://www.ledauphine.com/haute-savoie/rss
+  site: https://www.ledauphine.com/haute-savoie
+  filtre: mots_cles
+- id: dauphine-ain
+  nom: Le Dauphiné Libéré — Ain
+  url: https://www.ledauphine.com/ain/rss
+  site: https://www.ledauphine.com/ain
+  filtre: mots_cles
+- id: progres-rhone
+  nom: Le Progrès — Rhône
+  url: https://www.leprogres.fr/rhone/rss
+  site: https://www.leprogres.fr/rhone
+  filtre: mots_cles
+- id: progres-lyon
+  nom: Le Progrès — Lyon / Villeurbanne
+  url: https://www.leprogres.fr/edition-lyon-villeurbanne/rss
+  site: https://www.leprogres.fr/
+  filtre: mots_cles
+- id: progres-loire
+  nom: Le Progrès — Loire
+  url: https://www.leprogres.fr/loire/rss
+  site: https://www.leprogres.fr/loire
+  filtre: mots_cles
+- id: progres-ain
+  nom: Le Progrès — Ain
+  url: https://www.leprogres.fr/ain/rss
+  site: https://www.leprogres.fr/ain
+  filtre: mots_cles
+- id: progres-haute-loire
+  nom: Le Progrès — Haute-Loire
+  url: https://www.leprogres.fr/haute-loire/rss
+  site: https://www.leprogres.fr/haute-loire
+  filtre: mots_cles
+- id: lemessager
+  nom: Le Messager — Haute-Savoie
+  url: https://www.lemessager.fr/rss/606134/cible_principale
+  site: https://www.lemessager.fr/
+  filtre: mots_cles
+- id: voix-de-l-ain
+  nom: La Voix de l'Ain
+  url: https://www.lavoixdelain.fr/feed
+  site: https://www.lavoixdelain.fr/
+  filtre: mots_cles
+- id: 20minutes-lyon
+  nom: 20 Minutes — Lyon
+  url: https://www.20minutes.fr/feeds/rss-lyon.xml
+  site: https://www.20minutes.fr/lyon/
+  filtre: mots_cles
+- id: 20minutes-aura
+  nom: 20 Minutes — Auvergne-Rhône-Alpes
+  url: https://www.20minutes.fr/feeds/rss-auvergne-rhone-alpes.xml
+  site: https://www.20minutes.fr/auvergne-rhone-alpes/
+  filtre: mots_cles
+- id: lyon-capitale
+  nom: Lyon Capitale
+  url: https://www.lyoncapitale.fr/feed
+  site: https://www.lyoncapitale.fr/
+  filtre: mots_cles
+- id: lyon-mag
+  nom: Lyon Mag
+  url: https://www.lyonmag.com/rss
+  site: https://www.lyonmag.com/
+  filtre: mots_cles
+- id: rue89-lyon
+  nom: Rue89 Lyon
+  url: https://www.rue89lyon.fr/feed/
+  site: https://www.rue89lyon.fr/
+  filtre: mots_cles
+- id: tribune-de-lyon
+  nom: Tribune de Lyon
+  url: https://tribunedelyon.fr/feed/
+  site: https://tribunedelyon.fr/
+  filtre: mots_cles
+- id: mlyon
+  nom: MLyon
+  url: https://mlyon.fr/xml/news
+  site: https://mlyon.fr/
+  filtre: mots_cles
+- id: place-grenet
+  nom: Place Gre'net
+  url: https://www.placegrenet.fr/feed/
+  site: https://www.placegrenet.fr/
+  filtre: mots_cles
+- id: zoomdici
+  nom: Zoomdici
+  url: https://www.zoomdici.fr/feed
+  site: https://www.zoomdici.fr/
+  filtre: mots_cles
+- id: mesinfos-aura
+  nom: MesInfos — Auvergne-Rhône-Alpes
+  url: https://mesinfos.fr/auvergne-rhone-alpes/rss.xml
+  site: https://mesinfos.fr/auvergne-rhone-alpes
+  filtre: mots_cles
+- id: actu-lyon
+  nom: Actu.fr — Lyon
+  url: https://actu.fr/lyon/rss.xml
+  site: https://actu.fr/auvergne-rhone-alpes/rhone/lyon_69123/
+  filtre: mots_cles
+- id: actu-grenoble
+  nom: Actu.fr — Grenoble
+  url: https://actu.fr/grenoble/rss.xml
+  site: https://actu.fr/auvergne-rhone-alpes/isere/grenoble_38185/
+  filtre: mots_cles
+- id: actu-saint-etienne
+  nom: Actu.fr — Saint-Étienne
+  url: https://actu.fr/saint-etienne/rss.xml
+  site: https://actu.fr/auvergne-rhone-alpes/loire/saint-etienne_42218/
+  filtre: mots_cles
+- id: lepoint-lyon
+  nom: Le Point — Lyon
+  url: https://www.lepoint.fr/arc/outboundfeeds/rss/tags_slug/lyon/
+  site: https://www.lepoint.fr/
+  filtre: mots_cles
+- id: lemonde-lyon
+  nom: Le Monde — Lyon
+  url: https://www.lemonde.fr/lyon/rss_full.xml
+  site: https://www.lemonde.fr/lyon/
+  filtre: mots_cles
+- id: lemonde-grenoble
+  nom: Le Monde — Grenoble
+  url: https://www.lemonde.fr/grenoble/rss_full.xml
+  site: https://www.lemonde.fr/grenoble/
+  filtre: mots_cles
+- id: lemonde-clermont
+  nom: Le Monde — Clermont-Ferrand
+  url: https://www.lemonde.fr/clermont-ferrand/rss_full.xml
+  site: https://www.lemonde.fr/clermont-ferrand/
+  filtre: mots_cles
+- id: lemonde-saint-etienne
+  nom: Le Monde — Saint-Étienne
+  url: https://www.lemonde.fr/saint-etienne/rss_full.xml
+  site: https://www.lemonde.fr/saint-etienne/
+  filtre: mots_cles
+- id: la-croix-aura
+  nom: La Croix — Auvergne-Rhône-Alpes
+  url: https://www.la-croix.com/feeds/rss/France/region-auvergne-rhone-alpes-actualite-info.xml
+  site: https://www.la-croix.com/
+  filtre: mots_cles
+- id: tv5monde
+  nom: TV5 Monde
+  url: https://information.tv5monde.com/rsstaxo/all
+  site: https://information.tv5monde.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: atlantico
+  nom: Atlantico
+  url: https://rss.atlantico.fr
+  site: https://www.atlantico.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: chaine-meteo
+  nom: La Chaîne Météo
+  url: https://actualite.lachainemeteo.com/meteo-rss/actualite-meteo.rss
+  site: https://actualite.lachainemeteo.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: reporterre
+  nom: Reporterre
+  url: https://reporterre.net/spip.php?page=backend-simple
+  site: https://reporterre.net/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: 01net
+  nom: 01net
+  url: https://www.01net.com/actualites/feed
+  site: https://www.01net.com/
+  filtre: mots_cles
+- id: clubic
+  nom: Clubic
+  url: https://www.clubic.com/feed/rss
+  site: https://www.clubic.com/
+  filtre: mots_cles
+- id: numerama
+  nom: Numerama
+  url: https://www.numerama.com/feed
+  site: https://www.numerama.com/
+  filtre: mots_cles
+- id: zdnet-fr
+  nom: ZDNet.fr
+  url: https://www.zdnet.fr/feeds/rss/actualites/
+  site: https://www.zdnet.fr/
+  filtre: mots_cles
+- id: lmi-actu
+  nom: Le Monde Informatique
+  url: https://www.lemondeinformatique.fr/flux-rss/thematique/toutes-les-actualites/rss.xml
+  site: https://www.lemondeinformatique.fr/
+  filtre: mots_cles
+- id: jdn
+  nom: Journal du Net
+  url: https://www.journaldunet.com/rss.xml
+  site: https://www.journaldunet.com/
+  filtre: mots_cles
+- id: usine-digitale
+  nom: L'Usine Digitale
+  url: https://www.usine-digitale.fr/rss/
+  site: https://www.usine-digitale.fr/
+  filtre: mots_cles
+- id: usine-nouvelle
+  nom: L'Usine Nouvelle
+  url: https://www.usinenouvelle.com/rss/
+  site: https://www.usinenouvelle.com/
+  filtre: mots_cles
+- id: lesnumeriques
+  nom: Les Numériques
+  url: https://www.lesnumeriques.com/rss.xml
+  site: https://www.lesnumeriques.com/
+  filtre: mots_cles
+- id: next-ink
+  nom: Next
+  url: https://next.ink/feed/
+  site: https://next.ink/
+  filtre: mots_cles
+- id: frandroid
+  nom: Frandroid
+  url: https://www.frandroid.com/feed
+  site: https://www.frandroid.com/
+  filtre: mots_cles
+- id: presse-citron
+  nom: Presse-citron
+  url: https://www.presse-citron.net/feed/
+  site: https://www.presse-citron.net/
+  filtre: mots_cles
+- id: itespresso
+  nom: ITespresso
+  url: https://www.itespresso.fr/feed
+  site: https://www.itespresso.fr/
+  filtre: mots_cles
+- id: it-connect
+  nom: IT-Connect
+  url: https://www.it-connect.fr/feed/
+  site: https://www.it-connect.fr/
+  filtre: mots_cles
+- id: solutions-numeriques
+  nom: Solutions Numériques
+  url: https://www.solutions-numeriques.com/feed/
+  site: https://www.solutions-numeriques.com/
+  filtre: mots_cles
+- id: informatiquenews
+  nom: InformatiqueNews
+  url: https://www.informatiquenews.fr/feed
+  site: https://www.informatiquenews.fr/
+  filtre: mots_cles
+- id: lemonde-pixels
+  nom: Le Monde — Pixels
+  url: https://www.lemonde.fr/pixels/rss_full.xml
+  site: https://www.lemonde.fr/pixels/
+  filtre: mots_cles
+- id: lefigaro-hightech
+  nom: Le Figaro — High-tech
+  url: https://www.lefigaro.fr/rss/figaro_hightech.xml
+  site: https://www.lefigaro.fr/secteur/high-tech
+  filtre: mots_cles
+- id: bfmtv-tech
+  nom: BFMTV — Tech
+  url: https://www.bfmtv.com/rss/tech/
+  site: https://www.bfmtv.com/tech/
+  filtre: mots_cles
+- id: franceinfo-internet
+  nom: franceinfo — Internet
+  url: https://www.francetvinfo.fr/internet.rss
+  site: https://www.francetvinfo.fr/internet/
+  filtre: mots_cles
+- id: franceinfo-sciences
+  nom: franceinfo — Sciences
+  url: https://www.francetvinfo.fr/sciences.rss
+  site: https://www.francetvinfo.fr/sciences/
+  filtre: mots_cles
+- id: actuia
+  nom: ActuIA
+  url: https://www.actuia.com/feed/
+  site: https://www.actuia.com/
+  filtre: mots_cles
+- id: lebigdata
+  nom: LeBigData
+  url: https://www.lebigdata.fr/feed
+  site: https://www.lebigdata.fr/
+  filtre: mots_cles
+- id: siecle-digital
+  nom: Siècle Digital
+  url: https://siecledigital.fr/feed/
+  site: https://siecledigital.fr/
+  filtre: mots_cles
+- id: frenchweb
+  nom: FrenchWeb
+  url: https://www.frenchweb.fr/feed
+  site: https://www.frenchweb.fr/
+  filtre: mots_cles
+- id: maddyness
+  nom: Maddyness
+  url: https://www.maddyness.com/feed/
+  site: https://www.maddyness.com/
+  filtre: mots_cles
+- id: blogdumoderateur
+  nom: Blog du Modérateur
+  url: https://www.blogdumoderateur.com/feed/
+  site: https://www.blogdumoderateur.com/
+  filtre: mots_cles
+- id: developpez
+  nom: Developpez.com
+  url: https://www.developpez.com/index/rss
+  site: https://www.developpez.com/
+  filtre: mots_cles
+- id: programmez
+  nom: Programmez!
+  url: https://www.programmez.com/rss.xml
+  site: https://www.programmez.com/
+  filtre: mots_cles
+- id: linuxfr
+  nom: LinuxFr
+  url: https://linuxfr.org/news.atom
+  site: https://linuxfr.org/
+  filtre: mots_cles
+- id: framablog
+  nom: Framablog
+  url: https://framablog.org/feed/
+  site: https://framablog.org/
+  filtre: mots_cles
+- id: korben
+  nom: Korben
+  url: https://korben.info/feed
+  site: https://korben.info/
+  filtre: mots_cles
+- id: octo-talks
+  nom: OCTO Talks
+  url: https://blog.octo.com/feed
+  site: https://blog.octo.com/
+  filtre: mots_cles
+- id: techniques-ingenieur
+  nom: Techniques de l'Ingénieur
+  url: https://www.techniques-ingenieur.fr/actualite/feed/
+  site: https://www.techniques-ingenieur.fr/
+  filtre: mots_cles
+- id: toms-hardware-fr
+  nom: Tom's Hardware France
+  url: https://www.tomshardware.fr/feed/
+  site: https://www.tomshardware.fr/
+  filtre: mots_cles
+- id: toms-guide-fr
+  nom: Tom's Guide France
+  url: https://www.tomsguide.fr/feed/
+  site: https://www.tomsguide.fr/
+  filtre: mots_cles
+- id: futura-sciences
+  nom: Futura Sciences
+  url: https://www.futura-sciences.com/rss/actualites.xml
+  site: https://www.futura-sciences.com/
+  filtre: mots_cles
+- id: sciences-et-avenir
+  nom: Sciences et Avenir
+  url: https://www.sciencesetavenir.fr/rss.xml
+  site: https://www.sciencesetavenir.fr/
+  filtre: mots_cles
+- id: cnrs-journal
+  nom: CNRS Le Journal
+  url: https://lejournal.cnrs.fr/rss
+  site: https://lejournal.cnrs.fr/
+  filtre: mots_cles
+- id: the-conversation-fr
+  nom: The Conversation France
+  url: https://theconversation.com/fr/articles.atom
+  site: https://theconversation.com/fr/
+  filtre: mots_cles
+- id: ieee-spectrum
+  nom: IEEE Spectrum
+  url: https://spectrum.ieee.org/feeds/feed.rss
+  site: https://spectrum.ieee.org/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: eenews-europe
+  nom: eeNews Europe
+  url: https://eenewseurope.com/feed
+  site: https://eenewseurope.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: ecinews
+  nom: Electronique Composants & Instrumentation
+  url: https://ecinews.fr/feed
+  site: https://ecinews.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: rfid-journal
+  nom: RFID Journal
+  url: https://www.rfidjournal.com/feed/
+  site: https://www.rfidjournal.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: industrial-cyber
+  nom: Industrial Cyber
+  url: https://industrialcyber.co/feed
+  site: https://industrialcyber.co/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: la-revue-du-digital
+  nom: La Revue du Digital
+  url: https://www.larevuedudigital.com/feed/
+  site: https://www.larevuedudigital.com/
+  filtre: mots_cles
+- id: vigicrues
+  nom: Vigicrues
+  url: https://www.vigicrues.gouv.fr/territoire/rss
+  site: https://www.vigicrues.gouv.fr/
+  filtre: aucun
+  ignorer_date: true
+  profils:
+  - crise
+  - outils
+  - blackout
+- id: la1ere
+  nom: La 1ère — Outre-mer
+  url: https://la1ere.franceinfo.fr/actu/rss
+  site: https://la1ere.franceinfo.fr/
+  filtre: mots_cles
+- id: la1ere-martinique
+  nom: La 1ère — Martinique
+  url: https://la1ere.franceinfo.fr/martinique/actu/rss
+  site: https://la1ere.franceinfo.fr/martinique/
+  filtre: mots_cles
+- id: la1ere-wallis
+  nom: La 1ère — Wallis-et-Futuna
+  url: https://la1ere.franceinfo.fr/wallisfutuna/actu/rss
+  site: https://la1ere.franceinfo.fr/wallis-et-futuna/
+  filtre: mots_cles
+- id: franceinfo-societe
+  nom: franceinfo — Société
+  url: https://www.francetvinfo.fr/societe.rss
+  site: https://www.francetvinfo.fr/societe/
+  filtre: mots_cles
+- id: franceinfo-justice
+  nom: franceinfo — Justice
+  url: https://www.francetvinfo.fr/justice.rss
+  site: https://www.francetvinfo.fr/justice/
+  filtre: mots_cles
+- id: france3-idf
+  nom: France 3 Île-de-France
+  url: https://france3-regions.franceinfo.fr/paris-ile-de-france/actu/rss
+  site: https://france3-regions.franceinfo.fr/paris-ile-de-france/
+  filtre: mots_cles
+- id: france3-bfc
+  nom: France 3 Bourgogne-Franche-Comté
+  url: https://france3-regions.franceinfo.fr/bourgogne-franche-comte/actu/rss
+  site: https://france3-regions.franceinfo.fr/bourgogne-franche-comte/
+  filtre: mots_cles
+- id: france3-bretagne
+  nom: France 3 Bretagne
+  url: https://france3-regions.franceinfo.fr/bretagne/actu/rss
+  site: https://france3-regions.franceinfo.fr/bretagne/
+  filtre: mots_cles
+- id: france3-cvl
+  nom: France 3 Centre-Val de Loire
+  url: https://france3-regions.franceinfo.fr/centre-val-de-loire/actu/rss
+  site: https://france3-regions.franceinfo.fr/centre-val-de-loire/
+  filtre: mots_cles
+- id: france3-hdf
+  nom: France 3 Hauts-de-France
+  url: https://france3-regions.franceinfo.fr/hauts-de-france/actu/rss
+  site: https://france3-regions.franceinfo.fr/hauts-de-france/
+  filtre: mots_cles
+- id: france3-normandie
+  nom: France 3 Normandie
+  url: https://france3-regions.franceinfo.fr/normandie/actu/rss
+  site: https://france3-regions.franceinfo.fr/normandie/
+  filtre: mots_cles
+- id: france3-na
+  nom: France 3 Nouvelle-Aquitaine
+  url: https://france3-regions.franceinfo.fr/nouvelle-aquitaine/actu/rss
+  site: https://france3-regions.franceinfo.fr/nouvelle-aquitaine/
+  filtre: mots_cles
+- id: france3-occitanie
+  nom: France 3 Occitanie
+  url: https://france3-regions.franceinfo.fr/occitanie/actu/rss
+  site: https://france3-regions.franceinfo.fr/occitanie/
+  filtre: mots_cles
+- id: france3-pdl
+  nom: France 3 Pays de la Loire
+  url: https://france3-regions.franceinfo.fr/pays-de-la-loire/actu/rss
+  site: https://france3-regions.franceinfo.fr/pays-de-la-loire/
+  filtre: mots_cles
+- id: france3-paca
+  nom: France 3 Provence-Alpes-Côte d'Azur
+  url: https://france3-regions.franceinfo.fr/provence-alpes-cote-d-azur/actu/rss
+  site: https://france3-regions.franceinfo.fr/provence-alpes-cote-d-azur/
+  filtre: mots_cles
+- id: france3-grand-est
+  nom: France 3 Grand Est
+  url: https://france3-regions.franceinfo.fr/grand-est/rss
+  site: https://france3-regions.franceinfo.fr/grand-est/
+  filtre: mots_cles
+- id: france3-corse
+  nom: France 3 Corse
+  url: https://france3-regions.franceinfo.fr/corse/actu/rss
+  site: https://france3-regions.franceinfo.fr/corse/
+  filtre: mots_cles
+- id: franceinfo-idf
+  nom: franceinfo — Île-de-France
+  url: https://www.franceinfo.fr/france/ile-de-france.rss
+  site: https://www.franceinfo.fr/france/ile-de-france/
+  filtre: mots_cles
+- id: franceinfo-bretagne
+  nom: franceinfo — Bretagne
+  url: https://www.franceinfo.fr/france/bretagne.rss
+  site: https://www.franceinfo.fr/france/bretagne/
+  filtre: mots_cles
+- id: franceinfo-occitanie
+  nom: franceinfo — Occitanie
+  url: https://www.franceinfo.fr/france/occitanie.rss
+  site: https://www.franceinfo.fr/france/occitanie/
+  filtre: mots_cles
+- id: franceinfo-paca
+  nom: franceinfo — PACA
+  url: https://www.franceinfo.fr/france/provence-alpes-cote-d-azur.rss
+  site: https://www.franceinfo.fr/france/provence-alpes-cote-d-azur/
+  filtre: mots_cles
+- id: franceinfo-hdf
+  nom: franceinfo — Hauts-de-France
+  url: https://www.franceinfo.fr/france/hauts-de-france.rss
+  site: https://www.franceinfo.fr/france/hauts-de-france/
+  filtre: mots_cles
+- id: franceinfo-na
+  nom: franceinfo — Nouvelle-Aquitaine
+  url: https://www.franceinfo.fr/france/nouvelle-aquitaine.rss
+  site: https://www.franceinfo.fr/france/nouvelle-aquitaine/
+  filtre: mots_cles
+- id: franceinfo-grand-est
+  nom: franceinfo — Grand Est
+  url: https://www.franceinfo.fr/france/grand-est.rss
+  site: https://www.franceinfo.fr/france/grand-est/
+  filtre: mots_cles
+- id: franceinfo-normandie
+  nom: franceinfo — Normandie
+  url: https://www.franceinfo.fr/france/normandie.rss
+  site: https://www.franceinfo.fr/france/normandie/
+  filtre: mots_cles
+- id: franceinfo-pdl
+  nom: franceinfo — Pays de la Loire
+  url: https://www.franceinfo.fr/france/pays-de-la-loire.rss
+  site: https://www.franceinfo.fr/france/pays-de-la-loire/
+  filtre: mots_cles
+- id: franceinfo-cvl
+  nom: franceinfo — Centre-Val de Loire
+  url: https://www.franceinfo.fr/france/centre-val-de-loire.rss
+  site: https://www.franceinfo.fr/france/centre-val-de-loire/
+  filtre: mots_cles
+- id: franceinfo-bfc
+  nom: franceinfo — Bourgogne-Franche-Comté
+  url: https://www.franceinfo.fr/france/bourgogne-franche-comte.rss
+  site: https://www.franceinfo.fr/france/bourgogne-franche-comte/
+  filtre: mots_cles
+- id: franceinfo-corse
+  nom: franceinfo — Corse
+  url: https://www.franceinfo.fr/france/corse.rss
+  site: https://www.franceinfo.fr/france/corse/
+  filtre: mots_cles
+- id: ici-paris
+  nom: ICI Paris Île-de-France
+  url: https://www.ici.fr/rss/107-1/a-la-une.xml
+  site: https://www.ici.fr/paris-ile-de-france
+  filtre: mots_cles
+- id: ici-alsace
+  nom: ICI Alsace
+  url: https://www.ici.fr/rss/alsace/a-la-une.xml
+  site: https://www.ici.fr/alsace
+  filtre: mots_cles
+- id: ici-armorique
+  nom: ICI Armorique
+  url: https://www.ici.fr/rss/armorique/a-la-une.xml
+  site: https://www.ici.fr/armorique
+  filtre: mots_cles
+- id: ici-azur
+  nom: ICI Azur
+  url: https://www.ici.fr/rss/azur/a-la-une.xml
+  site: https://www.ici.fr/azur
+  filtre: mots_cles
+- id: ici-bearn
+  nom: ICI Béarn Bigorre
+  url: https://www.ici.fr/rss/bearn/a-la-une.xml
+  site: https://www.ici.fr/bearn-bigorre
+  filtre: mots_cles
+- id: ici-belfort
+  nom: ICI Belfort-Montbéliard
+  url: https://www.ici.fr/rss/belfort-montbeliard/a-la-une.xml
+  site: https://www.ici.fr/belfort-montbeliard
+  filtre: mots_cles
+- id: ici-berry
+  nom: ICI Berry
+  url: https://www.ici.fr/rss/berry/a-la-une.xml
+  site: https://www.ici.fr/berry
+  filtre: mots_cles
+- id: ici-besancon
+  nom: ICI Besançon
+  url: https://www.ici.fr/rss/besancon/a-la-une.xml
+  site: https://www.ici.fr/besancon
+  filtre: mots_cles
+- id: ici-bourgogne
+  nom: ICI Bourgogne
+  url: https://www.ici.fr/rss/bourgogne/a-la-une.xml
+  site: https://www.ici.fr/bourgogne
+  filtre: mots_cles
+- id: ici-breizh-izel
+  nom: ICI Breizh Izel
+  url: https://www.ici.fr/rss/breizh-izel/a-la-une.xml
+  site: https://www.ici.fr/breizh-izel
+  filtre: mots_cles
+- id: ici-normandie-caen
+  nom: ICI Normandie (Caen)
+  url: https://www.ici.fr/rss/normandie-caen/a-la-une.xml
+  site: https://www.ici.fr/normandie-caen
+  filtre: mots_cles
+- id: ici-champagne
+  nom: ICI Champagne-Ardenne
+  url: https://www.ici.fr/rss/champagne-ardenne/a-la-une.xml
+  site: https://www.ici.fr/champagne-ardenne
+  filtre: mots_cles
+- id: ici-cotentin
+  nom: ICI Cotentin
+  url: https://www.ici.fr/rss/cotentin/a-la-une.xml
+  site: https://www.ici.fr/cotentin
+  filtre: mots_cles
+- id: ici-creuse
+  nom: ICI Creuse
+  url: https://www.ici.fr/rss/creuse/a-la-une.xml
+  site: https://www.ici.fr/creuse
+  filtre: mots_cles
+- id: ici-elsass
+  nom: ICI Elsass
+  url: https://www.ici.fr/rss/elsass/a-la-une.xml
+  site: https://www.ici.fr/elsass
+  filtre: mots_cles
+- id: ici-gard-lozere
+  nom: ICI Gard Lozère
+  url: https://www.ici.fr/rss/gard-lozere/a-la-une.xml
+  site: https://www.ici.fr/gard-lozere
+  filtre: mots_cles
+- id: ici-gascogne
+  nom: ICI Gascogne
+  url: https://www.ici.fr/rss/gascogne/a-la-une.xml
+  site: https://www.ici.fr/gascogne
+  filtre: mots_cles
+- id: ici-gironde
+  nom: ICI Gironde
+  url: https://www.ici.fr/rss/gironde/a-la-une.xml
+  site: https://www.ici.fr/gironde
+  filtre: mots_cles
+- id: ici-herault
+  nom: ICI Hérault
+  url: https://www.ici.fr/rss/herault/rubrique/infos.xml
+  site: https://www.ici.fr/herault
+  filtre: mots_cles
+- id: ici-la-rochelle
+  nom: ICI La Rochelle
+  url: https://www.ici.fr/rss/la-rochelle/a-la-une.xml
+  site: https://www.ici.fr/la-rochelle
+  filtre: mots_cles
+- id: ici-limousin
+  nom: ICI Limousin
+  url: https://www.ici.fr/rss/limousin/a-la-une.xml
+  site: https://www.ici.fr/limousin
+  filtre: mots_cles
+- id: ici-loire-ocean
+  nom: ICI Loire Océan
+  url: https://www.ici.fr/rss/loire-ocean/a-la-une.xml
+  site: https://www.ici.fr/loire-ocean
+  filtre: mots_cles
+- id: ici-sud-lorraine
+  nom: ICI Lorraine (Nancy)
+  url: https://www.ici.fr/rss/sud-lorraine/a-la-une.xml
+  site: https://www.ici.fr/sud-lorraine
+  filtre: mots_cles
+- id: ici-lorraine-nord
+  nom: ICI Lorraine (Nord)
+  url: https://www.ici.fr/rss/lorraine-nord/a-la-une.xml
+  site: https://www.ici.fr/lorraine-nord
+  filtre: mots_cles
+- id: ici-maine
+  nom: ICI Maine
+  url: https://www.ici.fr/rss/maine/a-la-une.xml
+  site: https://www.ici.fr/maine
+  filtre: mots_cles
+- id: ici-mayenne
+  nom: ICI Mayenne
+  url: https://www.ici.fr/rss/mayenne/a-la-une.xml
+  site: https://www.ici.fr/mayenne
+  filtre: mots_cles
+- id: ici-nord
+  nom: ICI Nord
+  url: https://www.ici.fr/rss/nord/a-la-une.xml
+  site: https://www.ici.fr/nord
+  filtre: mots_cles
+- id: ici-toulouse
+  nom: ICI Occitanie (Toulouse)
+  url: https://www.ici.fr/rss/toulouse/a-la-une.xml
+  site: https://www.ici.fr/toulouse
+  filtre: mots_cles
+- id: ici-orleans
+  nom: ICI Orléans
+  url: https://www.ici.fr/rss/orleans/a-la-une.xml
+  site: https://www.ici.fr/orleans
+  filtre: mots_cles
+- id: ici-perigord
+  nom: ICI Périgord
+  url: https://www.ici.fr/rss/perigord/a-la-une.xml
+  site: https://www.ici.fr/perigord
+  filtre: mots_cles
+- id: ici-pays-basque
+  nom: ICI Pays Basque
+  url: https://www.ici.fr/rss/pays-basque/a-la-une.xml
+  site: https://www.ici.fr/pays-basque
+  filtre: mots_cles
+- id: ici-picardie
+  nom: ICI Picardie
+  url: https://www.ici.fr/rss/picardie/a-la-une.xml
+  site: https://www.ici.fr/picardie
+  filtre: mots_cles
+- id: ici-poitou
+  nom: ICI Poitou
+  url: https://www.ici.fr/rss/poitou/a-la-une.xml
+  site: https://www.ici.fr/poitou
+  filtre: mots_cles
+- id: ici-provence
+  nom: ICI Provence
+  url: https://www.ici.fr/rss/provence/a-la-une.xml
+  site: https://www.ici.fr/provence
+  filtre: mots_cles
+- id: ici-roussillon
+  nom: ICI Roussillon
+  url: https://www.ici.fr/rss/roussillon/a-la-une.xml
+  site: https://www.ici.fr/roussillon
+  filtre: mots_cles
+- id: ici-normandie-rouen
+  nom: ICI Normandie (Rouen)
+  url: https://www.ici.fr/rss/normandie-rouen/a-la-une.xml
+  site: https://www.ici.fr/normandie-rouen
+  filtre: mots_cles
+- id: ici-touraine
+  nom: ICI Touraine
+  url: https://www.ici.fr/rss/touraine/a-la-une.xml
+  site: https://www.ici.fr/touraine
+  filtre: mots_cles
+- id: ici-vaucluse
+  nom: ICI Vaucluse
+  url: https://www.ici.fr/rss/vaucluse/a-la-une.xml
+  site: https://www.ici.fr/vaucluse
+  filtre: mots_cles
+- id: ici-auxerre
+  nom: ICI Auxerre
+  url: https://www.ici.fr/rss/auxerre/a-la-une.xml
+  site: https://www.ici.fr/auxerre
+  filtre: mots_cles
+- id: ici-rcfm
+  nom: ICI RCFM (Corse)
+  url: https://www.ici.fr/rss/rcfm/a-la-une.xml
+  site: https://www.ici.fr/rcfm
+  filtre: mots_cles
+- id: bfm-paris
+  nom: BFM Paris
+  url: https://www.bfmtv.com/rss/paris/
+  site: https://www.bfmtv.com/paris/
+  filtre: mots_cles
+- id: bfm-marseille
+  nom: BFM Marseille
+  url: https://www.bfmtv.com/rss/marseille/
+  site: https://www.bfmtv.com/marseille/
+  filtre: mots_cles
+- id: bfm-bordeaux
+  nom: BFM Bordeaux
+  url: https://www.bfmtv.com/rss/bordeaux/
+  site: https://www.bfmtv.com/bordeaux/
+  filtre: mots_cles
+- id: bfm-lille
+  nom: BFM Grand Lille
+  url: https://www.bfmtv.com/rss/grand-lille/
+  site: https://www.bfmtv.com/grand-lille/
+  filtre: mots_cles
+- id: bfm-littoral
+  nom: BFM Grand Littoral
+  url: https://www.bfmtv.com/rss/grand-littoral/
+  site: https://www.bfmtv.com/grand-littoral/
+  filtre: mots_cles
+- id: bfm-toulouse
+  nom: BFM Toulouse
+  url: https://www.bfmtv.com/rss/toulouse/
+  site: https://www.bfmtv.com/toulouse/
+  filtre: mots_cles
+- id: bfm-rennes
+  nom: BFM Rennes
+  url: https://www.bfmtv.com/rss/rennes/
+  site: https://www.bfmtv.com/rennes/
+  filtre: mots_cles
+- id: bfm-nantes
+  nom: BFM Nantes
+  url: https://www.bfmtv.com/rss/nantes/
+  site: https://www.bfmtv.com/nantes/
+  filtre: mots_cles
+- id: bfm-montpellier
+  nom: BFM Montpellier
+  url: https://www.bfmtv.com/rss/montpellier/
+  site: https://www.bfmtv.com/montpellier/
+  filtre: mots_cles
+- id: bfm-cote-azur
+  nom: BFM Côte d'Azur
+  url: https://www.bfmtv.com/rss/cote-d-azur/
+  site: https://www.bfmtv.com/cote-d-azur/
+  filtre: mots_cles
+- id: bfm-normandie
+  nom: BFM Normandie
+  url: https://www.bfmtv.com/rss/normandie/
+  site: https://www.bfmtv.com/normandie/
+  filtre: mots_cles
+- id: bfm-nancy
+  nom: BFM Nancy
+  url: https://www.bfmtv.com/rss/nancy/
+  site: https://www.bfmtv.com/nancy/
+  filtre: mots_cles
+- id: bfm-strasbourg
+  nom: BFM Alsace
+  url: https://www.bfmtv.com/rss/alsace/
+  site: https://www.bfmtv.com/alsace/
+  filtre: mots_cles
+- id: bfm-tours
+  nom: BFM Tours
+  url: https://www.bfmtv.com/rss/tours/
+  site: https://www.bfmtv.com/tours/
+  filtre: mots_cles
+- id: bfm-brest
+  nom: BFM Brest
+  url: https://www.bfmtv.com/rss/brest/
+  site: https://www.bfmtv.com/brest/
+  filtre: mots_cles
+- id: bfm-var
+  nom: BFM Var
+  url: https://www.bfmtv.com/rss/var/
+  site: https://www.bfmtv.com/var/
+  filtre: mots_cles
+- id: bfm-bastia
+  nom: BFM Bastia
+  url: https://www.bfmtv.com/rss/bastia/
+  site: https://www.bfmtv.com/bastia/
+  filtre: mots_cles
+- id: ladepeche-toulouse
+  nom: La Dépêche — Toulouse
+  url: https://www.ladepeche.fr/communes/toulouse,31555/rss.xml
+  site: https://www.ladepeche.fr/
+  filtre: mots_cles
+- id: midilibre-montpellier
+  nom: Midi Libre — Montpellier
+  url: https://www.midilibre.fr/herault/montpellier/rss.xml
+  site: https://www.midilibre.fr/
+  filtre: mots_cles
+- id: laprovence-region
+  nom: La Provence
+  url: https://www.laprovence.com/rss/Region.xml
+  site: https://www.laprovence.com/
+  filtre: mots_cles
+- id: nicematin-nice
+  nom: Nice-Matin — Nice
+  url: https://www.nicematin.com/alpes-maritimes/nice/rss
+  site: https://www.nicematin.com/
+  filtre: mots_cles
+- id: est-republicain
+  nom: L'Est Républicain
+  url: https://www.estrepublicain.fr/rss
+  site: https://www.estrepublicain.fr/
+  filtre: mots_cles
+- id: republicain-lorrain
+  nom: Le Républicain Lorrain
+  url: https://www.republicain-lorrain.fr/edition-metz-et-agglomeration/rss
+  site: https://www.republicain-lorrain.fr/
+  filtre: mots_cles
+- id: dna-alsace
+  nom: Dernières Nouvelles d'Alsace
+  url: https://www.dna.fr/region/alsace/rss
+  site: https://www.dna.fr/
+  filtre: mots_cles
+- id: lalsace
+  nom: L'Alsace
+  url: https://www.lalsace.fr/region/alsace/rss
+  site: https://www.lalsace.fr/
+  filtre: mots_cles
+- id: bien-public
+  nom: Le Bien Public
+  url: https://www.bienpublic.com/cote-d-or/rss
+  site: https://www.bienpublic.com/
+  filtre: mots_cles
+- id: jsl
+  nom: Journal de Saône-et-Loire
+  url: https://www.lejsl.com/rss
+  site: https://www.lejsl.com/
+  filtre: mots_cles
+- id: centre-presse-aveyron
+  nom: Centre Presse Aveyron
+  url: https://www.centrepresseaveyron.fr/rss.xml
+  site: https://www.centrepresseaveyron.fr/
+  filtre: mots_cles
+- id: 20minutes-idf
+  nom: 20 Minutes — Île-de-France
+  url: https://www.20minutes.fr/feeds/rss-ile-de-france.xml
+  site: https://www.20minutes.fr/ile-de-france/
+  filtre: mots_cles
+- id: 20minutes-lille
+  nom: 20 Minutes — Lille
+  url: https://www.20minutes.fr/feeds/rss-lille.xml
+  site: https://www.20minutes.fr/lille/
+  filtre: mots_cles
+- id: 20minutes-marseille
+  nom: 20 Minutes — Marseille
+  url: https://www.20minutes.fr/feeds/rss-marseille.xml
+  site: https://www.20minutes.fr/marseille/
+  filtre: mots_cles
+- id: 20minutes-toulouse
+  nom: 20 Minutes — Toulouse
+  url: https://www.20minutes.fr/feeds/rss-toulouse.xml
+  site: https://www.20minutes.fr/toulouse/
+  filtre: mots_cles
+- id: 20minutes-nantes
+  nom: 20 Minutes — Nantes
+  url: https://www.20minutes.fr/feeds/rss-nantes.xml
+  site: https://www.20minutes.fr/nantes/
+  filtre: mots_cles
+- id: 20minutes-rennes
+  nom: 20 Minutes — Rennes
+  url: https://www.20minutes.fr/feeds/rss-rennes.xml
+  site: https://www.20minutes.fr/rennes/
+  filtre: mots_cles
+- id: 20minutes-bordeaux
+  nom: 20 Minutes — Bordeaux
+  url: https://www.20minutes.fr/feeds/rss-bordeaux.xml
+  site: https://www.20minutes.fr/bordeaux/
+  filtre: mots_cles
+- id: 20minutes-montpellier
+  nom: 20 Minutes — Montpellier
+  url: https://www.20minutes.fr/feeds/rss-montpellier.xml
+  site: https://www.20minutes.fr/montpellier/
+  filtre: mots_cles
+- id: 20minutes-nice
+  nom: 20 Minutes — Nice
+  url: https://www.20minutes.fr/feeds/rss-nice.xml
+  site: https://www.20minutes.fr/nice/
+  filtre: mots_cles
+- id: dec-nicematin-com
+  nom: Nice-Matin
+  url: https://www.nicematin.com/rss
+  site: https://nicematin.com/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-sti-eduscol-education-fr
+  nom: éduscol STI
+  url: https://sti.eduscol.education.fr/accueil/RSS
+  site: https://sti.eduscol.education.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-controles-essais-mesures-fr
+  nom: Contrôles Essais Mesures
+  url: https://www.controles-essais-mesures.fr/feed/
+  site: https://controles-essais-mesures.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-paloaltonetworks-com
+  nom: Palo Alto Networks
+  url: https://paloaltonetworks.com/blog/feed
+  site: https://paloaltonetworks.com/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-radioscoop-com
+  nom: Radio SCOOP
+  url: https://radioscoop.com/rss
+  site: https://radioscoop.com/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-lnt-ma
+  nom: lnt.ma
+  url: https://lnt.ma/feed
+  site: https://lnt.ma/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-openaccessgovernment-org
+  nom: Open Access Government
+  url: https://www.openaccessgovernment.org/feed/
+  site: https://openaccessgovernment.org/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-electropages-com
+  nom: Electropages
+  url: https://electropages.com/rss
+  site: https://electropages.com/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-businessnews-com-tn
+  nom: Business News
+  url: https://businessnews.com.tn/feed/
+  site: https://businessnews.com.tn/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-sapeurs-pompiers35-fr
+  nom: SDIS 35
+  url: https://sapeurs-pompiers35.fr/feed
+  site: https://sapeurs-pompiers35.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-kohenavocats-fr
+  nom: Kohen Avocats
+  url: https://kohenavocats.fr/feed/
+  site: https://kohenavocats.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-fox13news-com
+  nom: FOX 13 Tampa Bay
+  url: https://www.fox13news.com/rss.xml
+  site: https://fox13news.com/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-macommune-info
+  nom: maCommune.info
+  url: https://macommune.info/feed
+  site: https://macommune.info/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-lopinion-fr
+  nom: l'Opinion
+  url: https://www.lopinion.fr/index.rss
+  site: https://lopinion.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-realites-com-tn
+  nom: Réalités Magazine
+  url: https://realites.com.tn/fr/feed/
+  site: https://realites.com.tn/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-wqad-com
+  nom: wqad.com
+  url: https://www.youtube.com/feeds/videos.xml?channel_id=UCRlWXcripH3oV_v6uSb9ASw
+  site: https://wqad.com/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-itforbusiness-fr
+  nom: ITforBusiness.fr
+  url: https://www.itforbusiness.fr/feed
+  site: https://itforbusiness.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-lest-eclair-fr
+  nom: L'Est éclair
+  url: https://lest-eclair.fr/rss.xml
+  site: https://lest-eclair.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-pressegauche-org
+  nom: Presse-toi à gauche
+  url: https://pressegauche.org/spip.php?page=backend
+  site: https://pressegauche.org/
+  filtre: mots_cles
+  decouverte: '2026-09-22'
+- id: dec-newsshooter-com
+  nom: Newsshooter
+  url: https://newsshooter.com/feed
+  site: https://newsshooter.com/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-latribune-fr
+  nom: La Tribune
+  url: https://latribune.fr/feed.xml
+  site: https://latribune.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-touteleurope-eu
+  nom: Touteleurope.eu
+  url: https://touteleurope.eu/feed
+  site: https://touteleurope.eu/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-laist-com
+  nom: LAist
+  url: https://laist.com/index.atom
+  site: https://laist.com/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-batiactu-com
+  nom: Batiactu
+  url: https://batiactu.com/accueil.rss
+  site: https://batiactu.com/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-bridgemi-com
+  nom: Bridge Michigan
+  url: https://bridgemi.com/feed/
+  site: https://bridgemi.com/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-wtaj-com
+  nom: WTAJ
+  url: https://wtaj.com/feed
+  site: https://wtaj.com/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-wiki-openstreetmap-org
+  nom: OpenStreetMap Wiki
+  url: https://wiki.openstreetmap.org/w/index.php?title=Special:RecentChanges&feed=atom
+  site: https://wiki.openstreetmap.org/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-peertube-openstreetmap-fr
+  nom: peertube.openstreetmap.fr
+  url: https://peertube.openstreetmap.fr/feeds/videos.xml
+  site: https://peertube.openstreetmap.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-midilibre-fr
+  nom: midilibre.fr
+  url: https://www.midilibre.fr/rss.xml
+  site: https://midilibre.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-oisehebdo-fr
+  nom: Oise Hebdo
+  url: https://www.oisehebdo.fr/feed/
+  site: https://oisehebdo.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-hebdo39-net
+  nom: Hebdo39
+  url: https://hebdo39.net/feed/
+  site: https://hebdo39.net/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-gazdaujourdhui-fr
+  nom: Gaz d'aujourd'hui
+  url: https://gazdaujourdhui.fr/feed
+  site: https://gazdaujourdhui.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-lorient-maville-com
+  nom: MaVille.com
+  url: https://lorient.maville.com/flux/rss/meteo.php
+  site: https://lorient.maville.com/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-fastcompany-com
+  nom: Fast Company
+  url: https://fastcompany.com/rss
+  site: https://fastcompany.com/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-hawaiicatholicherald-com
+  nom: Hawaii Catholic Herald
+  url: https://hawaiicatholicherald.com/feed/
+  site: https://hawaiicatholicherald.com/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-toolbox-hotosm-org
+  nom: HOT Toolbox
+  url: https://toolbox.hotosm.org/index.xml
+  site: https://toolbox.hotosm.org/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-boutique-brgm-fr
+  nom: boutique.brgm.fr
+  url: https://boutique.brgm.fr/rss.xml
+  site: https://boutique.brgm.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-assistance-brgm-fr
+  nom: BRGM
+  url: https://assistance.brgm.fr/rss.xml
+  site: https://assistance.brgm.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-dpsm-brgm-fr
+  nom: BRGM
+  url: https://dpsm.brgm.fr/rss.xml
+  site: https://dpsm.brgm.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-maniaques-fr
+  nom: maniaques.fr
+  url: https://maniaques.fr/feed/
+  site: https://maniaques.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-geoweeknews-com
+  nom: Geo Week News
+  url: https://www.geoweeknews.com/feed/
+  site: https://geoweeknews.com/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-estrepublicain-fr
+  nom: L'Est Républicain
+  url: https://estrepublicain.fr/rss
+  site: https://estrepublicain.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-timefrance-fr
+  nom: TIME France
+  url: https://www.timefrance.fr/feed/
+  site: https://timefrance.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-springvillejournal-com
+  nom: Springville Journal
+  url: https://springvillejournal.com/feed
+  site: https://springvillejournal.com/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-missingmaps-org
+  nom: Missing Maps
+  url: https://missingmaps.org/feed.xml
+  site: https://missingmaps.org/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-prev-openstreetmap-fr
+  nom: prev.openstreetmap.fr
+  url: https://prev.openstreetmap.fr/rss
+  site: https://prev.openstreetmap.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-notebookcheck-biz
+  nom: Notebookcheck.fr
+  url: https://www.notebookcheck.biz/index.php?id=20501
+  site: https://notebookcheck.biz/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-edito-seloger-com
+  nom: SeLoger
+  url: https://edito.seloger.com/feed
+  site: https://edito.seloger.com/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-cidj-com
+  nom: CIDJ
+  url: https://cidj.com/rss.xml
+  site: https://cidj.com/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-dentaire365-fr
+  nom: Dentaire365
+  url: https://dentaire365.fr/feed
+  site: https://dentaire365.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-mcetv-ouest-france-fr
+  nom: MCE TV
+  url: https://mcetv.ouest-france.fr/feed/
+  site: https://mcetv.ouest-france.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-premiere-fr
+  nom: Première
+  url: https://premiere.fr/rss.xml
+  site: https://premiere.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-lyondemain-fr
+  nom: Lyon Demain
+  url: https://www.lyondemain.fr/feed/
+  site: https://lyondemain.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-lvsl-fr
+  nom: LVSL
+  url: https://lvsl.fr/feed/
+  site: https://lvsl.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-trackandfieldnews-com
+  nom: trackandfieldnews.com
+  url: https://trackandfieldnews.com/feed/
+  site: https://trackandfieldnews.com/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-atl-direct
+  nom: ATL Direct
+  url: https://atl.direct/feed/
+  site: https://atl.direct/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-rapport-activite-brgm-fr
+  nom: BRGM
+  url: https://rapport-activite.brgm.fr/rss.xml
+  site: https://rapport-activite.brgm.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-architectes-org
+  nom: Ordre des architectes
+  url: https://architectes.org/rss.xml
+  site: https://architectes.org/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-help-openstreetmap-org
+  nom: OpenStreetMap
+  url: https://help.openstreetmap.org/index.xml
+  site: https://help.openstreetmap.org/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-ktvq-com
+  nom: KTVQ
+  url: https://www.ktvq.com/index.rss
+  site: https://ktvq.com/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-innovationnewsnetwork-com
+  nom: Innovation News Network
+  url: https://www.innovationnewsnetwork.com/feed/
+  site: https://innovationnewsnetwork.com/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-npr-org
+  nom: NPR
+  url: https://feeds.npr.org/1002/rss.xml
+  site: https://npr.org/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-thefencepost-com
+  nom: The Fence Post
+  url: https://thefencepost.com/feed
+  site: https://thefencepost.com/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-abc7chicago-com
+  nom: ABC7 Chicago
+  url: https://abc7chicago.com/feed/
+  site: https://abc7chicago.com/
+  filtre: mots_cles
+  decouverte: '2026-09-23'
+- id: dec-radiookapi-net
+  nom: Radio Okapi |
+  url: https://radiookapi.net/feed
+  site: https://radiookapi.net/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-leseco-ma
+  nom: LesEco.ma
+  url: https://leseco.ma/feed
+  site: https://leseco.ma/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-africanmanager-com
+  nom: African Manager
+  url: https://africanmanager.com/feed/
+  site: https://africanmanager.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-fr-hespress-com
+  nom: Hespress Français - Actualités du Maroc
+  url: https://fr.hespress.com/feed
+  site: https://fr.hespress.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-digital-strategy-ec-europa-eu
+  nom: Shaping Europe’s digital future
+  url: https://digital-strategy.ec.europa.eu/rss.xml
+  site: https://digital-strategy.ec.europa.eu/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-larevuedudigital-com
+  nom: larevuedudigital.com
+  url: https://www.larevuedudigital.com/comments/feed/
+  site: https://larevuedudigital.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-letemps-ch
+  nom: Le Temps
+  url: https://letemps.ch/feed
+  site: https://letemps.ch/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-winkco-news
+  nom: winkco.news
+  url: https://winkco.news/feed
+  site: https://winkco.news/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-satnews-com
+  nom: satnews.com
+  url: https://satnews.com/feed/
+  site: https://satnews.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-lebrief-ma
+  nom: Lebrief
+  url: https://www.lebrief.ma/feed/
+  site: https://lebrief.ma/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-abcbourse-com
+  nom: ABC Bourse
+  url: https://abcbourse.com/rss/chroniquesrss
+  site: https://abcbourse.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-refrance-fr
+  nom: Revue économique de France
+  url: https://refrance.fr/feed/
+  site: https://refrance.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-cafepedagogique-net
+  nom: Le Café pédagogique
+  url: https://www.cafepedagogique.net/feed/
+  site: https://cafepedagogique.net/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-freshplaza-fr
+  nom: FreshPlaza.fr
+  url: https://freshplaza.fr/rss.xml
+  site: https://freshplaza.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-portugal-fr
+  nom: Portugal.fr
+  url: https://www.portugal.fr/feed
+  site: https://portugal.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-satelliteevolution-com
+  nom: Satellite Evolution
+  url: https://www.satelliteevolution.com/blog-feed.xml
+  site: https://satelliteevolution.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-airportindustry-news-com
+  nom: Airport Industry-News
+  url: https://airportindustry-news.com/feed
+  site: https://airportindustry-news.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-cryptoast-fr
+  nom: Cryptoast
+  url: https://cryptoast.fr/feed/
+  site: https://cryptoast.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-la-croix-com
+  nom: La Croix
+  url: https://la-croix.com/feed
+  site: https://la-croix.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-sudradio-fr
+  nom: Sud Radio
+  url: https://sudradio.fr/feed
+  site: https://sudradio.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-placegrenet-fr
+  nom: Place Gre'net
+  url: https://placegrenet.fr/feed
+  site: https://placegrenet.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-making-of-afp-com
+  nom: AFP.com
+  url: https://making-of.afp.com/rss.xml
+  site: https://making-of.afp.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-aljazeera-com
+  nom: aljazeera.com
+  url: https://www.aljazeera.com/xml/rss/all.xml
+  site: https://aljazeera.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-theguardian-com
+  nom: The Guardian
+  url: https://www.theguardian.com/europe/rss
+  site: https://theguardian.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-factuel-afp-com
+  nom: Factuel AFP
+  url: https://factuel.afp.com/rss.xml
+  site: https://factuel.afp.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-www-pp-afp-com
+  nom: www-pp.afp.com
+  url: https://www-pp.afp.com/rss.xml
+  site: https://www-pp.afp.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-realinvestmentadvice-com
+  nom: Real Investment Advice
+  url: https://realinvestmentadvice.com/feed
+  site: https://realinvestmentadvice.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-oxfamfrance-org
+  nom: Oxfam France
+  url: https://www.oxfamfrance.org/feed/
+  site: https://oxfamfrance.org/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-lcp-fr
+  nom: lcp.fr
+  url: https://lcp.fr/rss.xml
+  site: https://lcp.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-slate-fr
+  nom: Slate.fr
+  url: https://slate.fr/rss.xml
+  site: https://slate.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-lejsl-com
+  nom: Le JSL
+  url: https://lejsl.com/rss
+  site: https://lejsl.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-reussir-fr
+  nom: Portail Réussir
+  url: https://reussir.fr/rss.xml
+  site: https://reussir.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-bienpublic-com
+  nom: Le Bien Public
+  url: https://bienpublic.com/rss
+  site: https://bienpublic.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-lecourrierdelatlas-com
+  nom: Le Courrier de l'Atlas
+  url: https://www.lecourrierdelatlas.com/feed/
+  site: https://lecourrierdelatlas.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-leprogres-fr
+  nom: Le Progrès
+  url: https://leprogres.fr/rss
+  site: https://leprogres.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-sapeurs-pompiers35-fr-2
+  nom: SDIS 35
+  url: https://sapeurs-pompiers35.fr/rss
+  site: https://sapeurs-pompiers35.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-laval-maville-com
+  nom: MaVille.com
+  url: https://laval.maville.com/flux/rss/actu.php?c=loc
+  site: https://laval.maville.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-rezonodwes-com
+  nom: '- Rezo Nòdwès'
+  url: https://rezonodwes.com/feed/
+  site: https://rezonodwes.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-opensourceforu-com
+  nom: Open Source For You
+  url: https://www.opensourceforu.com/feed/
+  site: https://opensourceforu.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-capecoralbreeze-com
+  nom: capecoralbreeze.com
+  url: https://capecoralbreeze.com/feed
+  site: https://capecoralbreeze.com/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-le7-info
+  nom: Le7.info
+  url: https://le7.info/rss.xml
+  site: https://le7.info/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+- id: dec-dcreport-org
+  nom: DCReport.org
+  url: https://www.dcreport.org/comments/feed/
+  site: https://dcreport.org/
+  filtre: mots_cles
+  decouverte: '2026-09-11'
+requetes_rs:
+- id: iot-fr
+  label: IoT (français)
+  query: IoT OR IIoT OR LoRaWAN OR LoRa OR Meshtastic OR Meshcore OR "industrie 4.0" OR "objets connectés" OR "météo routière" OR "gestion routière" OR "main courante" OR "gestion de crise" OR radio
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+- id: iot-en
+  label: IoT (anglais)
+  query: IoT OR IIoT OR LoRaWAN OR Meshtastic OR Meshcore OR "Industry 4.0" OR "road weather" OR RWIS OR "crisis management"
+  hl: en-US
+  gl: US
+  ceid: US:en
+  filtre: mots_cles
+- id: lora-mesh
+  label: LoRa / mesh
+  query: LoRaWAN OR Meshtastic OR Meshcore OR "LoRa mesh" OR Semtech
+  hl: en-US
+  gl: US
+  ceid: US:en
+  filtre: mots_cles
+- id: crise-fr
+  label: Gestion de crise (français)
+  query: '"gestion de crise" OR inondation OR séisme OR catastrophe OR tempête OR tornade OR avalanche OR neige OR "aléa climatique" OR "aléa technologique" OR crisis'
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+- id: crise-en
+  label: Crise (anglais)
+  query: '"crisis management" OR flood OR earthquake OR disaster OR "climate hazard" OR Natech'
+  hl: en-US
+  gl: US
+  ceid: US:en
+  filtre: mots_cles
+- id: li-crise-gestion
+  label: gestion / cellule / ORSEC
+  reseaux:
+  - linkedin
+  query: '"gestion de crise" OR "cellule de crise" OR "plan de crise" OR ORSEC OR "plan communal de sauvegarde" OR "communication de crise"'
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  domaine: gestion_crise
+- id: li-crise-inondations
+  label: inondations
+  reseaux:
+  - linkedin
+  query: inondation OR crue OR submersion OR "flash flood" OR flooding OR "coulée de boue"
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  domaine: inondations
+- id: li-crise-seismes
+  label: séismes
+  reseaux:
+  - linkedin
+  query: '"tremblement de terre" OR séisme OR earthquake OR tsunami'
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  domaine: seismes
+- id: li-crise-catastrophes
+  label: catastrophes
+  reseaux:
+  - linkedin
+  query: catastrophe OR "catastrophe naturelle" OR disaster OR "état de catastrophe"
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  domaine: catastrophes
+- id: li-crise-climatique
+  label: aléa climatique
+  reseaux:
+  - linkedin
+  query: canicule OR tempête OR "feu de forêt" OR sécheresse OR avalanche OR cyclone OR "vague de chaleur" OR "aléa climatique"
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  domaine: alea_climatique
+- id: li-crise-techno
+  label: aléa technologique
+  reseaux:
+  - linkedin
+  query: Seveso OR Natech OR "accident industriel" OR "aléa technologique" OR "risque technologique" OR nucléaire
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  domaine: alea_technologique
+- id: li-crise-continuite
+  label: continuité / PC
+  reseaux:
+  - linkedin
+  query: '"continuité d''activité" OR "business continuity" OR "poste de commandement" OR "salle de crise" OR "centre opérationnel"'
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  domaine: gestion_crise
+- id: li-crise-en-mgmt
+  label: crisis management
+  reseaux:
+  - linkedin
+  query: '"crisis management" OR "emergency management" OR "disaster risk reduction" OR "crisis communication"'
+  hl: en-US
+  gl: US
+  ceid: US:en
+  filtre: mots_cles
+  domaine: gestion_crise
+- id: li-crise-en-disasters
+  label: disasters
+  reseaux:
+  - linkedin
+  query: flood OR earthquake OR wildfire OR hurricane OR "natural disaster" OR "flash flood"
+  hl: en-US
+  gl: US
+  ceid: US:en
+  filtre: mots_cles
+- id: radio-fr
+  label: Radio (français)
+  query: radioamateur OR "radio amateur" OR hamradio OR "ham radio" OR "trafic radio" OR "modes digitaux" OR TETRA OR PMR
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+- id: radio-en
+  label: Radio (anglais)
+  query: '"amateur radio" OR "ham radio" OR hamradio OR DMR OR TETRA OR "digital modes" OR SDR OR APRS'
+  hl: en-US
+  gl: US
+  ceid: US:en
+  filtre: mots_cles
+- id: outils-fr
+  label: Outils PC / crise (français)
+  query: '"gestion de crise" OR "poste de commandement" OR "main courante" OR NexSIS OR SYNERGI OR ORSEC OR "salle de crise"'
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+- id: outils-en
+  label: Crisis tools (anglais)
+  query: '"crisis management software" OR "emergency operations center" OR WebEOC OR Everbridge OR "common operational picture"'
+  hl: en-US
+  gl: US
+  ceid: US:en
+  filtre: mots_cles
+- id: li-outils-logiciels
+  label: logiciels / SIC
+  reseaux:
+  - linkedin
+  query: '"logiciel de gestion de crise" OR "outil de gestion de crise" OR "système d''information de crise" OR "tableau de bord de crise" OR "aide à la décision de crise"'
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  domaine: outils_crise
+- id: li-outils-pc
+  label: poste de commandement
+  reseaux:
+  - linkedin
+  query: '"poste de commandement" OR "salle de crise" OR "PC de crise" OR PCO OR PCC OR "PC opérationnel" OR "centre opérationnel"'
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  domaine: poste_commandement
+- id: li-outils-main-courante
+  label: main courante
+  reseaux:
+  - linkedin
+  query: '"main courante" OR "main courante numérique" OR "main courante électronique"'
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  domaine: main_courante
+- id: li-outils-orsec
+  label: NexSIS / SYNERGI / ORSEC
+  reseaux:
+  - linkedin
+  query: NexSIS OR SYNERGI OR ORSEC OR COGIC OR CODIS OR ANTARES OR SITAC OR "18-112" OR "plan communal de sauvegarde"
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  domaine: systemes_orsec
+- id: li-outils-editeurs-fr
+  label: éditeurs FR
+  reseaux:
+  - linkedin
+  query: Systel OR Anticip OR "IWS crise" OR "Hexagon Safety" OR Intergraph
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  domaine: editeurs
+- id: li-outils-software
+  label: crisis software
+  reseaux:
+  - linkedin
+  query: '"crisis management software" OR "emergency management software" OR "emergency management platform" OR "crisis information system"'
+  hl: en-US
+  gl: US
+  ceid: US:en
+  filtre: mots_cles
+  domaine: outils_crise
+- id: li-outils-eoc
+  label: EOC / COP
+  reseaux:
+  - linkedin
+  query: '"emergency operations center" OR "common operational picture" OR WebEOC OR "incident management software"'
+  hl: en-US
+  gl: US
+  ceid: US:en
+  filtre: mots_cles
+  domaine: poste_commandement
+- id: li-outils-editeurs-en
+  label: éditeurs (Everbridge, Juvare…)
+  reseaux:
+  - linkedin
+  query: Everbridge OR Juvare OR Veoci OR Noggin OR AtHoc OR D4H OR Dataminr OR Crisis24 OR OnSolve OR AlertMedia
+  hl: en-US
+  gl: US
+  ceid: US:en
+  filtre: mots_cles
+  domaine: editeurs
+- id: bl-rs-fr
+  label: Black-out France
+  query: blackout OR "black-out" OR délestage OR EcoWatt OR "panne géante" OR "réseau électrique" OR SGDSN OR CIRN OR "Emmanuel Macron"
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+- id: bl-rs-macron
+  label: Macron et électricité
+  query: ("Emmanuel Macron" OR Élysée) (blackout OR "black-out" OR délestage OR électricité OR énergie OR résilience OR EcoWatt)
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+- id: bl-rs-en
+  label: Blackout France (anglais)
+  query: (blackout OR "power outage" OR "black-out") (France OR French OR RTE OR Enedis OR Macron)
+  hl: en-US
+  gl: US
+  ceid: US:en
+  filtre: mots_cles
+- id: geomatique-fr
+  label: Géomatique (français)
+  query: géomatique OR QGIS OR "information géographique" OR géoportail OR "données géographiques" OR OpenStreetMap OR "géoplateforme"
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+- id: geomatique-en
+  label: GIS / geomatics (anglais)
+  query: QGIS OR "geographic information system" OR "geospatial data" OR GeoAI OR PostGIS OR "openstreetmap" OR "web mapping"
+  hl: en-US
+  gl: US
+  ceid: US:en
+  filtre: mots_cles
+- id: li-geomatique
+  label: géomatique / QGIS
+  reseaux:
+  - linkedin
+  query: géomatique OR géomaticien OR QGIS OR "information géographique" OR "données géographiques" OR OpenStreetMap OR IGN OR BRGM
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  domaine: geomatique
+- id: li-geoai
+  label: IA géomatique
+  reseaux:
+  - linkedin
+  query: GeoAI OR "geospatial AI" OR "IA géospatiale" OR ("intelligence artificielle" AND (QGIS OR géomatique OR cartographie OR télédétection))
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  domaine: ia
+- id: outils-geo
+  label: Outils géomatique et cartographie
+  query: '"outils géomatiques" OR "outil géomatique" OR "outils de cartographie" OR "logiciel de cartographie" OR "logiciel SIG" OR QGIS OR PostGIS OR GeoServer OR GDAL'
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  domaine: outils
+- id: lidar-aerien
+  label: Lidar
+  query: lidar OR "lidar aéroporté" OR "airborne lidar" OR "nuage de points"
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  domaine: lidar
+- id: releves-aeriens
+  label: Relevés et vues aériennes
+  query: '"prise de vue aérienne" OR "relevé topographique" OR "levé topographique" OR photogrammétrie OR "levé par drone" OR "aerial survey"'
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  domaine: releves
+- id: opendata-sdis
+  label: Open data et cartographie SDIS
+  query: ("open data" OR "données ouvertes") (cartographie OR géomatique OR SDIS OR SIG) OR "cartographie SDIS" OR "SIG SDIS" OR "point d'eau incendie"
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  domaine: donnees
+- id: carto-urgence
+  label: Cartographie d'urgence
+  query: '"cartographie d''urgence" OR "cartographie de crise" OR "cartographie humanitaire" OR "crisis mapping" OR "emergency mapping" OR CartONG OR MapAction OR "Missing Maps" OR UNOSAT'
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  domaine: urgence
+- id: mesh-fr
+  label: Mesh (français)
+  query: Meshtastic OR MeshCore OR "mesh wifi" OR "wifi mesh" OR "réseau maillé" OR "réseau mesh" OR Reticulum OR "802.11s"
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+- id: mesh-en
+  label: Mesh (anglais)
+  query: Meshtastic OR MeshCore OR "mesh wifi" OR "wifi mesh" OR "wireless mesh" OR Reticulum OR "802.11s" OR "batman-adv"
+  hl: en-US
+  gl: US
+  ceid: US:en
+  filtre: mots_cles
+- id: li-meshtastic
+  label: Meshtastic
+  reseaux:
+  - linkedin
+  query: Meshtastic OR "LoRa mesh" OR "mesh LoRa"
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  domaine: meshtastic
+- id: li-meshcore
+  label: MeshCore
+  reseaux:
+  - linkedin
+  query: MeshCore OR "Mesh Core"
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  filtre: mots_cles
+  domaine: meshcore
+mastodon_tags:
+- IoT
+- LoRaWAN
+- Meshtastic
+- Meshcore
+- IIoT
+- crisis
+- disaster
+- flood
+- earthquake
+- inondation
+- tempete
+- tornade
+- avalanche
+- neige
+- HamRadio
+- AmateurRadio
+- FT8
+- APRS
+- SDR
+- CrisisManagement
+- EmergencyManagement
+- ORSEC
+- NexSIS
+- blackout
+- delestage
+- ecowatt
+- QGIS
+- OpenStreetMap
+- GIS
+- GeoAI
+- PostGIS
+- geomatics
+- MissingMaps
+- MapAction
+- Reticulum
+wms:
+- id: wms-ign-raster
+  nom: WMS — IGN Géoplateforme (raster)
+  url: https://data.geopf.fr/wms-r/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities
+  site: https://cartes.gouv.fr/
+- id: wms-ign-vecteur
+  nom: WMS — IGN Géoplateforme (vecteur)
+  url: https://data.geopf.fr/wms-v/wms?SERVICE=WMS&REQUEST=GetCapabilities
+  site: https://cartes.gouv.fr/
+- id: wms-brgm-geologie
+  nom: WMS — BRGM géologie
+  url: https://geoservices.brgm.fr/geologie?SERVICE=WMS&REQUEST=GetCapabilities
+  site: https://www.brgm.fr/
+- id: wms-brgm-risques
+  nom: WMS — BRGM risques
+  url: https://geoservices.brgm.fr/risques?SERVICE=WMS&REQUEST=GetCapabilities
+  site: https://www.brgm.fr/
+- id: wms-brgm-infoterre
+  nom: WMS — BRGM InfoTerre
+  url: https://infoterre.brgm.fr/geoserver/ows?SERVICE=WMS&REQUEST=GetCapabilities
+  site: https://infoterre.brgm.fr/
+- id: wms-georisques
+  nom: WMS — Géorisques
+  url: https://georisques.gouv.fr/services?SERVICE=WMS&REQUEST=GetCapabilities
+  site: https://www.georisques.gouv.fr/
+- id: wms-georisques-mapsref
+  nom: WMS — Géorisques (mapsref BRGM)
+  url: https://mapsref.brgm.fr/wxs/georisques/risques?SERVICE=WMS&REQUEST=GetCapabilities
+  site: https://www.georisques.gouv.fr/
+- id: wms-shom
+  nom: WMS — SHOM
+  url: https://services.data.shom.fr/INSPIRE/wms/r?SERVICE=WMS&REQUEST=GetCapabilities
+  site: https://www.shom.fr/
+- id: wms-osm-fr
+  nom: WMS — OpenStreetMap France
+  url: https://wms.openstreetmap.fr/wms?SERVICE=WMS&REQUEST=GetCapabilities
+  site: https://wms.openstreetmap.fr/
+- id: wms-sandre
+  nom: WMS — Sandre (masses d'eau)
+  url: https://services.sandre.eaufrance.fr/geo/mdo?SERVICE=WMS&REQUEST=GetCapabilities
+  site: https://www.sandre.eaufrance.fr/
+- id: wms-grandlyon
+  nom: WMS — Data Grand Lyon
+  url: https://download.data.grandlyon.com/wms/grandlyon?SERVICE=WMS&REQUEST=GetCapabilities
+  site: https://data.grandlyon.com/
+- id: wms-sdis35
+  nom: WMS — SDIS 35 (GéoBretagne)
+  url: https://geobretagne.fr/geoserver/sdis35/wms?SERVICE=WMS&REQUEST=GetCapabilities
+  site: https://geobretagne.fr/
+- id: wms-sigloire
+  nom: WMS — SIG Loire (dont SDIS 44)
+  url: https://datacarto.sigloire.fr/wms?SERVICE=WMS&REQUEST=GetCapabilities
+  site: https://www.sigloire.fr/
+- id: wms-craig-public
+  nom: WMS — CRAIG (accès ouvert)
+  url: https://ids.craig.fr/wxs/public/wms?SERVICE=WMS&REQUEST=GetCapabilities
+  site: https://ids.craig.fr/
+- id: wms-craig-pcrs
+  nom: WMS — CRAIG PCRS
+  url: https://ids.craig.fr/wxs/pcrs/wms?SERVICE=WMS&REQUEST=GetCapabilities
+  site: https://ids.craig.fr/
+- id: wms-dec-datacarto-open-datara-fr-wms
+  nom: WMS — WMS D@tARA
+  url: https://datacarto.open-datara.fr/wms?service=WMS&request=GetCapabilities
+  site: https://datacarto.open-datara.fr/wms?service=WMS&request=GetCapabilities
+  decouverte: '2026-09-23'
+- id: wms-dec-datagrandest-fr-geoserver-region-grand-est-wms
+  nom: WMS — DataGrandEst WMS Service (region-grand-est)
+  url: https://www.datagrandest.fr/geoserver/region-grand-est/wms?request=getcapabilities&service=WMS
+  site: https://www.datagrandest.fr/geoserver/region-grand-est/wms?request=getcapabilities&service=WMS
+  decouverte: '2026-09-23'
+- id: wms-dec-carto-smmar-fr-wxs
+  nom: WMS — Webservices des données du SMMAR
+  url: https://carto.smmar.fr/wxs?SERVICE=WMS&REQUEST=GetCapabilities
+  site: https://carto.smmar.fr/wxs?SERVICE=WMS&REQUEST=GetCapabilities
+  decouverte: '2026-09-23'
+- id: wms-dec-datagrandest-fr-geoserver-geograndest-wms
+  nom: WMS — DataGrandEst WMS Service (geograndest)
+  url: https://www.datagrandest.fr/geoserver/geograndest/wms?SERVICE=WMS&REQUEST=GetCapabilities
+  site: https://www.datagrandest.fr/geoserver/geograndest/wms?SERVICE=WMS&REQUEST=GetCapabilities
+  decouverte: '2026-09-23'
+- id: wms-dec-kartenn-region-bretagne-fr-ws-cadastre-france-wm
+  nom: WMS — Cadastre WMS
+  url: https://kartenn.region-bretagne.fr/ws/cadastre/france.wms?REQUEST=GetCapabilities&SERVICE=WMS&VERSION=1.3.0
+  site: https://kartenn.region-bretagne.fr/ws/cadastre/france.wms?REQUEST=GetCapabilities&SERVICE=WMS&VERSION=1.3.0
+  decouverte: '2026-09-23'
+- id: wms-dec-ows-region-bretagne-fr-geoserver-rb-wms
+  nom: WMS — Service de visualisation Région Bretagne
+  url: https://ows.region-bretagne.fr/geoserver/rb/wms?SERVICE=WMS&REQUEST=GetCapabilities
+  site: https://ows.region-bretagne.fr/geoserver/rb/wms?SERVICE=WMS&REQUEST=GetCapabilities
+  decouverte: '2026-09-23'
+- id: wms-dec-geo-brest-metropole-fr-arcgis-services-public-gp
+  nom: WMS — geo.brest-metropole.fr
+  url: https://geo.brest-metropole.fr/arcgis/services/public/GPB_CAD/MapServer/WMSServer?request=GetCapabilities&service=WMS
+  site: https://geo.brest-metropole.fr/arcgis/services/public/GPB_CAD/MapServer/WMSServer?request=GetCapabilities&service=WMS
+  decouverte: '2026-09-23'
+- id: wms-dec-geobretagne-fr-geoserver-geobretagne-wms
+  nom: WMS — Service de visualisation cartographique (WMS) du partenariat GéoBretagne
+  url: https://geobretagne.fr/geoserver/geobretagne/wms?REQUEST=GetCapabilities&SERVICE=WMS
+  site: https://geobretagne.fr/geoserver/geobretagne/wms?REQUEST=GetCapabilities&SERVICE=WMS
+  decouverte: '2026-09-23'

@@ -10,24 +10,11 @@ Chaque veille a un fichier `config/keywords*.yaml` :
 
 Les alias français et anglais, avec ou sans accents, sont normalisés à l’exécution. Dans un domaine, les mots-clés se combinent par OU. L’article est rangé dans le domaine de plus haute priorité qui matche.
 
-## Fichiers de sources
+## Fichier de sources
 
-| Fichier | Qui l’utilise |
-| --- | --- |
-| `config/sources.yaml` | IoT |
-| `config/sources_crise.yaml` | Crise |
-| `config/sources_radio.yaml` | Radio |
-| `config/sources_outils.yaml` | Outils de PC |
-| `config/sources_blackout.yaml` | Black-out |
-| `config/sources_geomatique.yaml` | Géomatique |
-| `config/sources_mesh.yaml` | Mesh |
-| `config/sources_presse.yaml` | Les sept veilles (presse nationale et Auvergne-Rhône-Alpes) |
-| `config/sources_tech.yaml` | Les sept veilles (informatique, technique, IA, développement) |
-| `config/sources_auto.yaml` | Les sept veilles (sources ajoutées au fil de l’eau) |
-| `config/sources_crise_territoires.yaml` | Crise, outils de PC et black-out (presse régionale de France) |
-| `config/reseaux_sociaux.yaml` | Les sept veilles |
+Toutes les veilles lisent `config/sources.yaml` : flux RSS, Google News, réseaux sociaux et services WMS. `config/reseaux_sociaux.yaml` indique seulement les sites des réseaux (LinkedIn, Mastodon, etc.).
 
-Les articles de la presse partagée ne sont gardés que s’ils correspondent aux mots-clés du profil.
+Une source ajoutée dans `config/sources.yaml` est lue par les sept veilles. Chacune garde les articles qui correspondent à ses mots-clés. Un flux marqué `filtre: aucun` avec `profils` est repris en entier par les veilles listées ; les autres n’en gardent que les articles qui matchent.
 
 Un flux s’écrit ainsi :
 
@@ -43,27 +30,27 @@ flux:
 `filtre` :
 
 - `mots_cles` : l’article n’est gardé que si un mot-clé du profil matche
-- `aucun` : tous les articles de la période sont gardés (source déjà dédiée au sujet)
+- `aucun` : tous les articles de la période sont gardés, pour les veilles citées dans `profils`
 
-Un dépôt GitHub du périmètre s’ajoute avec l’adresse `https://github.com/orga/depot/releases.atom`, `filtre: aucun` et le `domaine` de la rubrique. La liste des dépôts de chaque veille est dans [profils.md](profils.md). Mesh a les siens dans `config/sources_mesh.yaml`.
+Un dépôt GitHub du périmètre s’ajoute dans `config/sources.yaml` avec l’adresse `https://github.com/orga/depot/releases.atom`, `filtre: aucun`, le `domaine` de la rubrique et `profils` pour la veille concernée. La liste des dépôts de chaque veille est dans [profils.md](profils.md).
 
-Si la source porte aussi un `domaine`, ce domaine lui est attribué d’office. Le filtre par mots-clés ne l’écarte plus. On réserve ça à une requête déjà ciblée, par exemple une recherche Google News étroite.
+Si la source porte aussi un `domaine` connu de la veille, ce domaine lui est attribué d’office. Le filtre par mots-clés ne l’écarte plus. On réserve ça à une requête déjà ciblée, par exemple une recherche Google News étroite.
 
 Google News se déclare dans `google_news` (`id`, `label`, `query`, `hl`, `gl`, `ceid`, et au besoin `filtre` et `domaine`). Chaque requête est un flux distinct : l’adresse complète, paramètres compris, sert d’identité. Sans `filtre`, une requête Google News est prise en entier (`aucun`).
 
 Un site sans RSS public s’ajoute en Google News avec `site:domaine.fr`.
 
-Un service WMS (donnée cartographique, pas un fil d’articles) s’ajoute dans `wms` du fichier de sources du profil (`id`, `nom`, `url` du GetCapabilities, `site`). À chaque lancement, la veille cherche aussi de nouveaux services WMS et les enregistre dans `config/sources_wms_decouvertes.yaml`. Le rapport les regroupe dans la rubrique Flux WMS, anciens et nouveaux. Ils ne sont pas lus comme des flux RSS.
+Un service WMS (donnée cartographique, pas un fil d’articles) s’ajoute dans `wms` de `config/sources.yaml` (`id`, `nom`, `url` du GetCapabilities, `site`). À chaque lancement, la veille cherche aussi de nouveaux services WMS et les enregistre dans ce même fichier. Le rapport les regroupe dans la rubrique Flux WMS, anciens et nouveaux. Ils ne sont pas lus comme des flux RSS.
 
 ## Découverte
 
-À chaque lancement, le programme cherche de nouveaux flux et les ajoute à `config/sources_auto.yaml` et au `config/sources_decouvertes_*.yaml` du profil. Pour la géomatique, il cherche aussi de nouveaux services WMS et les ajoute à `config/sources_wms_decouvertes.yaml`. Une URL déjà connue est ignorée. `--sans-decouverte` saute ces deux recherches ; les services WMS déjà enregistrés restent listés dans le rapport.
+À chaque lancement, chaque veille cherche de nouveaux flux dans son périmètre, et de nouveaux services WMS. Les trouvailles sont ajoutées à `config/sources.yaml` avec `filtre: mots_cles`, donc les sept veilles les lisent ensuite. Une URL déjà connue est ignorée. `--sans-decouverte` saute ces deux recherches ; les services WMS déjà enregistrés restent listés dans le rapport.
 
 Les caches `config/decouverte_cache*.yaml` et `config/traduction_cache.json` restent sur le poste. Ils ne sont pas versionnés.
 
 ## Ajouter une source à la main
 
 1. Vérifier que l’adresse répond en XML (RSS ou Atom), pas en page HTML ni en 404.
-2. Choisir le fichier du tableau ci-dessus. Une source hors de ces catégories va dans `config/sources_auto.yaml`.
-3. Ne pas réutiliser un `id` ni une URL déjà présents, y compris dans les `sources_decouvertes*.yaml`.
-4. Mettre `filtre: mots_cles`, sauf si le flux ne parle que du sujet de la veille : alors `filtre: aucun`.
+2. L’ajouter dans `config/sources.yaml`, dans `flux`, `google_news` ou `wms`.
+3. Ne pas réutiliser un `id` ni une URL déjà présents dans ce fichier.
+4. Mettre `filtre: mots_cles`. Si le flux ne parle que d’une veille, mettre `filtre: aucun` et `profils` avec son identifiant (`iot`, `crise`, `radio`, `outils`, `blackout`, `geomatique` ou `mesh`) : les autres veilles ne gardent alors que les articles qui matchent leurs mots-clés.

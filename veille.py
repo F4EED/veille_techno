@@ -31,6 +31,7 @@ import feedparser
 import yaml
 
 CONFIG = ROOT / "config"
+FICHIER_SOURCES = CONFIG / "sources.yaml"
 USER_AGENT = "Mozilla/5.0 (compatible; VeilleIOT/1.0; outil local de veille technique)"
 TIMEOUT_S = 18
 MAX_WORKERS = 10
@@ -179,6 +180,7 @@ class Source:
     site: str = ""
     filtre: str = "mots_cles"
     domaine: str = ""
+    profils: tuple[str, ...] = ()
     ignorer_date: bool = False
     nouvelle: bool = False
 
@@ -197,7 +199,6 @@ class Profil:
     requetes_web: tuple[str, ...]
     sujet_email: str
     orphelins: str
-    sources_extra: tuple[Path, ...] = field(default_factory=tuple)
 
 
 def charger_profils() -> dict[str, Profil]:
@@ -214,8 +215,8 @@ def charger_profils() -> dict[str, Profil]:
             prefixe_sortie="Veille_IOT",
             alias_sortie="Veille_IOT.pdf",
             keywords=CONFIG / "keywords.yaml",
-            sources=CONFIG / "sources.yaml",
-            decouvertes=CONFIG / "sources_decouvertes.yaml",
+            sources=FICHIER_SOURCES,
+            decouvertes=FICHIER_SOURCES,
             cache=CONFIG / "decouverte_cache.yaml",
             requetes_web=(
                 'IoT "RSS" feed blog',
@@ -247,8 +248,8 @@ def charger_profils() -> dict[str, Profil]:
             prefixe_sortie="Veille_Crise",
             alias_sortie="Veille_Crise.pdf",
             keywords=CONFIG / "keywords_crise.yaml",
-            sources=CONFIG / "sources_crise.yaml",
-            decouvertes=CONFIG / "sources_decouvertes_crise.yaml",
+            sources=FICHIER_SOURCES,
+            decouvertes=FICHIER_SOURCES,
             cache=CONFIG / "decouverte_cache_crise.yaml",
             requetes_web=(
                 '"gestion de crise" RSS',
@@ -269,7 +270,6 @@ def charger_profils() -> dict[str, Profil]:
             ),
             sujet_email="Veille_Crise",
             orphelins="Autres articles des sources crise",
-            sources_extra=(CONFIG / "sources_crise_territoires.yaml",),
         ),
         "radio": Profil(
             identifiant="radio",
@@ -282,8 +282,8 @@ def charger_profils() -> dict[str, Profil]:
             prefixe_sortie="Veille_Radio",
             alias_sortie="Veille_Radio.pdf",
             keywords=CONFIG / "keywords_radio.yaml",
-            sources=CONFIG / "sources_radio.yaml",
-            decouvertes=CONFIG / "sources_decouvertes_radio.yaml",
+            sources=FICHIER_SOURCES,
+            decouvertes=FICHIER_SOURCES,
             cache=CONFIG / "decouverte_cache_radio.yaml",
             requetes_web=(
                 "ham radio RSS feed",
@@ -313,8 +313,8 @@ def charger_profils() -> dict[str, Profil]:
             prefixe_sortie="Veille_Outils_PC",
             alias_sortie="Veille_Outils_PC.pdf",
             keywords=CONFIG / "keywords_outils.yaml",
-            sources=CONFIG / "sources_outils.yaml",
-            decouvertes=CONFIG / "sources_decouvertes_outils.yaml",
+            sources=FICHIER_SOURCES,
+            decouvertes=FICHIER_SOURCES,
             cache=CONFIG / "decouverte_cache_outils.yaml",
             requetes_web=(
                 '"logiciel de gestion de crise" RSS',
@@ -329,7 +329,6 @@ def charger_profils() -> dict[str, Profil]:
             ),
             sujet_email="Veille_Outils_PC",
             orphelins="Autres articles des sources outils PC",
-            sources_extra=(CONFIG / "sources_crise_territoires.yaml",),
         ),
         "blackout": Profil(
             identifiant="blackout",
@@ -347,8 +346,8 @@ def charger_profils() -> dict[str, Profil]:
             prefixe_sortie="Veille_Blackout",
             alias_sortie="Veille_Blackout.pdf",
             keywords=CONFIG / "keywords_blackout.yaml",
-            sources=CONFIG / "sources_blackout.yaml",
-            decouvertes=CONFIG / "sources_decouvertes_blackout.yaml",
+            sources=FICHIER_SOURCES,
+            decouvertes=FICHIER_SOURCES,
             cache=CONFIG / "decouverte_cache_blackout.yaml",
             requetes_web=(
                 '"black-out" OR blackout France RSS',
@@ -362,7 +361,6 @@ def charger_profils() -> dict[str, Profil]:
             ),
             sujet_email="Veille_Blackout",
             orphelins="Autres articles des sources black-out",
-            sources_extra=(CONFIG / "sources_crise_territoires.yaml",),
         ),
         "geomatique": Profil(
             identifiant="geomatique",
@@ -378,8 +376,8 @@ def charger_profils() -> dict[str, Profil]:
             prefixe_sortie="Veille_Geomatique",
             alias_sortie="Veille_Geomatique.pdf",
             keywords=CONFIG / "keywords_geomatique.yaml",
-            sources=CONFIG / "sources_geomatique.yaml",
-            decouvertes=CONFIG / "sources_decouvertes_geomatique.yaml",
+            sources=FICHIER_SOURCES,
+            decouvertes=FICHIER_SOURCES,
             cache=CONFIG / "decouverte_cache_geomatique.yaml",
             requetes_web=(
                 "géomatique RSS feed blog",
@@ -410,8 +408,8 @@ def charger_profils() -> dict[str, Profil]:
             prefixe_sortie="Veille_Mesh",
             alias_sortie="Veille_Mesh.pdf",
             keywords=CONFIG / "keywords_mesh.yaml",
-            sources=CONFIG / "sources_mesh.yaml",
-            decouvertes=CONFIG / "sources_decouvertes_mesh.yaml",
+            sources=FICHIER_SOURCES,
+            decouvertes=FICHIER_SOURCES,
             cache=CONFIG / "decouverte_cache_mesh.yaml",
             requetes_web=(
                 "Meshtastic RSS feed blog",
@@ -529,6 +527,35 @@ def requete_site(sites: list[str], query: str) -> str:
     return f"({clause}) ({query})"
 
 
+def lire_profils(item: dict[str, Any]) -> tuple[str, ...]:
+    brut = item.get("profils") or ()
+    if isinstance(brut, str):
+        brut = [brut]
+    return tuple(str(profil) for profil in brut if str(profil).strip())
+
+
+def filtre_pour_profil(source: Source, profil_id: str, ids_domaines: set[str]) -> str:
+    """Le catalogue est commun. « aucun » ne livre tout le flux qu'à la veille concernée."""
+    if source.profils and profil_id not in source.profils:
+        return "mots_cles"
+    if source.domaine and source.domaine not in ids_domaines and source.filtre != "mots_cles":
+        return "mots_cles"
+    return source.filtre
+
+
+def completer_domaines(
+    source: Source,
+    domaines_ok: list[str],
+    profil_id: str,
+    ids_domaines: set[str],
+) -> list[str]:
+    if source.profils and profil_id not in source.profils:
+        return domaines_ok
+    if source.domaine in ids_domaines and source.domaine not in domaines_ok:
+        return [source.domaine, *domaines_ok]
+    return domaines_ok
+
+
 def sources_reseaux_sociaux(cfg: dict[str, Any]) -> list[Source]:
     """LinkedIn, X, Mastodon, Bluesky, Threads via Google News + hashtags Mastodon."""
     chemin = CONFIG / "reseaux_sociaux.yaml"
@@ -556,6 +583,7 @@ def sources_reseaux_sociaux(cfg: dict[str, Any]) -> list[Source]:
                     site=reseau.get("url") or f"https://{sites[0]}/",
                     filtre=req.get("filtre", "mots_cles"),
                     domaine=req.get("domaine", ""),
+                    profils=lire_profils(req),
                     ignorer_date=True,
                 )
             )
@@ -589,6 +617,7 @@ def charger_bloc_sources(cfg: dict[str, Any], *, reseaux: bool = False) -> list[
                 site=item.get("site") or "https://news.google.com/",
                 filtre=item.get("filtre", "aucun"),
                 domaine=item.get("domaine", ""),
+                profils=lire_profils(item),
                 ignorer_date=True,
             )
         )
@@ -600,9 +629,10 @@ def charger_bloc_sources(cfg: dict[str, Any], *, reseaux: bool = False) -> list[
                 identifiant=item["id"],
                 nom=item["nom"],
                 url=item["url"],
-                    site=item.get("site", ""),
+                site=item.get("site", ""),
                 filtre=item.get("filtre", "mots_cles"),
                 domaine=item.get("domaine", ""),
+                profils=lire_profils(item),
                 ignorer_date=bool(item.get("ignorer_date", False)),
             )
         )
@@ -636,28 +666,8 @@ def fusionner_sources(*listes: list[Source]) -> list[Source]:
     return resultat
 
 
-def charger_sources_presse() -> list[Source]:
-    sources: list[Source] = []
-    for nom in ("sources_presse.yaml", "sources_tech.yaml", "sources_auto.yaml"):
-        chemin = CONFIG / nom
-        if chemin.exists():
-            sources.extend(charger_bloc_sources(charger_yaml(chemin), reseaux=False))
-    return sources
-
-
-def charger_sources_extra(profil: Profil) -> list[Source]:
-    sources: list[Source] = []
-    for chemin in profil.sources_extra:
-        if chemin.exists():
-            sources.extend(charger_bloc_sources(charger_yaml(chemin), reseaux=False))
-    return sources
-
-
 def charger_sources(cfg: dict[str, Any]) -> list[Source]:
-    return fusionner_sources(
-        charger_bloc_sources(cfg, reseaux=True),
-        charger_sources_presse(),
-    )
+    return fusionner_sources(charger_bloc_sources(cfg, reseaux=True))
 
 
 def telecharger(url: str, timeout: int | None = None) -> bytes:
@@ -1083,8 +1093,6 @@ def collecter(
     list[Source],
 ]:
     from decouverte import (
-        charger_sources_decouvertes,
-        charger_wms_decouverts,
         cle_wms,
         decouvrir_sources,
         decouvrir_wms,
@@ -1093,21 +1101,18 @@ def collecter(
     profil = profil or charger_profils()["iot"]
     prefixe = f"[{profil.identifiant}]"
     kw_cfg = charger_yaml(profil.keywords)
-    src_cfg = charger_yaml(profil.sources)
+    src_cfg = charger_yaml(FICHIER_SOURCES)
     domaines = charger_domaines(kw_cfg)
     tendances = charger_tendances(kw_cfg)
-    sources = fusionner_sources(
-        charger_sources(src_cfg),
-        charger_sources_extra(profil),
-        charger_sources_decouvertes(profil.decouvertes),
-    )
+    ids_domaines = {domaine.identifiant for domaine in domaines}
+    sources = charger_sources(src_cfg)
     nouvelles: list[Source] = []
     if decouvrir:
         nouvelles = decouvrir_sources(
             sources,
             domaines,
             tendances,
-            fichier_decouvertes=profil.decouvertes,
+            fichier_decouvertes=FICHIER_SOURCES,
             fichier_cache=profil.cache,
             requetes_web=profil.requetes_web,
             prefixe=prefixe,
@@ -1152,12 +1157,11 @@ def collecter(
                 lien = extraire_lien(entree)
                 texte = normaliser(f"{titre} {resume}")
                 domaines_ok, mots, tendances_ok = matcher(texte, domaines, tendances)
-                if source.domaine and source.domaine not in domaines_ok:
-                    domaines_ok = [source.domaine] + domaines_ok
+                domaines_ok = completer_domaines(source, domaines_ok, profil.identifiant, ids_domaines)
                 if profil.identifiant in {"geomatique", "mesh"} and len(domaines_ok) > 1:
                     priorites = {d.identifiant: d.priorite for d in domaines}
                     domaines_ok.sort(key=lambda ident: priorites.get(ident, 0), reverse=True)
-                if source.filtre == "mots_cles" and not domaines_ok:
+                if filtre_pour_profil(source, profil.identifiant, ids_domaines) == "mots_cles" and not domaines_ok:
                     continue
                 articles.append(
                     Article(
@@ -1197,8 +1201,6 @@ def collecter(
                     domaine="donnees",
                 )
             )
-        for service in charger_wms_decouverts():
-            _ajouter_wms(service)
         if decouvrir:
             for service in decouvrir_wms(services_wms, prefixe=prefixe):
                 _ajouter_wms(service)

@@ -1,24 +1,20 @@
 ---
-description: Ajouter automatiquement toute nouvelle source RSS pertinente aux listes de veille
+description: Ajouter automatiquement toute nouvelle source RSS pertinente au catalogue commun
 alwaysApply: true
 ---
 
 # Sources : ajout automatique
 
-Dès qu’une source d’information pertinente est identifiée (presse nationale, Auvergne-Rhône-Alpes, informatique, technique, IA, développement, IoT, crise, radio, outils de PC, géomatique, mesh), l’ajouter tout de suite à la liste, sans demander confirmation.
+Dès qu’une source d’information pertinente est identifiée (presse nationale, Auvergne-Rhône-Alpes, informatique, technique, IA, développement, IoT, crise, radio, outils de PC, géomatique, mesh), l’ajouter tout de suite à `config/sources.yaml`, sans demander confirmation.
 
-## Où l’écrire
-
-- Presse généraliste nationale ou AURA → `config/sources_presse.yaml`
-- Informatique, technique, IA, développement → `config/sources_tech.yaml`
-- Spécifique IoT / crise / radio / outils PC / géomatique / mesh → `config/sources.yaml`, `sources_crise.yaml`, `sources_radio.yaml`, `sources_outils.yaml`, `sources_geomatique.yaml` ou `sources_mesh.yaml`
-- Presse régionale France entière (veilles crise et outils PC) → `config/sources_crise_territoires.yaml`
-- Source découverte au fil de l’eau, hors catégories ci-dessus → `config/sources_auto.yaml`
+Les sept veilles lisent ce fichier. Une source ajoutée est donc prise en compte par toutes.
 
 ## Règles
 
 - Vérifier que le flux RSS/Atom répond (XML, pas 404/HTML).
-- Ne pas dupliquer un `id` ni une URL déjà présents (y compris dans `sources_decouvertes*.yaml`).
-- `filtre: mots_cles` sauf source dédiée au périmètre (alors `filtre: aucun`).
-- Format identique aux fichiers existants (`id`, `nom`, `url`, `site`, `filtre`).
+- Ne pas dupliquer un `id` ni une URL déjà présents dans `config/sources.yaml`.
+- `filtre: mots_cles`, pour que chaque veille ne garde que les articles qui correspondent à ses mots-clés.
+- Si le flux ne parle que d’une veille : `filtre: aucun` et `profils` avec son identifiant (`iot`, `crise`, `radio`, `outils`, `blackout`, `geomatique` ou `mesh`).
+- Format identique aux entrées existantes (`id`, `nom`, `url`, `site`, `filtre`).
 - Si le site n’a pas de RSS public, l’ajouter en `google_news` avec `site:domaine.fr`.
+- Un service WMS s’ajoute dans la liste `wms` du même fichier.

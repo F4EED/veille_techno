@@ -1,10 +1,10 @@
 # Les sept veilles
 
-Chaque profil a ses mots-clés, ses flux dédiés et son fichier de sources découvertes. Toutes partagent la presse nationale, la presse d’Auvergne-Rhône-Alpes, la presse informatique et les réseaux sociaux. Voir [sources.md](sources.md).
+Chaque profil a ses mots-clés. Toutes les veilles lisent le même catalogue, `config/sources.yaml`. Une source ajoutée dans ce fichier, à la main ou trouvée au lancement, est vue par les sept. Chaque veille ne garde que les articles qui correspondent à ses mots-clés. Les services WMS du catalogue figurent dans chaque rapport. Voir [sources.md](sources.md).
 
 ## Veille_IOT
 
-Fichier : `config/keywords.yaml`. Sources : `config/sources.yaml`.
+Mots-clés : `config/keywords.yaml`.
 
 - IoT et objets connectés
 - LoRa et LoRaWAN
@@ -18,7 +18,7 @@ Dépôts GitHub suivis par `releases.atom` : ChirpStack, The Things Stack, ESPHo
 
 ## Veille_Crise
 
-Fichier : `config/keywords_crise.yaml`. Sources : `config/sources_crise.yaml`, plus `config/sources_crise_territoires.yaml`.
+Mots-clés : `config/keywords_crise.yaml`.
 
 - Crise, crisis, crisi, gestion de crise
 - Inondation
@@ -33,7 +33,7 @@ Dépôts GitHub suivis par `releases.atom` : Ushahidi, OpenQuake, InaSAFE, CLIMA
 
 ## Veille_Radio
 
-Fichier : `config/keywords_radio.yaml`. Sources : `config/sources_radio.yaml`.
+Mots-clés : `config/keywords_radio.yaml`.
 
 - Radio, hamradio, radioamateur
 - Modes digitaux (FT8, JS8, Winlink, DMR, D-STAR)
@@ -46,7 +46,7 @@ Dépôts GitHub suivis par `releases.atom` : GNU Radio, SDRangel, SDR++, OpenWeb
 
 ## Veille_Outils_PC
 
-Fichier : `config/keywords_outils.yaml`. Sources : `config/sources_outils.yaml`, plus `config/sources_crise_territoires.yaml`.
+Mots-clés : `config/keywords_outils.yaml`.
 
 - Logiciels de gestion de crise
 - Poste de commandement (PCO, PCA, PCC, salle de crise)
@@ -58,7 +58,7 @@ Dépôts GitHub suivis par `releases.atom` : Sahana Eden (poste de commandement)
 
 ## Veille_Blackout
 
-Fichier : `config/keywords_blackout.yaml`. Fenêtre de 14 jours. Sources : `config/sources_blackout.yaml`, plus `config/sources_crise_territoires.yaml`.
+Mots-clés : `config/keywords_blackout.yaml`. Fenêtre de 14 jours.
 
 - Black-out, panne géante, coupure généralisée en France
 - Exercice national de black-out, CIRN, SGDSN, guide « Tous résilients »
@@ -74,7 +74,7 @@ Dépôts GitHub suivis par `releases.atom` : Antares Simulator, Grid2Op (RTE), O
 
 ## Veille_Geomatique
 
-Fichier : `config/keywords_geomatique.yaml`. Sources : `config/sources_geomatique.yaml`.
+Mots-clés : `config/keywords_geomatique.yaml`.
 
 Le rapport reste une seule veille, Géomatique, avec ces sous-rubriques. L’article va dans la plus précise :
 
@@ -90,13 +90,11 @@ Les sites des SDIS qui publient un flux sont suivis pour la cartographie et l’
 
 Sources dédiées : IGN, Géoportail, OpenStreetMap, hebdoOSM, QGIS, Geotribu, Afigéo, CNIG, OSGeo, OGC. Le BRGM, Géorisques, le SHOM, cartes.gouv.fr et le CRAIG (craig.fr, ids.craig.fr) n’ont pas de flux RSS utile : ils sont interrogés par Google News avec `site:`. Les services WMS du CRAIG (accès ouvert et PCRS) sont dans la rubrique Flux WMS.
 
-Dépôts GitHub suivis par `releases.atom` : QGIS, GDAL, GeoServer, PostGIS, PROJ, GRASS GIS, OpenLayers, MapLibre, GeoPandas, PDAL, iD (OpenStreetMap), HOT Tasking Manager, cartes.gouv.fr (IGN).
-
-À chaque lancement, les nouveaux flux trouvés sont ajoutés à `config/sources_decouvertes_geomatique.yaml` et à `config/sources_auto.yaml`. Les nouveaux services WMS sont cherchés en même temps et ajoutés à `config/sources_wms_decouvertes.yaml`. Le rapport les regroupe dans la rubrique Flux WMS, avec les services déjà connus.
+Dépôts GitHub suivis par `releases.atom` : QGIS, GDAL, GeoServer, PostGIS, PROJ, GRASS GIS, OpenLayers, MapLibre, GeoPandas, PDAL, iD (OpenStreetMap), HOT Tasking Manager, cartes.gouv.fr (IGN). Le rapport regroupe les services WMS du catalogue dans la rubrique Flux WMS.
 
 ## Veille_Mesh
 
-Fichier : `config/keywords_mesh.yaml`. Sources : `config/sources_mesh.yaml`.
+Mots-clés : `config/keywords_mesh.yaml`.
 
 Le rapport reste une seule veille, Mesh, avec ces sous-rubriques. L’article va dans la plus précise :
 
@@ -105,5 +103,3 @@ Le rapport reste une seule veille, Mesh, avec ces sous-rubriques. L’article va
 - Général (mesh Wi-Fi, réseaux maillés, 802.11s, Reticulum, Yggdrasil, cjdns)
 
 Sources dédiées : blog Meshtastic, dépôts GitHub Meshtastic, blog MeshCore, dépôts MeshCore, Reticulum, RNode, Hackaday Meshtastic, Reddit r/meshtastic. reticulum.network et unsigned.io n’ont pas de flux RSS : ils sont interrogés par Google News avec `site:`. LinkedIn, X, Mastodon, Bluesky et Threads sont interrogés sur Meshtastic, MeshCore et le mesh Wi-Fi.
-
-À chaque lancement, les nouveaux flux trouvés sont ajoutés à `config/sources_decouvertes_mesh.yaml` et à `config/sources_auto.yaml`.
