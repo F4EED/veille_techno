@@ -98,8 +98,10 @@ Mots-clés : `config/keywords_mesh.yaml`.
 
 Le rapport reste une seule veille, Mesh, avec ces sous-rubriques. L’article va dans la plus précise :
 
+- Firmware Meshtastic (rôles du même firmware : client, base, balise, capteur, TAK, routeur)
+- Firmware MeshCore (un binaire par mode : companion, répéteur, room server, interface, pont, capteur)
 - Meshtastic
 - MeshCore
 - Général (mesh Wi-Fi, réseaux maillés, 802.11s, Reticulum, Yggdrasil, cjdns)
 
-Sources dédiées : blog Meshtastic, dépôts GitHub Meshtastic, blog MeshCore, dépôts MeshCore, Reticulum, RNode, Hackaday Meshtastic, Reddit r/meshtastic. reticulum.network et unsigned.io n’ont pas de flux RSS : ils sont interrogés par Google News avec `site:`. LinkedIn, X, Mastodon, Bluesky et Threads sont interrogés sur Meshtastic, MeshCore et le mesh Wi-Fi.
+Sources dédiées : blog Meshtastic, dépôts GitHub du firmware et des flashers Meshtastic et MeshCore, Trail Mate, Squatch Mesh, Wadamesh, MESHCOMOD, WhisperOS (TSAO), builds CJK TSAO, station météo Gaulix, ThinkNode M1, Bipper L1 Pro, ZephCore, EasySkyMesh, MCLite, MeshDeck, FieldMesh, blog MeshCore, Reticulum, RNode, Hackaday Meshtastic, Reddit r/meshtastic. Les sites sans flux (flasher.meshtastic.org, flasher.meshcore.io, docs.meshcore.io, config.meshcore.io, squatchmesh.com, wadamesh.com, ssaprus.works, tsao.dev) sont interrogés par Google News avec `site:`. Un nouveau dépôt GitHub de firmware trouvé au lancement est ajouté via son flux `releases.atom`, avec la rubrique Firmware Meshtastic ou Firmware MeshCore. reticulum.network et unsigned.io n’ont pas de flux RSS : ils sont interrogés par Google News avec `site:`. LinkedIn, X, Mastodon, Bluesky et Threads sont interrogés sur Meshtastic, MeshCore et le mesh Wi-Fi.

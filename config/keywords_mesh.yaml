@@ -5,6 +5,194 @@
 periode_jours: 7
 
 domaines:
+  firmware_meshtastic:
+    label: Firmware Meshtastic
+    priorite: 110
+    intro: >
+      Un seul firmware par carte, installé depuis le flasher.
+      Le mode est le rôle device.role : il se change dans l'application, sans reflasher.
+      ROUTER_CLIENT a été retiré en 2.3.15. REPEATER est retiré depuis 2.7.11 : le rôle à utiliser est ROUTER.
+    lien: https://flasher.meshtastic.org
+    mots_cles:
+      - "firmware meshtastic"
+      - "meshtastic firmware"
+      - "flasher.meshtastic"
+      - "device.role"
+      - client_mute
+      - client_hidden
+      - client_base
+      - router_late
+      - tak_tracker
+      - lost_and_found
+      - "trail mate"
+      - trailmate
+      - trail-mate
+      - "thinknode m1"
+      - "station météo gaulix"
+      - "station meteo gaulix"
+      - "bipper l1"
+      - bipper_l1pro
+      - "fork meshtastic"
+      - "meshtastic fork"
+    firmwares:
+      - mode: Client
+        nom: CLIENT
+        usage: Messagerie, reliée à l'application ou autonome. Relaie si aucun autre nœud ne l'a fait. Rôle par défaut.
+      - mode: Client muet
+        nom: CLIENT_MUTE
+        usage: Participe au réseau sans relayer les paquets des autres nœuds.
+      - mode: Client caché
+        nom: CLIENT_HIDDEN
+        usage: N'émet que le nécessaire. Invisible dans la liste des nœuds.
+      - mode: Base personnelle
+        nom: CLIENT_BASE
+        usage: Relaie en priorité le trafic des nœuds favoris. Le reste est traité comme CLIENT.
+      - mode: Balise
+        nom: TRACKER
+        usage: Priorité aux positions GPS.
+      - mode: Objet perdu
+        nom: LOST_AND_FOUND
+        usage: Diffuse régulièrement sa position sur le canal par défaut pour retrouver l'appareil.
+      - mode: Capteur
+        nom: SENSOR
+        usage: Priorité à la télémétrie.
+      - mode: TAK
+        nom: TAK
+        usage: Échanges avec ATAK, avec moins d'émissions de routine.
+      - mode: Balise TAK
+        nom: TAK_TRACKER
+        usage: Positions PLI automatiques vers ATAK.
+      - mode: Routeur
+        nom: ROUTER
+        usage: Infrastructure. Relaie toujours une fois et reste visible. À réserver aux sites élevés.
+      - mode: Routeur tardif
+        nom: ROUTER_LATE
+        usage: Relaie une fois, après les autres modes. Couverture locale complémentaire.
+      - mode: Répéteur
+        nom: REPEATER
+        usage: Retiré depuis le firmware 2.7.11. Remplacé par ROUTER.
+      - mode: Trail Mate
+        nom: Trail Mate (mode Meshtastic)
+        usage: Firmware autonome pour T-Deck, T-LoRa Pager et cartes proches. Protocole Meshtastic (LongFast). Le même binaire propose aussi MeshCore et Reticulum.
+      - mode: CJK
+        nom: TSAO — builds CJK
+        usage: Binaires Meshtastic avec chinois, japonais et coréen. Dépôt csrutil/meshtastic-releases.
+      - mode: Capteur
+        nom: Station météo Gaulix
+        usage: Fork Meshtastic pour une station météo sur Wio Tracker L1 Pro.
+      - mode: ThinkNode M1
+        nom: firmware MT ThinkNode M1
+        usage: Fork Meshtastic pour l’Elecrow ThinkNode M1.
+      - mode: Bipper
+        nom: Bipper L1 Pro
+        usage: Fork Meshtastic pour le Seeed Wio Tracker L1 Pro.
+
+  firmware_meshcore:
+    label: Firmware MeshCore
+    priorite: 110
+    intro: >
+      Chaque mode est un binaire distinct, choisi dans le flasher. Changer de mode impose de reflasher.
+      Le Wi-Fi Companion et le capteur ne sont pas fournis par le flasher officiel.
+    lien: https://flasher.meshcore.io
+    mots_cles:
+      - "firmware meshcore"
+      - "meshcore firmware"
+      - "flasher.meshcore"
+      - "companion radio"
+      - "ble companion"
+      - "usb companion"
+      - "wifi companion"
+      - "wi-fi companion"
+      - "kiss modem"
+      - companion_radio
+      - "meshcore room server"
+      - "room server meshcore"
+      - "trail mate"
+      - trailmate
+      - trail-mate
+      - "squatch mesh"
+      - squatchmesh
+      - "inw mesh"
+      - inw-mesh
+      - wadamesh
+      - "wada mesh"
+      - meshcomod
+      - whisperos
+      - "whisper os"
+      - zephcore
+      - "zeph core"
+      - easyskymesh
+      - "easy sky mesh"
+      - "easy skymesh"
+      - mclite
+      - "mc lite"
+      - "keymind cascade"
+      - keymind
+      - meshdeck
+      - "meshdeck os"
+      - "meshdeck-os"
+      - fieldmesh
+      - "fork meshcore"
+      - "meshcore fork"
+    firmwares:
+      - mode: Companion
+        nom: BLE Companion (companion_radio_ble)
+        usage: Client mobile. Se connecte à l'application Android ou iOS en Bluetooth.
+      - mode: Companion
+        nom: USB Serial Companion (companion_radio_usb)
+        usage: Client de bureau. Se connecte en USB au client web ou à un ordinateur.
+      - mode: Companion
+        nom: Wi-Fi Companion (companion_radio_wifi)
+        usage: Poste fixe. Le SSID est compilé dans le binaire. Absent du flasher officiel.
+      - mode: Répéteur
+        nom: Repeater
+        usage: Relais. Retransmet vers la destination connue, pas tous les paquets.
+      - mode: Room server
+        nom: Room Server
+        usage: BBS. Conserve les messages et en livre 32 non lus au client qui se reconnecte.
+      - mode: Interface
+        nom: GUI
+        usage: Client autonome sur les cartes à écran, comme le T-Deck.
+      - mode: Interface
+        nom: GUI avec carte SD
+        usage: Même client, avec les cartes stockées sur carte SD.
+      - mode: Pont
+        nom: KISS Modem (kiss_modem)
+        usage: Pont série KISS pour une application hôte.
+      - mode: Capteur
+        nom: Simple Sensor (simple_sensor)
+        usage: Nœud de télémétrie. Présent dans les sources, pas de binaire dans le flasher officiel.
+      - mode: Companion
+        nom: Squatch Mesh (inw-mesh)
+        usage: Terminal MeshCore autonome pour le LilyGo T-LoRa Pager. Messagerie, carte hors ligne et outils pour les répéteurs. Flasher sur squatchmesh.com.
+      - mode: Companion
+        nom: Wadamesh
+        usage: Interface tactile MeshCore pour T-Deck et Heltec V4. Companion BLE, USB et Wi-Fi, construit sur le fork MESHCOMOD.
+      - mode: Companion
+        nom: Trail Mate (mode MeshCore)
+        usage: Même firmware Trail Mate, avec le sélecteur de protocole sur MeshCore. Navigation GPS hors ligne.
+      - mode: Companion
+        nom: WhisperOS (TSAO)
+        usage: Interface alternative pour les radios companion MeshCore (Heltec, Wio Tracker L1, GAT562). Site ssaprus.works.
+      - mode: Distribution
+        nom: ZephCore
+        usage: Portage MeshCore sur Zephyr. Companion, répéteur, room server et observateur. Flasher zephcore.meshcore.dev.
+      - mode: Distribution
+        nom: EasySkyMesh PowerSaving
+        usage: MeshCore allégé en consommation, pour répéteurs solaires ou sur batterie. Rôles companion, répéteur et room server.
+      - mode: Distribution
+        nom: MCLite
+        usage: Messagerie autonome sur T-Deck Plus et T-Watch Ultra, sans téléphone. Encore expérimental.
+      - mode: Distribution
+        nom: MeshDeck
+        usage: Firmware MeshCore libre pour le T-Deck, alternative à MeshOS. Chat, carte hors ligne et balise SOS.
+      - mode: Distribution
+        nom: FieldMesh
+        usage: Fork MeshCore pour l’extérieur. Suivi GPS, mode hors réseau et alerte SOS.
+      - mode: Distribution
+        nom: Keymind Cascade
+        usage: Fork expérimental qui fait répéter un paquet si le relais suivant ne l’a pas repris. Pas de dépôt public repéré.
+
   meshtastic:
     label: Meshtastic
     priorite: 100

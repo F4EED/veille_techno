@@ -44,7 +44,7 @@ Un service WMS (donnée cartographique, pas un fil d’articles) s’ajoute dans
 
 ## Découverte
 
-À chaque lancement, chaque veille cherche de nouveaux flux dans son périmètre, et de nouveaux services WMS. Les trouvailles sont ajoutées à `config/sources.yaml` avec `filtre: mots_cles`, donc les sept veilles les lisent ensuite. Une URL déjà connue est ignorée. `--sans-decouverte` saute ces deux recherches ; les services WMS déjà enregistrés restent listés dans le rapport.
+À chaque lancement, chaque veille cherche de nouveaux flux dans son périmètre, et de nouveaux services WMS. Les trouvailles sont ajoutées à `config/sources.yaml` avec `filtre: mots_cles`, donc les sept veilles les lisent ensuite. Un flux dont le titre et la majorité des billets portent sur le firmware Meshtastic ou MeshCore est enregistré avec `filtre: aucun`, `profils: [iot, mesh]` et le `domaine` de la rubrique firmware. Un lien GitHub est suivi comme un dépôt (`releases.atom`), pas comme le site github.com déjà connu. Une URL déjà connue est ignorée. `--sans-decouverte` saute ces deux recherches ; les services WMS déjà enregistrés restent listés dans le rapport.
 
 Les caches `config/decouverte_cache*.yaml` et `config/traduction_cache.json` restent sur le poste. Ils ne sont pas versionnés.
 

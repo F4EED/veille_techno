@@ -416,11 +416,33 @@ def _envoyer_lien(
     _envoyer(message, smtp, utilisateur, mot_de_passe)
 
 
-def envoyer_rapport(rapport: Path, sujet: str | None = None) -> str:
+def destinataires_pour(cfg: dict[str, Any], profil: str | None = None) -> list[str]:
+    """Destinataires communs, plus ceux réservés au profil en cours."""
+    vus: list[str] = []
+    deja: set[str] = set()
+
+    def ajouter(adresses: Any) -> None:
+        for adresse in adresses or []:
+            texte = str(adresse).strip()
+            cle = texte.lower()
+            if texte and cle not in deja:
+                deja.add(cle)
+                vus.append(texte)
+
+    ajouter(cfg.get("destinataires"))
+    if profil:
+        extras = (cfg.get("destinataires_profils") or {}).get(profil)
+        ajouter(extras)
+    return vus
+
+
+def envoyer_rapport(rapport: Path, sujet: str | None = None, profil: str | None = None) -> str:
     cfg = charger_config_email()
     if not cfg.get("actif", True):
         return "envoi e-mail désactivé"
-    destinataires = list(cfg.get("destinataires") or [])
+    cfg = dict(cfg)
+    cfg["destinataires"] = destinataires_pour(cfg, profil)
+    destinataires = list(cfg["destinataires"])
     if not destinataires:
         raise RuntimeError("aucun destinataire configuré")
     smtp = cfg.get("smtp") or {}

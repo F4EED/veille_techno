@@ -2,7 +2,7 @@
 
 Outil local de veille. Il interroge des flux RSS, Google News et les réseaux sociaux, classe les articles par thème, écrit un rapport PDF et HTML, l’envoie par e-mail, puis le dépose sur les Pages Perso Free.
 
-Sept veilles tournent en parallèle :
+Sept veilles tournent l’une après l’autre :
 
 | Profil | Rapport | Thème |
 | --- | --- | --- |
@@ -26,7 +26,7 @@ cp config/email.secrets.yaml.example config/email.secrets.yaml
 ./lancer.sh
 ```
 
-`lancer.sh` installe les dépendances dans `.vendor` s’il le faut, puis lance les sept profils.
+`lancer.sh` installe les dépendances dans `.vendor` s’il le faut, puis lance les sept profils l’un après l’autre.
 
 Un seul profil :
 

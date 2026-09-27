@@ -11,7 +11,7 @@ from typing import Any
 
 import yaml
 
-from veille import CONFIG, MOIS_FR, date_longue_fr
+from veille import CONFIG, MOIS_FR, date_longue_fr, titre_public
 
 _ARCHIVE_NOM = re.compile(
     r"^(Veille_(?:Outils_PC|Blackout|Geomatique|Mesh|IOT|Crise|Radio))"
@@ -139,7 +139,7 @@ def _index_html() -> str:
             f"""
 <a class="carte" href="{escape(pdf)}" style="--accent:{couleur}">
 <span class="pastille">PDF</span>
-<strong>{escape(titre)}</strong>
+<strong>{escape(titre_public(titre))}</strong>
 <em>{escape(accroche)}</em>
 <span class="lien">Ouvrir le rapport</span>
 </a>
@@ -291,7 +291,7 @@ def _archives_html(noms: set[str] | None = None) -> str:
         blocs.append(
             f"""
 <section style="--accent:{couleur}">
-<h2>{escape(titre)}</h2>
+<h2>{escape(titre_public(titre))}</h2>
 <p class="accroche">{escape(accroche)}</p>
 <ul>
 {"".join(lignes)}

@@ -126,6 +126,46 @@ def slug_hote(hote: str) -> str:
     return "dec-" + re.sub(r"[^a-z0-9]+", "-", hote).strip("-")
 
 
+_ORGS_GITHUB_IGNORES = {
+    "about",
+    "collections",
+    "customer-stories",
+    "enterprise",
+    "explore",
+    "features",
+    "login",
+    "marketplace",
+    "open-source",
+    "orgs",
+    "pricing",
+    "readme",
+    "resources",
+    "security",
+    "settings",
+    "signup",
+    "solutions",
+    "sponsors",
+    "topics",
+}
+
+
+def depot_github(url: str) -> str:
+    """Identité d'un dépôt. github.com seul masquerait tous les autres dépôts."""
+    if hote_url(url) != "github.com":
+        return ""
+    morceaux = [morceau for morceau in urllib.parse.urlparse(url).path.split("/") if morceau]
+    if len(morceaux) < 2:
+        return ""
+    org, repo = morceaux[0], morceaux[1].removesuffix(".git")
+    if org.lower() in _ORGS_GITHUB_IGNORES or not repo:
+        return ""
+    return f"github.com/{org}/{repo}".lower()
+
+
+def identite_site(url: str) -> str:
+    return depot_github(url) or hote_url(url)
+
+
 def hote_interdit(hote: str) -> bool:
     return any(hote == bloque or hote.endswith("." + bloque) for bloque in HOTES_IGNORES)
 
@@ -165,9 +205,12 @@ def urls_connues(sources: list[Source]) -> set[str]:
 
 
 def hotes_connus(sources: list[Source]) -> set[str]:
-    return {hote_url(source.url) for source in sources if source.url} | {
-        hote_url(source.site) for source in sources if source.site
-    }
+    connus: set[str] = set()
+    for source in sources:
+        for url in (source.url, source.site):
+            if url:
+                connus.add(identite_site(url))
+    return connus
 
 
 def hotes_en_echec(cache: dict[str, Any]) -> set[str]:
@@ -272,16 +315,19 @@ def enregistrer_flux(nouvelles: list[Source], cible: Path | None = None) -> None
                 while f"{identifiant}-{numero}" in identifiants:
                     numero += 1
                 identifiant = f"{identifiant}-{numero}"
-            flux.append(
-                {
-                    "id": identifiant,
-                    "nom": source.nom,
-                    "url": source.url,
-                    "site": source.site,
-                    "filtre": "mots_cles",
-                    "decouverte": aujourd_hui,
-                }
-            )
+            fiche = {
+                "id": identifiant,
+                "nom": source.nom,
+                "url": source.url,
+                "site": source.site,
+                "filtre": source.filtre or "mots_cles",
+                "decouverte": aujourd_hui,
+            }
+            if source.domaine:
+                fiche["domaine"] = source.domaine
+            if source.profils:
+                fiche["profils"] = list(source.profils)
+            flux.append(fiche)
             existants.add(normaliser_url(source.url))
             identifiants.add(identifiant)
         cfg["flux"] = flux
@@ -335,32 +381,46 @@ def extraire_liens_ddg(html_page: str) -> list[str]:
     return uniques
 
 
+def _resultats_requete(requete: str) -> list[tuple[str, str]]:
+    url = "https://html.duckduckgo.com/html/?" + urllib.parse.urlencode({"q": requete})
+    try:
+        page = telecharger(url, timeout=8).decode("utf-8", errors="ignore")
+    except Exception:
+        return []
+    trouves: list[tuple[str, str]] = []
+    for lien in extraire_liens_ddg(page)[:8]:
+        hote = hote_url(lien)
+        if not hote or hote_interdit(hote):
+            continue
+        depot = depot_github(lien)
+        if depot:
+            trouves.append((f"https://{depot}", depot.rsplit("/", 1)[-1]))
+            continue
+        trouves.append((f"https://{hote}/", hote))
+    return trouves
+
+
 def rechercher_web(requetes: tuple[str, ...] | None = None) -> list[tuple[str, str, int]]:
     compteur: Counter[str] = Counter()
     noms: dict[str, str] = {}
-    for requete in requetes or REQUETES_WEB:
-        url = "https://html.duckduckgo.com/html/?" + urllib.parse.urlencode({"q": requete})
-        try:
-            page = telecharger(url, timeout=10).decode("utf-8", errors="ignore")
-        except Exception:
-            continue
-        for lien in extraire_liens_ddg(page)[:8]:
-            hote = hote_url(lien)
-            if not hote or hote_interdit(hote):
-                continue
-            site = f"https://{hote}/"
-            compteur[site] += 1
-            noms.setdefault(site, hote)
+    liste = requetes or REQUETES_WEB
+    with ThreadPoolExecutor(max_workers=min(6, max(1, len(liste)))) as pool:
+        for trouves in pool.map(_resultats_requete, liste):
+            for site, nom in trouves:
+                compteur[site] += 1
+                noms.setdefault(site, nom)
     return [(site, noms[site], n) for site, n in compteur.most_common()]
 
 
 def editeurs_google_news(sources: list[Source]) -> list[tuple[str, str, int]]:
     compteur: Counter[str] = Counter()
     noms: dict[str, str] = {}
-    for source in sources:
-        if not source.identifiant.startswith("gn-"):
-            continue
-        _src, entrees, erreur = analyser_flux(source)
+    cibles = [source for source in sources if source.identifiant.startswith("gn-")]
+    if not cibles:
+        return []
+    with ThreadPoolExecutor(max_workers=min(16, len(cibles))) as pool:
+        resultats = list(pool.map(analyser_flux, cibles))
+    for _src, entrees, erreur in resultats:
         if erreur:
             continue
         for entree in entrees:
@@ -377,6 +437,9 @@ def editeurs_google_news(sources: list[Source]) -> list[tuple[str, str, int]]:
 
 
 def candidats_flux(site: str) -> list[str]:
+    depot = depot_github(site)
+    if depot:
+        return [f"https://{depot}/releases.atom"]
     base = site.rstrip("/")
     urls: list[str] = []
     try:
@@ -407,21 +470,60 @@ def candidats_flux(site: str) -> list[str]:
     return uniques[:8]
 
 
-def flux_pertinent(url: str, domaines: list[Domaine], tendances: list[Tendance]) -> tuple[bool, str]:
+def domaine_firmware_dedie(
+    nom_flux: str,
+    textes_entrees: list[str],
+    domaines: list[Domaine],
+    tendances: list[Tendance],
+) -> str:
+    """Un flux dont le titre et la majorité des billets parlent d'un firmware mesh."""
+    cibles = ("firmware_meshtastic", "firmware_meshcore")
+    comptes = {identifiant: 0 for identifiant in cibles}
+    echantillons = [nom_flux, *textes_entrees]
+    utiles = 0
+    for texte in echantillons:
+        if not texte.strip():
+            continue
+        utiles += 1
+        domaines_ok, _mots, _tendances = matcher(normaliser(texte), domaines, tendances)
+        for identifiant in domaines_ok:
+            if identifiant in comptes:
+                comptes[identifiant] += 1
+    if utiles < 2:
+        return ""
+    identifiant, hits = max(comptes.items(), key=lambda item: item[1])
+    if hits >= max(2, utiles // 2):
+        return identifiant
+    return ""
+
+
+def flux_pertinent(url: str, domaines: list[Domaine], tendances: list[Tendance]) -> tuple[bool, str, str]:
     try:
         brut = telecharger(url, timeout=8)
     except Exception:
-        return False, ""
-    flux = feedparser.parse(brut)
+        return False, "", ""
+    flux = feedparser.parse(brut, resolve_relative_uris=False, sanitize_html=False)
     if not getattr(flux, "entries", None):
-        return False, ""
+        return False, "", ""
     nom = nettoyer_html(getattr(flux.feed, "title", "") or hote_url(url))
     textes = [nom]
+    textes_entrees: list[str] = []
     for entree in list(flux.entries)[:8]:
-        textes.append(nettoyer_html(entree.get("title") or ""))
-        textes.append(extraire_resume(entree))
+        titre = nettoyer_html(entree.get("title") or "")
+        resume = extraire_resume(entree)
+        textes.append(titre)
+        textes.append(resume)
+        textes_entrees.append(f"{titre} {resume}")
     domaines_ok, _mots, _tendances = matcher(normaliser(" ".join(textes)), domaines, tendances)
-    return bool(domaines_ok), nom or hote_url(url)
+    domaine = domaine_firmware_dedie(nom, textes_entrees, domaines, tendances)
+    if not domaine and "github.com" in url and url.rstrip("/").endswith("releases.atom"):
+        if "meshtastic" in domaines_ok and "meshcore" not in domaines_ok:
+            domaine = "firmware_meshtastic"
+        elif "meshcore" in domaines_ok or "firmware_meshcore" in domaines_ok:
+            domaine = "firmware_meshcore"
+        elif "firmware_meshtastic" in domaines_ok:
+            domaine = "firmware_meshtastic"
+    return bool(domaines_ok or domaine), nom or hote_url(url), domaine
 
 
 def tester_site(
@@ -436,18 +538,21 @@ def tester_site(
     for url in candidats_flux(site):
         if normaliser_url(url) in connues_urls:
             continue
-        ok, nom_flux = flux_pertinent(url, domaines, tendances)
+        ok, nom_flux, domaine = flux_pertinent(url, domaines, tendances)
         if not ok:
             continue
         identifiant = slug_hote(hote)
         if identifiant in identifiants:
             identifiant = slug_hote(hote + "-rss")
+        profils = ("iot", "mesh") if domaine else ()
         return Source(
             identifiant=identifiant,
             nom=nom or nom_flux or hote,
             url=url,
             site=site,
-            filtre="mots_cles",
+            filtre="aucun" if domaine else "mots_cles",
+            domaine=domaine,
+            profils=profils,
             nouvelle=True,
         )
     return None
@@ -473,8 +578,8 @@ def decouvrir_sources(
     noms: dict[str, str] = {}
 
     for site, nom, n in editeurs_google_news(sources) + rechercher_web(requetes_web):
-        hote = hote_url(site)
-        if hote in connus_hotes or hote in ignores or hote_interdit(hote):
+        hote = identite_site(site)
+        if hote in connus_hotes or hote in ignores or hote_interdit(hote_url(site)):
             continue
         scores[site] += n
         noms.setdefault(site, nom)
@@ -500,7 +605,7 @@ def decouvrir_sources(
         }
         for futur in as_completed(futurs):
             site = futurs[futur]
-            hote = hote_url(site)
+            hote = identite_site(site)
             try:
                 resultat = futur.result()
             except Exception as exc:  # noqa: BLE001
@@ -698,10 +803,11 @@ def decouvrir_wms(
     print(f"{etiquette}  {len(candidats)} adresse(s) WMS à vérifier.", flush=True)
 
     nouvelles: list[Source] = []
-    for candidat in candidats:
+    with ThreadPoolExecutor(max_workers=min(8, max(1, len(candidats)))) as pool:
+        sondes = list(pool.map(sonder_wms, candidats))
+    for _candidat, (ok, nom, cible) in zip(candidats, sondes):
         if len(nouvelles) >= MAX_NOUVEAUX_WMS:
             break
-        ok, nom, cible = sonder_wms(candidat)
         if not ok:
             continue
         cle = cle_wms(cible)

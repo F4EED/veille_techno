@@ -1,5 +1,6 @@
 .venv/
 .vendor/
+.cache/
 .python-veille
 .runlogs/
 fonts/*.ttf
@@ -14,6 +15,7 @@ config/sources.lock
 .archives_veille.html
 config/rapports_courants.yaml
 config/email.secrets.yaml
+pwd.md
 
 # Rapports générés localement (le site Pages Perso les publie)
 Veille_*.pdf

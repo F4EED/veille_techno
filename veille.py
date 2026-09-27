@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import html
 import re
 import shutil
@@ -33,9 +34,29 @@ import yaml
 CONFIG = ROOT / "config"
 FICHIER_SOURCES = CONFIG / "sources.yaml"
 USER_AGENT = "Mozilla/5.0 (compatible; VeilleIOT/1.0; outil local de veille technique)"
-TIMEOUT_S = 18
-MAX_WORKERS = 10
+PREFIXE_AFFICHE = "Veille F. Bouchet"
+
+
+def titre_public(nom: str) -> str:
+    """Titre affiché : « Veille F. Bouchet : Veille_… »."""
+    texte = (nom or "").strip()
+    prefixe = f"{PREFIXE_AFFICHE} :"
+    if texte.startswith(prefixe):
+        return texte
+    return f"{prefixe} {texte}" if texte else PREFIXE_AFFICHE
+TIMEOUT_S = 12
+MAX_WORKERS = 28
+CACHE_FLUX = ROOT / ".cache" / "flux"
+CACHE_FLUX_S = 90 * 60
+LIMITE_PAR_HOTE = {
+    "news.google.com": 10,
+    "github.com": 8,
+    "html.duckduckgo.com": 4,
+}
+_limiteurs_hotes: dict[str, threading.BoundedSemaphore] = {}
+_limiteurs_lock = threading.Lock()
 DATE_MIN = datetime(2025, 1, 1, tzinfo=timezone.utc)
+FENETRE_FIRMWARE = timedelta(days=90)
 MOIS_FR = (
     "janvier",
     "février",
@@ -50,13 +71,16 @@ MOIS_FR = (
     "novembre",
     "décembre",
 )
-BRUIT_TITRE = (
-    r"nyse:iot",
-    r"shares gap",
-    r"stock a bargain",
-    r"gf score",
-    r"cpi report",
-    r"valuations could swing",
+BRUIT_TITRE = tuple(
+    re.compile(motif)
+    for motif in (
+        r"nyse:iot",
+        r"shares gap",
+        r"stock a bargain",
+        r"gf score",
+        r"cpi report",
+        r"valuations could swing",
+    )
 )
 
 
@@ -155,6 +179,14 @@ class MotCle:
     brut: str
     normalise: str
     est_phrase: bool
+    motif: re.Pattern[str] | None = None
+
+
+@dataclass
+class VarianteFirmware:
+    mode: str
+    nom: str
+    usage: str
 
 
 @dataclass
@@ -163,6 +195,9 @@ class Domaine:
     label: str
     priorite: int
     mots_cles: list[MotCle]
+    intro: str = ""
+    lien: str = ""
+    firmwares: list[VarianteFirmware] = field(default_factory=list)
 
 
 @dataclass
@@ -399,7 +434,8 @@ def charger_profils() -> dict[str, Profil]:
             identifiant="mesh",
             titre="Veille_Mesh",
             perimetre=(
-                "Rubrique Mesh, avec sous-rubriques Meshtastic, MeshCore et Général. "
+                "Rubrique Mesh, avec sous-rubriques Firmware Meshtastic, Firmware MeshCore, "
+                "Meshtastic, MeshCore et Général. "
                 "Réseaux mesh, mesh Wi-Fi, Meshtastic, MeshCore, Reticulum, "
                 "802.11s et protocoles de maillage voisins. Sources : flux RSS, "
                 "Google News, presse nationale, Auvergne-Rhône-Alpes, "
@@ -413,7 +449,13 @@ def charger_profils() -> dict[str, Profil]:
             cache=CONFIG / "decouverte_cache_mesh.yaml",
             requetes_web=(
                 "Meshtastic RSS feed blog",
+                "Meshtastic firmware flasher RSS",
                 "MeshCore RSS feed blog",
+                "MeshCore firmware companion repeater flasher RSS",
+                "Trail Mate OR Squatch Mesh OR Wadamesh OR WhisperOS firmware RSS",
+                "ZephCore OR EasySkyMesh OR MCLite OR FieldMesh OR MeshDeck firmware github",
+                "Keymind Cascade OR \"custom firmware\" OR \"firmware fork\" Meshtastic OR MeshCore github",
+                "site:flasher.meshtastic.org OR site:flasher.meshcore.io RSS",
                 '"mesh wifi" OR "wifi mesh" OR "802.11s" RSS',
                 "Reticulum OR RNode mesh RSS",
                 '"réseau maillé" OR "wireless mesh" RSS',
@@ -438,6 +480,7 @@ class Article:
     domaines: list[str] = field(default_factory=list)
     mots_trouves: list[str] = field(default_factory=list)
     tendances: list[str] = field(default_factory=list)
+    reference: bool = False
 
     @property
     def cle_dedup(self) -> str:
@@ -451,8 +494,21 @@ def compiler_mots(valeurs: list[str]) -> list[MotCle]:
         normalise = normaliser(brut)
         if not normalise:
             continue
-        mots.append(MotCle(brut=brut, normalise=normalise, est_phrase=(" " in normalise or "-" in normalise)))
+        phrase = " " in normalise or "-" in normalise
+        motif = None if phrase else re.compile(rf"(?<![a-z0-9]){re.escape(normalise)}(?![a-z0-9])")
+        mots.append(MotCle(brut=brut, normalise=normalise, est_phrase=phrase, motif=motif))
     return mots
+
+
+def charger_firmwares(data: dict[str, Any]) -> list[VarianteFirmware]:
+    firmwares: list[VarianteFirmware] = []
+    for ligne in data.get("firmwares") or []:
+        mode = str(ligne.get("mode") or "").strip()
+        nom = str(ligne.get("nom") or "").strip()
+        usage = str(ligne.get("usage") or "").strip()
+        if mode and nom:
+            firmwares.append(VarianteFirmware(mode=mode, nom=nom, usage=usage))
+    return firmwares
 
 
 def charger_domaines(cfg: dict[str, Any]) -> list[Domaine]:
@@ -464,6 +520,9 @@ def charger_domaines(cfg: dict[str, Any]) -> list[Domaine]:
                 label=data["label"],
                 priorite=int(data.get("priorite", 0)),
                 mots_cles=compiler_mots(data.get("mots_cles") or []),
+                intro=str(data.get("intro") or "").strip(),
+                lien=str(data.get("lien") or "").strip(),
+                firmwares=charger_firmwares(data),
             )
         )
     domaines.sort(key=lambda d: d.priorite, reverse=True)
@@ -484,9 +543,9 @@ def charger_tendances(cfg: dict[str, Any]) -> list[Tendance]:
 
 
 def mot_dans_texte(mot: MotCle, texte: str) -> bool:
-    if mot.est_phrase:
+    if mot.est_phrase or mot.motif is None:
         return mot.normalise in texte
-    return re.search(rf"(?<![a-z0-9]){re.escape(mot.normalise)}(?![a-z0-9])", texte) is not None
+    return mot.motif.search(texte) is not None
 
 
 def matcher(texte: str, domaines: list[Domaine], tendances: list[Tendance]) -> tuple[list[str], list[str], list[str]]:
@@ -554,6 +613,81 @@ def completer_domaines(
     if source.domaine in ids_domaines and source.domaine not in domaines_ok:
         return [source.domaine, *domaines_ok]
     return domaines_ok
+
+
+MARQUES_FIRMWARE_LORA = (
+    "meshtastic",
+    "meshcore",
+    "mesh core",
+    "mesh-core",
+    "trail mate",
+    "trailmate",
+    "trail-mate",
+    "squatch",
+    "wadamesh",
+    "wada mesh",
+    "meshcomod",
+    "whisperos",
+    "whisper os",
+    "zephcore",
+    "zeph core",
+    "easyskymesh",
+    "easy sky mesh",
+    "mclite",
+    "mc lite",
+    "keymind",
+    "meshdeck os",
+    "meshdeck-os",
+    "fieldmesh",
+    "thinknode",
+    "inw-mesh",
+    "inw mesh",
+    "bipper",
+    "flasher.meshtastic",
+    "flasher.meshcore",
+)
+
+
+def est_nouveaute(article: Article, depuis: datetime) -> bool:
+    """Une release de référence plus ancienne que la période reste dans l'existant."""
+    if not article.reference or article.date is None:
+        return True
+    return article.date >= depuis
+
+
+def concerne_firmware_lora(texte: str) -> bool:
+    return any(marque in texte for marque in MARQUES_FIRMWARE_LORA)
+
+
+def references_firmware(source: Source, entrees: list[Any]) -> set[int]:
+    """Dernier jour de publication d'un dépôt firmware : c'est la version en place."""
+    if not source.domaine.startswith("firmware_") or "github.com" not in source.url:
+        return set()
+    datées: list[tuple[datetime, Any]] = []
+    for entree in entrees:
+        date = extraire_date(entree)
+        if date is None or avant_2025(date):
+            continue
+        datées.append((date, entree))
+    if not datées:
+        return set()
+    plus_recente = max(date for date, _entree in datées)
+    if plus_recente < now_utc() - FENETRE_FIRMWARE:
+        return set()
+    jour = plus_recente.date()
+    return {id(entree) for date, entree in datées if date.date() == jour}
+
+
+def restreindre_firmware(domaines_ok: list[str], texte: str, source: Source) -> list[str]:
+    """Une rubrique firmware ne garde que Meshtastic, MeshCore et leurs variantes."""
+    if not any(identifiant.startswith("firmware_") for identifiant in domaines_ok):
+        return domaines_ok
+    if concerne_firmware_lora(texte):
+        return domaines_ok
+    depot = f"{source.url} {source.site}"
+    if source.domaine.startswith("firmware_") and "github.com" in depot:
+        return domaines_ok
+    return [identifiant for identifiant in domaines_ok if not identifiant.startswith("firmware_")]
 
 
 def sources_reseaux_sociaux(cfg: dict[str, Any]) -> list[Source]:
@@ -670,8 +804,44 @@ def charger_sources(cfg: dict[str, Any]) -> list[Source]:
     return fusionner_sources(charger_bloc_sources(cfg, reseaux=True))
 
 
-def telecharger(url: str, timeout: int | None = None) -> bytes:
-    delai = timeout or TIMEOUT_S
+def _limiteur_hote(url: str) -> threading.BoundedSemaphore:
+    hote = urllib.parse.urlparse(url).netloc.lower()
+    if hote.startswith("www."):
+        hote = hote[4:]
+    with _limiteurs_lock:
+        limiteur = _limiteurs_hotes.get(hote)
+        if limiteur is None:
+            limiteur = threading.BoundedSemaphore(LIMITE_PAR_HOTE.get(hote, 16))
+            _limiteurs_hotes[hote] = limiteur
+        return limiteur
+
+
+def _chemin_cache_flux(url: str) -> Path:
+    return CACHE_FLUX / hashlib.sha256(url.encode("utf-8")).hexdigest()
+
+
+def _lire_cache_flux(url: str) -> bytes | None:
+    chemin = _chemin_cache_flux(url)
+    try:
+        if time() - chemin.stat().st_mtime > CACHE_FLUX_S:
+            return None
+        return chemin.read_bytes()
+    except OSError:
+        return None
+
+
+def _ecrire_cache_flux(url: str, brut: bytes) -> None:
+    chemin = _chemin_cache_flux(url)
+    try:
+        CACHE_FLUX.mkdir(parents=True, exist_ok=True)
+        temporaire = chemin.with_suffix(".tmp")
+        temporaire.write_bytes(brut)
+        temporaire.replace(chemin)
+    except OSError:
+        return
+
+
+def _telecharger_reseau(url: str, delai: int) -> bytes:
     requete = urllib.request.Request(
         url,
         headers={
@@ -690,7 +860,7 @@ def telecharger(url: str, timeout: int | None = None) -> bytes:
 
     fil = threading.Thread(target=_run, daemon=True)
     fil.start()
-    fil.join(delai + 4)
+    fil.join(delai + 2)
     if fil.is_alive() or not resultat:
         raise TimeoutError("délai dépassé")
     valeur = resultat[0]
@@ -699,10 +869,25 @@ def telecharger(url: str, timeout: int | None = None) -> bytes:
     return valeur
 
 
+def telecharger(url: str, timeout: int | None = None) -> bytes:
+    en_cache = _lire_cache_flux(url)
+    if en_cache is not None:
+        return en_cache
+    delai = timeout or TIMEOUT_S
+    limiteur = _limiteur_hote(url)
+    limiteur.acquire()
+    try:
+        brut = _telecharger_reseau(url, delai)
+    finally:
+        limiteur.release()
+    _ecrire_cache_flux(url, brut)
+    return brut
+
+
 def analyser_flux(source: Source) -> tuple[Source, list[Any], str | None]:
     try:
         brut = telecharger(source.url)
-        flux = feedparser.parse(brut)
+        flux = feedparser.parse(brut, resolve_relative_uris=False, sanitize_html=False)
         if getattr(flux, "bozo", False) and not flux.entries:
             motif = getattr(getattr(flux, "bozo_exception", None), "args", [""])[0]
             return source, [], f"flux illisible ({motif})"
@@ -739,7 +924,7 @@ def formater_date_court(dt: datetime | None) -> str:
 
 def est_bruit(titre: str) -> bool:
     texte = normaliser(titre)
-    return any(re.search(motif, texte) for motif in BRUIT_TITRE)
+    return any(motif.search(texte) for motif in BRUIT_TITRE)
 
 
 def tronquer(texte: str, taille: int = 420) -> str:
@@ -854,15 +1039,16 @@ def ecrire_rapport(
     par_tendance = {t.identifiant: t for t in tendances}
     comptes: dict[str, int] = {d.identifiant: 0 for d in domaines}
     for article in articles:
-        if article.domaines:
+        if article.domaines and est_nouveaute(article, depuis):
             comptes[article.domaines[0]] = comptes.get(article.domaines[0], 0) + 1
     orphelins = [a for a in articles if not a.domaines]
     max_compte = max([*comptes.values(), len(orphelins), 1])
     accent = COULEURS_PROFIL.get(profil.identifiant, "#0f4c5c")
     date_lue = date_longue_fr()
     genere = datetime.now().strftime("%d/%m/%Y à %H:%M")
+    n_nouveautes = sum(1 for article in articles if est_nouveaute(article, depuis))
     stats = (
-        f"{len(articles)} article(s) · {len(sources)} source(s) · {len(services_wms)} flux WMS · "
+        f"{n_nouveautes} nouveauté(s) · {len(sources)} source(s) · {len(services_wms)} flux WMS · "
         f"depuis le {depuis.astimezone().strftime('%d/%m/%Y')} · généré le {genere}"
     )
 
@@ -924,6 +1110,10 @@ def ecrire_rapport(
             sommaire.append(
                 f'<li><a href="#{ancre(domaine.label)}">{echap_html(domaine.label)} <strong>{n}</strong></a></li>'
             )
+        elif domaine.firmwares:
+            sommaire.append(
+                f'<li><a href="#{ancre(domaine.label)}">{echap_html(domaine.label)}</a></li>'
+            )
     if orphelins:
         sommaire.append(
             f'<li><a href="#{ancre(profil.orphelins)}">{echap_html(profil.orphelins)} <strong>{len(orphelins)}</strong></a></li>'
@@ -982,21 +1172,76 @@ def ecrire_rapport(
 
     sections: list[str] = []
 
-    def ajouter_section(titre: str, items: list[Article], compact: bool = False) -> None:
-        if not items:
+    def tableau_firmwares(domaine: Domaine) -> str:
+        lignes = [
+            "<table><thead><tr><th>Mode</th><th>Firmware</th><th>Usage</th></tr></thead><tbody>"
+        ]
+        for variante in domaine.firmwares:
+            lignes.append(
+                "<tr>"
+                f"<td>{echap_html(variante.mode)}</td>"
+                f"<td>{echap_html(variante.nom)}</td>"
+                f"<td>{echap_html(variante.usage)}</td>"
+                "</tr>"
+            )
+        lignes.append("</tbody></table>")
+        return "\n".join(lignes)
+
+    def ajouter_section(
+        titre: str,
+        items: list[Article],
+        compact: bool = False,
+        domaine: Domaine | None = None,
+    ) -> None:
+        if not items and not (domaine and domaine.firmwares):
             return
         sections.append(f'<section id="{ancre(titre)}">')
         sections.append(f"<h2>{echap_html(titre)}</h2>")
-        sections.append(f'<p class="compte">{len(items)} article(s)</p>')
-        if compact:
-            sections.append(tableau_compact(items))
-        else:
-            sections.extend(fiche(article) for article in items)
+        if domaine and domaine.intro:
+            sections.append(f'<p class="note">{echap_html(domaine.intro)}</p>')
+        if domaine and domaine.lien:
+            sections.append(
+                f'<p class="meta"><a href="{echap_html(domaine.lien)}">{echap_html(domaine.lien)}</a></p>'
+            )
+        if domaine and domaine.firmwares:
+            sections.append("<h3>Existant</h3>")
+            sections.append(tableau_firmwares(domaine))
+        références = [article for article in items if article.reference]
+        nouveautes = [article for article in items if est_nouveaute(article, depuis)]
+        if références:
+            if not (domaine and domaine.firmwares):
+                sections.append("<h3>Existant</h3>")
+            lignes_ref = [
+                "<table><thead><tr><th>Projet</th><th>Version en place</th><th>Date</th></tr></thead><tbody>"
+            ]
+            for article in sorted(références, key=lambda a: a.source):
+                lignes_ref.append(
+                    "<tr>"
+                    f"<td>{echap_html(article.source)}</td>"
+                    f"<td>{lien_titre(titre_propre(article.titre), article.lien)}</td>"
+                    f"<td>{echap_html(formater_date_court(article.date))}</td>"
+                    "</tr>"
+                )
+            lignes_ref.append("</tbody></table>")
+            sections.append("\n".join(lignes_ref))
+        if domaine and (domaine.firmwares or références):
+            sections.append("<h3>Nouveautés</h3>")
+            if nouveautes:
+                sections.append(f'<p class="compte">{len(nouveautes)} nouveauté(s)</p>')
+                sections.extend(fiche(article) for article in nouveautes)
+            else:
+                sections.append('<p class="note">Aucune nouveauté sur la période.</p>')
+        elif items:
+            sections.append(f'<p class="compte">{len(items)} article(s)</p>')
+            if compact:
+                sections.append(tableau_compact(items))
+            else:
+                sections.extend(fiche(article) for article in items)
         sections.append("</section>")
 
     for domaine in domaines:
         selection = [a for a in articles if a.domaines and a.domaines[0] == domaine.identifiant]
-        ajouter_section(domaine.label, selection)
+        ajouter_section(domaine.label, selection, domaine=domaine)
     if orphelins:
         ajouter_section(profil.orphelins, orphelins, compact=len(orphelins) > 8)
 
@@ -1040,7 +1285,7 @@ def ecrire_rapport(
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{echap_html(profil.titre)} — {echap_html(date_lue)}</title>
+<title>{echap_html(titre_public(profil.titre))} — {echap_html(date_lue)}</title>
 <style>
 {CSS_RAPPORT}
 :root {{ --accent: {accent}; }}
@@ -1048,7 +1293,7 @@ def ecrire_rapport(
 </head>
 <body>
 <header>
-<h1>{echap_html(profil.titre)}</h1>
+<h1>{echap_html(titre_public(profil.titre))}</h1>
 <p class="date">{echap_html(date_lue)}</p>
 <p class="stats">{echap_html(stats)}</p>
 </header>
@@ -1142,11 +1387,13 @@ def collecter(
                     if len(fraiches) >= 18:
                         break
                 entrees = fraiches
+            références = references_firmware(source, entrees)
             for entree in entrees:
                 date = extraire_date(entree)
                 if avant_2025(date):
                     continue
-                if date and date < depuis and not source.ignorer_date:
+                reference = id(entree) in références
+                if date and date < depuis and not source.ignorer_date and not reference:
                     continue
                 titre = nettoyer_html(entree.get("title") or "")
                 if not normaliser(titre) or normaliser(titre) in {"sans titre", "(sans titre)"}:
@@ -1158,6 +1405,13 @@ def collecter(
                 texte = normaliser(f"{titre} {resume}")
                 domaines_ok, mots, tendances_ok = matcher(texte, domaines, tendances)
                 domaines_ok = completer_domaines(source, domaines_ok, profil.identifiant, ids_domaines)
+                if profil.identifiant == "mesh":
+                    domaines_ok = restreindre_firmware(domaines_ok, texte, source)
+                    if "firmware_meshcore" in domaines_ok and any(
+                        marque in texte
+                        for marque in ("zephcore", "easyskymesh", "mclite", "fieldmesh", "meshdeck os", "keymind")
+                    ):
+                        domaines_ok = [ident for ident in domaines_ok if ident != "firmware_meshtastic"]
                 if profil.identifiant in {"geomatique", "mesh"} and len(domaines_ok) > 1:
                     priorites = {d.identifiant: d.priorite for d in domaines}
                     domaines_ok.sort(key=lambda ident: priorites.get(ident, 0), reverse=True)
@@ -1173,6 +1427,7 @@ def collecter(
                         domaines=domaines_ok,
                         mots_trouves=mots,
                         tendances=tendances_ok,
+                        reference=reference,
                     )
                 )
 
@@ -1311,7 +1566,14 @@ def main() -> int:
 
         piece = sortie_pdf
         try:
-            print(envoyer_rapport(piece, sujet=f"{profil.sujet_email} — {date_longue_fr()}"), flush=True)
+            print(
+                envoyer_rapport(
+                    piece,
+                    sujet=f"{titre_public(profil.sujet_email)} — {date_longue_fr()}",
+                    profil=profil.identifiant,
+                ),
+                flush=True,
+            )
         except Exception as exc:  # noqa: BLE001
             print(f"[{profil.identifiant}] Envoi e-mail impossible : {exc}", flush=True)
             return 2

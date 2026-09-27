@@ -7,6 +7,7 @@ import re
 import sys
 import threading
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -16,8 +17,8 @@ from typing import Any
 
 CONFIG = Path(__file__).resolve().parent / "config"
 FICHIER_CACHE = CONFIG / "traduction_cache.json"
-MAX_TRADUCTIONS = 4
-TIMEOUT_S = 14
+MAX_TRADUCTIONS = 8
+TIMEOUT_S = 8
 USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/128.0.0.0 Safari/537.36"
 
 MOTS_EN = {
@@ -36,7 +37,7 @@ MOTS_FR = {
 _cache: dict[str, str] = {}
 _cache_lock = threading.Lock()
 _cache_charge = False
-_erreur_affichee = False
+_moteurs_coupes: set[str] = set()
 
 
 @contextmanager
@@ -190,6 +191,17 @@ def _nettoyer(texte: str) -> str:
     return re.sub(r"\s+", " ", texte).strip()
 
 
+def _couper_moteur(nom: str, exc: BaseException) -> None:
+    """Un moteur en panne ou saturé ne doit pas ralentir chaque article."""
+    if isinstance(exc, RuntimeError) and "vide" in str(exc).lower():
+        return
+    with _cache_lock:
+        if nom in _moteurs_coupes:
+            return
+        _moteurs_coupes.add(nom)
+    print(f"  traduction : {nom} laissé de côté ({exc})", flush=True)
+
+
 def traduire_texte(texte: str) -> str:
     brut = (texte or "").strip()
     if not brut or not semble_anglais(brut):
@@ -198,18 +210,22 @@ def traduire_texte(texte: str) -> str:
     with _cache_lock:
         if brut in _cache:
             return _cache[brut]
+        coupes = set(_moteurs_coupes)
     traduit = brut
-    for moteur in (_via_lingva, _via_mymemory, _via_google):
+    for moteur in (_via_google, _via_mymemory, _via_lingva):
+        if moteur.__name__ in coupes:
+            continue
         try:
             candidat = _nettoyer(moteur(brut))
             if candidat and candidat != brut:
                 traduit = candidat
                 break
         except Exception as exc:  # noqa: BLE001
-            global _erreur_affichee
-            if not _erreur_affichee:
-                print(f"  traduction ({moteur.__name__}) : {exc}", flush=True)
-                _erreur_affichee = True
+            if isinstance(exc, (TimeoutError, urllib.error.URLError, urllib.error.HTTPError)) or any(
+                indice in str(exc).lower() for indice in ("429", "quota", "timed out", "timeout", "too many")
+            ):
+                _couper_moteur(moteur.__name__, exc)
+                coupes.add(moteur.__name__)
             continue
     if traduit != brut:
         with _cache_lock:

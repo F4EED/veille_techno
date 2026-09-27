@@ -18,8 +18,10 @@ from veille import (
     charger_profils,
     date_longue_fr,
     formater_date_court,
+    est_nouveaute,
     resume_propre,
     titre_propre,
+    titre_public,
     tronquer,
 )
 
@@ -138,7 +140,7 @@ class RapportPDF(FPDF):
         self.add_font("Lib", "", regular)
         self.add_font("Lib", "B", gras)
         self.add_font("Lib", "I", italique)
-        self.set_title(f"{profil.titre} — {date_lue}")
+        self.set_title(f"{titre_public(profil.titre)} — {date_lue}")
         self.set_author("Veille")
         self.set_creator("Veille locale")
 
@@ -156,7 +158,7 @@ class RapportPDF(FPDF):
         self.set_xy(16, 2.2)
         self.set_font("Lib", "", 8)
         self.set_text_color(255, 255, 255)
-        self.cell(0, 5, f"{self.profil.titre}  ·  {self.date_lue}", align="L")
+        self.cell(0, 5, f"{titre_public(self.profil.titre)}  ·  {self.date_lue}", align="L")
         self.set_y(14)
         self.set_text_color(28, 25, 23)
 
@@ -203,6 +205,102 @@ def _barre(pdf: RapportPDF, x: float, y: float, largeur: float, ratio: float) ->
     if plein:
         pdf.set_fill_color(*pdf.accent)
         _arrondi(pdf, x, y, plein, 4.2, 2, "F")
+
+
+def _bloc_firmwares(pdf: RapportPDF, domaine: Domaine, catalogue_seul: bool = False) -> None:
+    if not catalogue_seul and domaine.intro:
+        pdf.set_font("Lib", "I", 8.5)
+        pdf.set_text_color(87, 83, 78)
+        pdf.multi_cell(0, 4.2, texte_pdf(domaine.intro))
+        pdf.ln(1)
+    if not catalogue_seul and domaine.lien:
+        pdf.set_font("Lib", "", 8)
+        pdf.set_text_color(*pdf.accent)
+        pdf.cell(0, 5, texte_pdf(domaine.lien), new_x="LMARGIN", new_y="NEXT", link=domaine.lien)
+        pdf.ln(1)
+    largeurs = (32.0, 58.0, 88.0)
+    entetes = ("Mode", "Firmware", "Usage")
+
+    def ligne(valeurs: tuple[str, str, str], gras: bool = False) -> None:
+        pdf.set_font("Lib", "B" if gras else "", 7.5)
+        hauteurs = [
+            pdf.multi_cell(largeur, 3.6, texte_pdf(valeur), dry_run=True, output="HEIGHT")
+            for valeur, largeur in zip(valeurs, largeurs)
+        ]
+        hauteur = max(float(h) for h in hauteurs) + 1.6
+        if pdf.reste() < hauteur + 2:
+            pdf.add_page()
+        y = pdf.get_y()
+        x = 16.0
+        if gras:
+            pdf.set_fill_color(*pdf.theme["clair"])
+            pdf.rect(x, y, sum(largeurs), hauteur, "F")
+        pdf.set_text_color(40, 37, 35)
+        for valeur, largeur in zip(valeurs, largeurs):
+            pdf.set_xy(x + 1, y + 0.8)
+            pdf.multi_cell(largeur - 2, 3.6, texte_pdf(valeur))
+            x += largeur
+        pdf.set_draw_color(220, 215, 208)
+        pdf.line(16, y + hauteur, 16 + sum(largeurs), y + hauteur)
+        pdf.set_y(y + hauteur)
+
+    ligne(entetes, gras=True)
+    for variante in domaine.firmwares:
+        ligne((variante.mode, variante.nom, variante.usage))
+    pdf.ln(2)
+
+
+def _sous_titre(pdf: RapportPDF, titre: str) -> None:
+    if pdf.reste() < 12:
+        pdf.add_page()
+    pdf.set_font("Lib", "B", 11)
+    pdf.set_text_color(*pdf.accent)
+    pdf.cell(0, 7, texte_pdf(titre), new_x="LMARGIN", new_y="NEXT")
+    pdf.ln(1)
+    pdf.set_text_color(28, 25, 23)
+
+
+def _bloc_references(pdf: RapportPDF, articles: list[Article]) -> None:
+    if not articles:
+        return
+    largeurs = (52.0, 96.0, 30.0)
+    entetes = ("Projet", "Version en place", "Date")
+
+    def ligne(valeurs: tuple[str, str, str], gras: bool = False, lien: str = "") -> None:
+        pdf.set_font("Lib", "B" if gras else "", 7.5)
+        hauteurs = [
+            pdf.multi_cell(largeur, 3.6, texte_pdf(valeur), dry_run=True, output="HEIGHT")
+            for valeur, largeur in zip(valeurs, largeurs)
+        ]
+        hauteur = max(float(h) for h in hauteurs) + 1.6
+        if pdf.reste() < hauteur + 2:
+            pdf.add_page()
+        y = pdf.get_y()
+        x = 16.0
+        if gras:
+            pdf.set_fill_color(*pdf.theme["clair"])
+            pdf.rect(x, y, sum(largeurs), hauteur, "F")
+        pdf.set_text_color(40, 37, 35)
+        for index, (valeur, largeur) in enumerate(zip(valeurs, largeurs)):
+            pdf.set_xy(x + 1, y + 0.8)
+            if index == 1 and lien and not gras:
+                pdf.set_text_color(*pdf.accent)
+                pdf.multi_cell(largeur - 2, 3.6, texte_pdf(valeur), link=lien)
+                pdf.set_text_color(40, 37, 35)
+            else:
+                pdf.multi_cell(largeur - 2, 3.6, texte_pdf(valeur))
+            x += largeur
+        pdf.set_draw_color(220, 215, 208)
+        pdf.line(16, y + hauteur, 16 + sum(largeurs), y + hauteur)
+        pdf.set_y(y + hauteur)
+
+    ligne(entetes, gras=True)
+    for article in sorted(articles, key=lambda item: item.source):
+        ligne(
+            (article.source, titre_propre(article.titre), formater_date_court(article.date)),
+            lien=article.lien,
+        )
+    pdf.ln(2)
 
 
 def _titre_section(pdf: RapportPDF, titre: str) -> None:
@@ -349,7 +447,7 @@ def ecrire_rapport_pdf(
     par_tendance = {t.identifiant: t for t in tendances}
     comptes: dict[str, int] = {d.identifiant: 0 for d in domaines}
     for article in articles:
-        if article.domaines:
+        if article.domaines and est_nouveaute(article, depuis):
             comptes[article.domaines[0]] = comptes.get(article.domaines[0], 0) + 1
     orphelins = [a for a in articles if not a.domaines]
     max_compte = max([*comptes.values(), len(orphelins), 1])
@@ -387,7 +485,7 @@ def ecrire_rapport_pdf(
     pdf.set_xy(16, 30)
     pdf.set_font("Lib", "B", 28)
     pdf.set_text_color(255, 255, 255)
-    pdf.cell(0, 12, profil.titre)
+    pdf.cell(0, 12, titre_public(profil.titre))
     pdf.set_xy(16, 46)
     pdf.set_font("Lib", "", 13)
     pdf.cell(0, 7, texte_pdf(theme["accroche"]))
@@ -482,11 +580,38 @@ def ecrire_rapport_pdf(
 
     for domaine in domaines:
         selection = [a for a in articles if a.domaines and a.domaines[0] == domaine.identifiant]
-        if not selection:
+        références = [article for article in selection if article.reference]
+        nouveautes = [article for article in selection if est_nouveaute(article, depuis)]
+        if not nouveautes and not domaine.firmwares and not références:
             continue
-        _titre_section(pdf, f"{domaine.label}  ({len(selection)})")
-        for article in selection:
-            _fiche(pdf, article, par_id, par_tendance)
+        titre = domaine.label if not nouveautes else f"{domaine.label}  ({len(nouveautes)})"
+        _titre_section(pdf, titre)
+        if domaine.firmwares or références:
+            if domaine.intro:
+                pdf.set_font("Lib", "I", 8.5)
+                pdf.set_text_color(87, 83, 78)
+                pdf.multi_cell(0, 4.2, texte_pdf(domaine.intro))
+                pdf.ln(1)
+            if domaine.lien:
+                pdf.set_font("Lib", "", 8)
+                pdf.set_text_color(*pdf.accent)
+                pdf.cell(0, 5, texte_pdf(domaine.lien), new_x="LMARGIN", new_y="NEXT", link=domaine.lien)
+                pdf.ln(1)
+            _sous_titre(pdf, "Existant")
+            if domaine.firmwares:
+                _bloc_firmwares(pdf, domaine, catalogue_seul=True)
+            _bloc_references(pdf, références)
+            _sous_titre(pdf, "Nouveautés")
+            if nouveautes:
+                for article in nouveautes:
+                    _fiche(pdf, article, par_id, par_tendance)
+            else:
+                pdf.set_font("Lib", "I", 9)
+                pdf.set_text_color(110, 104, 98)
+                pdf.cell(0, 6, "Aucune nouveauté sur la période.", new_x="LMARGIN", new_y="NEXT")
+        else:
+            for article in selection:
+                _fiche(pdf, article, par_id, par_tendance)
 
     if orphelins:
         _titre_section(pdf, f"{profil.orphelins}  ({len(orphelins)})")

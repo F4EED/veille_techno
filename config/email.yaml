@@ -4,6 +4,11 @@ expediteur_nom: Veille
 destinataires:
   - frederic.f4eed@gmail.com
   - frederic.bouchet@loire.fr
+destinataires_profils:
+  geomatique:
+    - flavie.benoit@loire.fr
+    - clotilde.carton@loire.fr
+    - gregory.preynat@loire.fr
 publication:
   actif: true
   hote: ftpperso.free.fr

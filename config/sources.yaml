@@ -612,6 +612,192 @@ google_news:
   profils:
   - mesh
   filtre: aucun
+- id: gn-firmware-meshtastic
+  label: Google News — Firmware Meshtastic
+  query: '"firmware Meshtastic" OR "Meshtastic firmware" OR "flasher Meshtastic" OR flasher.meshtastic.org'
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  profils:
+  - mesh
+  filtre: mots_cles
+- id: gn-firmware-meshtastic-en
+  label: Google News — Firmware Meshtastic (anglais)
+  query: '"Meshtastic firmware" OR "firmware Meshtastic" OR "Meshtastic flasher" OR flasher.meshtastic.org'
+  hl: en-US
+  gl: US
+  ceid: US:en
+  profils:
+  - mesh
+  filtre: mots_cles
+- id: gn-firmware-meshcore
+  label: Google News — Firmware MeshCore
+  query: '"firmware MeshCore" OR "MeshCore firmware" OR "companion radio" OR "BLE companion" OR ("room server" MeshCore) OR flasher.meshcore.io'
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  profils:
+  - mesh
+  filtre: mots_cles
+- id: gn-firmware-meshcore-en
+  label: Google News — Firmware MeshCore (anglais)
+  query: '"MeshCore firmware" OR "firmware MeshCore" OR "companion radio" MeshCore OR "room server" MeshCore OR "BLE companion" OR flasher.meshcore.io OR docs.meshcore.io'
+  hl: en-US
+  gl: US
+  ceid: US:en
+  profils:
+  - mesh
+  filtre: mots_cles
+- id: gn-flasher-meshtastic
+  label: Google News — Flasher Meshtastic
+  query: site:flasher.meshtastic.org
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  profils:
+  - mesh
+  filtre: mots_cles
+  site: https://flasher.meshtastic.org
+- id: gn-flasher-meshcore
+  label: Google News — Flasher et docs MeshCore
+  query: site:flasher.meshcore.io OR site:docs.meshcore.io OR site:config.meshcore.io
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  profils:
+  - mesh
+  filtre: mots_cles
+  site: https://flasher.meshcore.io
+- id: gn-trail-mate
+  label: Google News — Trail Mate
+  query: ("trail mate" OR trailmate OR "trail-mate") (Meshtastic OR MeshCore)
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  profils:
+  - mesh
+  filtre: mots_cles
+- id: gn-trail-mate-en
+  label: Google News — Trail Mate (anglais)
+  query: ("trail mate" OR trailmate OR "trail-mate") (Meshtastic OR MeshCore)
+  hl: en-US
+  gl: US
+  ceid: US:en
+  profils:
+  - mesh
+  filtre: mots_cles
+- id: gn-squatch-mesh
+  label: Google News — Squatch Mesh
+  query: '"squatch mesh" OR squatchmesh OR "inw-mesh" OR "inw mesh"'
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  profils:
+  - mesh
+  filtre: mots_cles
+- id: gn-squatch-mesh-en
+  label: Google News — Squatch Mesh (anglais)
+  query: '"squatch mesh" OR squatchmesh OR "inw-mesh" OR "inw mesh"'
+  hl: en-US
+  gl: US
+  ceid: US:en
+  profils:
+  - mesh
+  filtre: mots_cles
+- id: gn-wadamesh
+  label: Google News — Wadamesh
+  query: wadamesh OR "wada mesh" OR meshcomod
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  profils:
+  - mesh
+  filtre: mots_cles
+- id: gn-wadamesh-en
+  label: Google News — Wadamesh (anglais)
+  query: wadamesh OR "wada mesh" OR meshcomod
+  hl: en-US
+  gl: US
+  ceid: US:en
+  profils:
+  - mesh
+  filtre: mots_cles
+- id: gn-site-squatchmesh
+  label: Google News — squatchmesh.com
+  query: site:squatchmesh.com
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  profils:
+  - mesh
+  filtre: mots_cles
+  site: https://squatchmesh.com
+- id: gn-site-wadamesh
+  label: Google News — wadamesh.com
+  query: site:wadamesh.com
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  profils:
+  - mesh
+  filtre: mots_cles
+  site: https://wadamesh.com
+- id: gn-whisperos
+  label: Google News — WhisperOS (TSAO)
+  query: WhisperOS OR "Whisper OS" OR ssaprus.works
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  profils:
+  - mesh
+  filtre: mots_cles
+- id: gn-whisperos-en
+  label: Google News — WhisperOS (TSAO, anglais)
+  query: WhisperOS OR "Whisper OS" OR ssaprus.works
+  hl: en-US
+  gl: US
+  ceid: US:en
+  profils:
+  - mesh
+  filtre: mots_cles
+- id: gn-site-ssaprus
+  label: Google News — ssaprus.works
+  query: site:ssaprus.works
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  profils:
+  - mesh
+  filtre: mots_cles
+  site: https://ssaprus.works
+- id: gn-site-tsao
+  label: Google News — tsao.dev
+  query: site:tsao.dev
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  profils:
+  - mesh
+  filtre: mots_cles
+  site: https://tsao.dev
+- id: gn-firmware-alternatif
+  label: Google News — firmwares mesh alternatifs
+  query: ZephCore OR EasySkyMesh OR "Easy Sky Mesh" OR MCLite OR "Keymind Cascade" OR MeshDeck OR FieldMesh
+  hl: fr
+  gl: FR
+  ceid: FR:fr
+  profils:
+  - mesh
+  filtre: mots_cles
+- id: gn-firmware-alternatif-en
+  label: Google News — firmwares mesh alternatifs (anglais)
+  query: ZephCore OR EasySkyMesh OR MCLite OR "Keymind Cascade" OR MeshDeck OR FieldMesh OR "firmware fork" (Meshtastic OR MeshCore)
+  hl: en-US
+  gl: US
+  ceid: US:en
+  profils:
+  - mesh
+  filtre: mots_cles
 - id: gn-mesh-sites
   label: Google News — Meshtastic, MeshCore, Reticulum
   query: site:meshtastic.org OR site:meshcore.io OR site:blog.meshcore.io OR site:reticulum.network OR site:unsigned.io OR site:open-mesh.org
@@ -978,7 +1164,7 @@ flux:
   profils:
   - iot
   - mesh
-  domaine: meshtastic
+  domaine: firmware_meshtastic
 - id: meshcore-ripple
   nom: MeshCore (GitHub ripplebiz)
   url: https://github.com/ripplebiz/MeshCore/releases.atom
@@ -987,7 +1173,7 @@ flux:
   profils:
   - iot
   - mesh
-  domaine: meshcore
+  domaine: firmware_meshcore
 - id: meshcore-dev
   nom: MeshCore (GitHub meshcore-dev)
   url: https://github.com/meshcore-dev/MeshCore/releases.atom
@@ -996,7 +1182,169 @@ flux:
   profils:
   - iot
   - mesh
-  domaine: meshcore
+  domaine: firmware_meshcore
+- id: mesh-meshtastic-web-flasher
+  nom: Meshtastic Web Flasher (GitHub)
+  url: https://github.com/meshtastic/web-flasher/releases.atom
+  site: https://flasher.meshtastic.org
+  filtre: aucun
+  profils:
+  - iot
+  - mesh
+  domaine: firmware_meshtastic
+- id: mesh-meshtastic-gui-installer
+  nom: Meshtastic GUI installer (GitHub)
+  url: https://github.com/meshtastic/Meshtastic-gui-installer/releases.atom
+  site: https://github.com/meshtastic/Meshtastic-gui-installer
+  filtre: aucun
+  profils:
+  - iot
+  - mesh
+  domaine: firmware_meshtastic
+- id: mesh-meshtastic-firmware-ota
+  nom: Meshtastic firmware OTA (GitHub)
+  url: https://github.com/meshtastic/firmware-ota/releases.atom
+  site: https://github.com/meshtastic/firmware-ota
+  filtre: aucun
+  profils:
+  - iot
+  - mesh
+  domaine: firmware_meshtastic
+- id: mesh-meshcore-flasher
+  nom: MeshCore Web Flasher (GitHub)
+  url: https://github.com/meshcore-dev/flasher.meshcore.io/releases.atom
+  site: https://flasher.meshcore.io
+  filtre: aucun
+  profils:
+  - iot
+  - mesh
+  domaine: firmware_meshcore
+- id: mesh-trail-mate
+  nom: Trail Mate (GitHub)
+  url: https://github.com/vicliu624/trail-mate/releases.atom
+  site: https://github.com/vicliu624/trail-mate
+  filtre: aucun
+  profils:
+  - iot
+  - mesh
+  domaine: firmware_meshcore
+- id: mesh-squatch
+  nom: Squatch Mesh (GitHub inw-mesh)
+  url: https://github.com/BamBam1121/inw-mesh/releases.atom
+  site: https://squatchmesh.com
+  filtre: aucun
+  profils:
+  - iot
+  - mesh
+  domaine: firmware_meshcore
+- id: mesh-wadamesh
+  nom: Wadamesh (GitHub)
+  url: https://github.com/ALLFATHER-BV/wadamesh/releases.atom
+  site: https://wadamesh.com
+  filtre: aucun
+  profils:
+  - iot
+  - mesh
+  domaine: firmware_meshcore
+- id: mesh-meshcomod
+  nom: MESHCOMOD (GitHub)
+  url: https://github.com/ALLFATHER-BV/meshcomod/releases.atom
+  site: https://github.com/ALLFATHER-BV/meshcomod
+  filtre: aucun
+  profils:
+  - iot
+  - mesh
+  domaine: firmware_meshcore
+- id: mesh-zephcore
+  nom: ZephCore (GitHub)
+  url: https://github.com/liquidraver/ZephCore/releases.atom
+  site: https://github.com/liquidraver/ZephCore
+  filtre: aucun
+  profils:
+  - iot
+  - mesh
+  domaine: firmware_meshcore
+- id: mesh-easyskymesh
+  nom: EasySkyMesh (GitHub)
+  url: https://github.com/IoTThinks/EasySkyMesh/releases.atom
+  site: https://github.com/IoTThinks/EasySkyMesh
+  filtre: aucun
+  profils:
+  - iot
+  - mesh
+  domaine: firmware_meshcore
+- id: mesh-mclite
+  nom: MCLite (GitHub)
+  url: https://github.com/jason-s13r/MCLite/releases.atom
+  site: https://github.com/jason-s13r/MCLite
+  filtre: aucun
+  profils:
+  - iot
+  - mesh
+  domaine: firmware_meshcore
+- id: mesh-meshdeck
+  nom: MeshDeck (GitHub)
+  url: https://github.com/meshdeck-os/meshdeck/releases.atom
+  site: https://meshdeck-os.github.io/meshdeck/
+  filtre: aucun
+  profils:
+  - iot
+  - mesh
+  domaine: firmware_meshcore
+- id: mesh-fieldmesh
+  nom: FieldMesh (GitHub)
+  url: https://github.com/TogeriX-hub/FieldMesh/releases.atom
+  site: https://github.com/TogeriX-hub/FieldMesh
+  filtre: aucun
+  profils:
+  - iot
+  - mesh
+  domaine: firmware_meshcore
+- id: mesh-tsao-cjk
+  nom: TSAO — Meshtastic CJK (GitHub)
+  url: https://github.com/csrutil/meshtastic-releases/releases.atom
+  site: https://github.com/csrutil/meshtastic-releases
+  filtre: aucun
+  profils:
+  - iot
+  - mesh
+  domaine: firmware_meshtastic
+- id: mesh-whisperos
+  nom: WhisperOS — TSAO (GitHub)
+  url: https://github.com/ssaprus/whisperOS/releases.atom
+  site: https://ssaprus.works
+  filtre: aucun
+  profils:
+  - iot
+  - mesh
+  domaine: firmware_meshcore
+- id: mesh-station-meteo
+  nom: Station météo Gaulix (GitHub)
+  url: https://github.com/F4EED/station_meteo_firmware/releases.atom
+  site: https://github.com/F4EED/station_meteo_firmware
+  filtre: aucun
+  profils:
+  - iot
+  - mesh
+  domaine: firmware_meshtastic
+- id: mesh-thinknode-m1
+  nom: ThinkNode M1 (GitHub)
+  url: https://github.com/F4EED/firmware_MT_ThinkNode_M1/releases.atom
+  site: https://github.com/F4EED/firmware_MT_ThinkNode_M1
+  filtre: aucun
+  profils:
+  - iot
+  - mesh
+  domaine: firmware_meshtastic
+- id: mesh-bipper-l1pro
+  nom: Bipper L1 Pro (GitHub)
+  url: https://github.com/F4EED/Bipper_L1Pro/releases.atom
+  site: https://github.com/F4EED/Bipper_L1Pro
+  filtre: aucun
+  profils:
+  - iot
+  - mesh
+  domaine: firmware_meshtastic
 - id: cnx-software
   nom: CNX Software
   url: https://www.cnx-software.com/feed/
@@ -4070,6 +4418,96 @@ flux:
   site: https://dcreport.org/
   filtre: mots_cles
   decouverte: '2026-09-11'
+- id: dec-labomaison-com
+  nom: labomaison.com
+  url: https://labomaison.com/feed/
+  site: https://labomaison.com/
+  filtre: mots_cles
+  decouverte: '2026-09-24'
+- id: dec-3dvf-com
+  nom: 3DVF
+  url: https://3dvf.com/feed
+  site: https://3dvf.com/
+  filtre: mots_cles
+  decouverte: '2026-09-24'
+- id: dec-blackberry-com
+  nom: BlackBerry
+  url: https://blackberry.com/feed.xml
+  site: https://blackberry.com/
+  filtre: mots_cles
+  decouverte: '2026-09-24'
+- id: dec-lereportersablais-com
+  nom: Le Reporter sablais
+  url: https://www.lereportersablais.com/comments/feed/
+  site: https://lereportersablais.com/
+  filtre: mots_cles
+  decouverte: '2026-09-24'
+- id: dec-lapresse-tn
+  nom: La Presse de Tunisie
+  url: https://www.lapresse.tn/feed/
+  site: https://lapresse.tn/
+  filtre: mots_cles
+  decouverte: '2026-09-24'
+- id: dec-presseagence-fr
+  nom: Presse Agence
+  url: https://presseagence.fr/feed/
+  site: https://presseagence.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-24'
+- id: dec-alwihdainfo-com
+  nom: Alwihda Info
+  url: https://www.alwihdainfo.com/rss/
+  site: https://alwihdainfo.com/
+  filtre: mots_cles
+  decouverte: '2026-09-25'
+- id: dec-lavoixdefrance-fr
+  nom: lavoixdefrance.fr
+  url: https://www.lavoixdefrance.fr/feed/
+  site: https://lavoixdefrance.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-25'
+- id: dec-yop-l-frii-com
+  nom: yop.l-frii.com
+  url: https://yop.l-frii.com/feed/
+  site: https://yop.l-frii.com/
+  filtre: mots_cles
+  decouverte: '2026-09-27'
+- id: dec-madeinfoot-ouest-france-fr
+  nom: MadeInFOOT
+  url: https://madeinfoot.ouest-france.fr/flux/rss_news.php
+  site: https://madeinfoot.ouest-france.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-27'
+- id: dec-fortune-com
+  nom: Fortune
+  url: https://fortune.com/feed
+  site: https://fortune.com/
+  filtre: mots_cles
+  decouverte: '2026-09-27'
+- id: dec-journaldugeek-com
+  nom: Journal du Geek
+  url: https://www.journaldugeek.com/feed/
+  site: https://journaldugeek.com/
+  filtre: mots_cles
+  decouverte: '2026-09-27'
+- id: dec-autojournal-fr
+  nom: L'Auto-Journal
+  url: https://www.autojournal.fr/feed
+  site: https://autojournal.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-27'
+- id: dec-fr-tradingview-com
+  nom: TradingView
+  url: https://fr.tradingview.com/feed
+  site: https://fr.tradingview.com/
+  filtre: mots_cles
+  decouverte: '2026-09-27'
+- id: dec-macg-co
+  nom: MacGeneration
+  url: https://rss.macg.co
+  site: https://macg.co/
+  filtre: mots_cles
+  decouverte: '2026-09-27'
 requetes_rs:
 - id: iot-fr
   label: IoT (français)
@@ -4569,3 +5007,8 @@ wms:
   url: https://geobretagne.fr/geoserver/geobretagne/wms?REQUEST=GetCapabilities&SERVICE=WMS
   site: https://geobretagne.fr/geoserver/geobretagne/wms?REQUEST=GetCapabilities&SERVICE=WMS
   decouverte: '2026-09-23'
+- id: wms-dec-sextant-ifremer-fr-services-wms-dce-angiospermes
+  nom: WMS — DCE Angiospermes
+  url: https://sextant.ifremer.fr/services/wms/dce_angiospermes?SERVICE=WMS&REQUEST=GetCapabilities
+  site: https://sextant.ifremer.fr/services/wms/dce_angiospermes?SERVICE=WMS&REQUEST=GetCapabilities
+  decouverte: '2026-09-27'
