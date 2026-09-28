@@ -4508,6 +4508,36 @@ flux:
   site: https://macg.co/
   filtre: mots_cles
   decouverte: '2026-09-27'
+- id: dec-aisnenouvelle-fr
+  nom: L'Aisne nouvelle
+  url: https://aisnenouvelle.fr/rss.xml
+  site: https://aisnenouvelle.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-28'
+- id: dec-lardennais-fr
+  nom: L'Ardennais
+  url: https://lardennais.fr/rss.xml
+  site: https://lardennais.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-28'
+- id: dec-linternaute-com
+  nom: Linternaute.com
+  url: https://linternaute.com/rss.xml
+  site: https://linternaute.com/
+  filtre: mots_cles
+  decouverte: '2026-09-28'
+- id: dec-wtnh-com
+  nom: WTNH.com
+  url: https://wtnh.com/feed
+  site: https://wtnh.com/
+  filtre: mots_cles
+  decouverte: '2026-09-28'
+- id: dec-toutelathailande-fr
+  nom: Toute la Thaïlande
+  url: https://toutelathailande.fr/feed/
+  site: https://toutelathailande.fr/
+  filtre: mots_cles
+  decouverte: '2026-09-28'
 requetes_rs:
 - id: iot-fr
   label: IoT (français)
